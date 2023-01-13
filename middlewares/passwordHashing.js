@@ -13,10 +13,8 @@ const hash = (password, salt) => {
     .digest("base64");
 
   if (salted) {
-    const saltWithHash = salt + "$" + hashed;
-    return saltWithHash;
+    return `${salt}$${hashed}`;
   }
-
   return hashed;
 };
 
