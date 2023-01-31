@@ -20,6 +20,7 @@ module.exports = {
       if (validatePassword === passwordField[1]) {
         const payload = {
           id: userExist.id,
+          role: userExist.role,
           name: userExist.name,
           email: userExist.email,
           profile_pic: userExist.profile_pic,
@@ -49,13 +50,17 @@ module.exports = {
       const userExist = await User.findOne({ where: { email: email } });
       if (userExist) throw error.EMAIL_EXIST;
 
-      const createUser = await User.create({
+      const createUserResult = await User.create({
+        role: "User",
         name: name,
         email: email,
         password: req.body.password,
       });
-      if (createUser) {
-        const userData = { name: createUser.name, email: createUser.email };
+      if (createUserResult) {
+        const userData = {
+          name: createUserResult.name,
+          email: createUserResult.email,
+        };
         return res.status(201).json({
           status: "Success",
           message: "Register sukses.",

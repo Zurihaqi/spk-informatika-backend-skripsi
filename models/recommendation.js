@@ -8,10 +8,10 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Recommendation.hasOne(models.Rule, {
+      Recommendation.belongsTo(models.Rule, {
         foreignKey: "rule_id",
       });
-      Recommendation.hasOne(models.Specialization, {
+      Recommendation.belongsTo(models.Specialization, {
         foreignKey: "specialization_id",
       });
     }

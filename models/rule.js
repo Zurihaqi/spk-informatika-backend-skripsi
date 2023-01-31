@@ -8,10 +8,10 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Rule.hasMany(models.Grade, {
-        foreignKey: "grade_id",
+      Rule.belongsTo(models.Course, {
+        foreignKey: "course_id",
       });
-      Rule.hasMany(models.Specialization, {
+      Rule.belongsTo(models.Specialization, {
         foreignKey: "specialization_id",
       });
     }
@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
   Rule.init(
     {
       rule_name: DataTypes.STRING,
-      grade_id: DataTypes.INTEGER,
+      course_id: DataTypes.INTEGER,
       specialization_id: DataTypes.INTEGER,
     },
     {
