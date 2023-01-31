@@ -4,11 +4,11 @@ const error = require("../misc/errorHandlers");
 module.exports = {
   getAll: async (req, res, next) => {
     try {
-      const getAllResult = await Course.findAll();
-      if (getAllResult[0] === undefined) throw error.EMPTY_TABLE;
+      const result = await Course.findAll();
+      if (result[0] === undefined) throw error.EMPTY_TABLE;
       return res.status(201).json({
         status: "Success",
-        data: getAllResult,
+        data: result,
       });
     } catch (err) {
       next(err);
@@ -17,14 +17,12 @@ module.exports = {
   getById: async (req, res, next) => {
     try {
       const { id } = req.params;
-      const getByIdResult = await Course.findByPk(id);
-      if (getByIdResult) {
-        return res.status(201).json({
-          status: "Success",
-          data: getByIdResult,
-        });
-      }
-      throw error.DATA_NOT_FOUND;
+      const result = await Course.findByPk(id);
+      if (!result) throw error.DATA_NOT_FOUND;
+      return res.status(201).json({
+        status: "Success",
+        data: result,
+      });
     } catch (err) {
       next(err);
     }
@@ -32,19 +30,19 @@ module.exports = {
   create: async (req, res, next) => {
     try {
       const { course_name, credit, grade_weight } = req.body;
-      const checkForDuplicates = await Course.findOne({
+      const duplicate = await Course.findOne({
         where: { course_name: course_name },
       });
-      if (checkForDuplicates) throw error.DUPLICATE_DATA;
-      const createCourseResult = await Course.create({
+      if (duplicate) throw error.DUPLICATE_DATA;
+      const result = await Course.create({
         course_name: course_name,
         credit: credit,
         grade_weight: grade_weight,
       });
-      if (createCourseResult) {
+      if (result) {
         return res.status(201).json({
           status: "Success",
-          data: createCourseResult,
+          data: result,
         });
       }
     } catch (err) {
@@ -56,11 +54,9 @@ module.exports = {
       const { course_name, credit, grade_weight } = req.body;
       const { id } = req.params;
       if (Object.keys(req.body).length === 0) throw error.EMPTY_BODY;
-
-      const checkIfDataExist = await Course.findByPk(id);
-      if (!checkIfDataExist) throw error.DATA_NOT_FOUND;
-
-      const updateCourseResult = await Course.update(
+      const dataExist = await Course.findByPk(id);
+      if (!dataExist) throw error.DATA_NOT_FOUND;
+      const result = await Course.update(
         {
           course_name: course_name,
           credit: credit,
@@ -72,10 +68,10 @@ module.exports = {
           plain: true,
         }
       );
-      if (updateCourseResult) {
+      if (result) {
         return res.status(201).json({
           status: "Success",
-          data: updateCourseResult,
+          data: result,
         });
       }
     } catch (err) {
@@ -85,10 +81,10 @@ module.exports = {
   delete: async (req, res, next) => {
     try {
       const { id } = req.params;
-      const deleteCourseResult = await Course.destroy({
+      const result = await Course.destroy({
         where: { id: id },
       });
-      if (!deleteCourseResult) throw error.DATA_NOT_FOUND;
+      if (!result) throw error.DATA_NOT_FOUND;
       return res.status(201).json({
         status: "Success",
       });
