@@ -31,4 +31,14 @@ module.exports = {
   ),
   DATA_FK: new apiError(401, "Error", "Data masih tersimpan pada tabel lain."),
   EMPTY_BODY: new apiError(404, "Error", "Masukkan data yang ingin diupdate."),
+  FK_NOT_FOUND: new apiError(
+    404,
+    "Error",
+    "Data FK yang dituju tidak ditemukan"
+  ),
+  INVALID_GRADE: new apiError(
+    400,
+    "Error",
+    "Nilai yang dimasukkan tidak valid"
+  ),
 };

@@ -1,10 +1,11 @@
-const { Course } = require("../models/");
+const { Grade, Course } = require("../models");
 const error = require("../misc/errorHandlers");
+const grading = require("../helpers/letterGrading");
 
 module.exports = {
   getAll: async (req, res, next) => {
     try {
-      const result = await Course.findAll();
+      const result = await Grade.findAll({ include: { model: Course } });
       if (result[0] === undefined) throw error.EMPTY_TABLE;
       return res.status(201).json({
         status: "Success",
@@ -17,7 +18,7 @@ module.exports = {
   getById: async (req, res, next) => {
     try {
       const { id } = req.params;
-      const result = await Course.findByPk(id);
+      const result = await Grade.findByPk(id, { include: { model: Course } });
       if (!result) throw error.DATA_NOT_FOUND;
       return res.status(201).json({
         status: "Success",
@@ -29,14 +30,19 @@ module.exports = {
   },
   create: async (req, res, next) => {
     try {
-      const { course_name, credit } = req.body;
-      const duplicate = await Course.findOne({
-        where: { course_name: course_name },
+      const { lettered_grade, course_id } = req.body;
+      const course = await Course.findByPk(course_id);
+      const numbered_grade = grading(lettered_grade, parseInt(course.credit));
+      const courseExist = await Course.findOne({ where: { id: course_id } });
+      if (!courseExist) throw error.FK_NOT_FOUND;
+      const duplicate = await Grade.findOne({
+        where: { course_id: course_id },
       });
       if (duplicate) throw error.DUPLICATE_DATA;
-      const result = await Course.create({
-        course_name: course_name,
-        credit: credit,
+      const result = await Grade.create({
+        numbered_grade: numbered_grade,
+        lettered_grade: lettered_grade,
+        course_id: course_id,
       });
       if (result) {
         return res.status(201).json({
@@ -50,15 +56,26 @@ module.exports = {
   },
   update: async (req, res, next) => {
     try {
-      const { course_name, credit } = req.body;
+      const { lettered_grade, course_id } = req.body;
       const { id } = req.params;
-      if (Object.keys(req.body).length === 0) throw error.EMPTY_BODY;
-      const dataExist = await Course.findByPk(id);
+      let course;
+      const dataExist = await Grade.findByPk(id);
       if (!dataExist) throw error.DATA_NOT_FOUND;
-      const result = await Course.update(
+      if (!course_id) course = await Course.findByPk(dataExist.course_id);
+      if (course_id) {
+        course = await Course.findByPk(course_id);
+        const courseExist = await Course.findOne({
+          where: { id: course_id },
+        });
+        if (!courseExist) throw error.FK_NOT_FOUND;
+      }
+      const numbered_grade = grading(lettered_grade, parseInt(course.credit));
+      if (Object.keys(req.body).length === 0) throw error.EMPTY_BODY;
+      const result = await Grade.update(
         {
-          course_name: course_name,
-          credit: credit,
+          numbered_grade: numbered_grade,
+          lettered_grade: lettered_grade,
+          course_id: course_id,
         },
         {
           where: { id: id },
@@ -79,7 +96,7 @@ module.exports = {
   delete: async (req, res, next) => {
     try {
       const { id } = req.params;
-      const result = await Course.destroy({
+      const result = await Grade.destroy({
         where: { id: id },
       });
       if (!result) throw error.DATA_NOT_FOUND;

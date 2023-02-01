@@ -31,7 +31,7 @@ module.exports = {
         });
         return res.status(201).json({
           status: "Success",
-          message: "Login sukses.",
+          message: "Login sukses",
           token: token,
         });
       }

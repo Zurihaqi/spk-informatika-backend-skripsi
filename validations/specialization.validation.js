@@ -5,20 +5,18 @@ module.exports = {
     param("id").notEmpty().isNumeric().withMessage("Masukkan id yang valid"),
   ],
   create: () => [
-    body("course_name")
-      .isAlphanumeric("en-US", { ignore: " " })
+    body("spec_name")
+      .isAlpha("en-US", { ignore: " " })
       .isLength({ min: 3 })
-      .withMessage("Minimal 3 huruf tanpa simbol"),
-    body("credit").isNumeric().withMessage("Masukkan angka"),
+      .withMessage("Minimal 3 huruf tanpa simbol atau angka"),
   ],
   update: () => [
     param("id").notEmpty().isNumeric().withMessage("Masukkan id yang valid"),
-    body("course_name")
+    body("spec_name")
       .optional()
-      .isAlphanumeric("en-US", { ignore: " " })
+      .isAlpha("en-US", { ignore: " " })
       .isLength({ min: 3 })
-      .withMessage("Minimal 3 huruf tanpa simbol"),
-    body("credit").optional().isNumeric().withMessage("Masukkan angka"),
+      .withMessage("Minimal 3 huruf tanpa simbol atau angka"),
   ],
   delete: () => [
     param("id").notEmpty().isNumeric().withMessage("Masukkan id yang valid"),
