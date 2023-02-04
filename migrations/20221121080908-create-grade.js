@@ -14,6 +14,9 @@ module.exports = {
       lettered_grade: {
         type: Sequelize.STRING,
       },
+      credit_grade: {
+        type: Sequelize.FLOAT,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

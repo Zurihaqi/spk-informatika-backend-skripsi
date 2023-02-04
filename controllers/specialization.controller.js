@@ -29,6 +29,7 @@ module.exports = {
   },
   create: async (req, res, next) => {
     try {
+      if (req.user.role !== "Admin") throw error.UNAUTHORIZED_ROLE;
       const { spec_name } = req.body;
       const duplicate = await Specialization.findOne({
         where: { spec_name: spec_name },
@@ -49,6 +50,7 @@ module.exports = {
   },
   update: async (req, res, next) => {
     try {
+      if (req.user.role !== "Admin") throw error.UNAUTHORIZED_ROLE;
       const { spec_name } = req.body;
       const { id } = req.params;
       if (Object.keys(req.body).length === 0) throw error.EMPTY_BODY;
@@ -76,6 +78,7 @@ module.exports = {
   },
   delete: async (req, res, next) => {
     try {
+      if (req.user.role !== "Admin") throw error.UNAUTHORIZED_ROLE;
       const { id } = req.params;
       const result = await Specialization.destroy({
         where: { id: id },

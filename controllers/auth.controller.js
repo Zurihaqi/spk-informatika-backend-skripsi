@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 const { JWT_SECRET } = process.env;
 const error = require("../misc/errorHandlers");
 const hash = require("../middlewares/passwordHashing");
+const { request } = require("express");
 
 module.exports = {
   signIn: async (req, res, next) => {
@@ -29,6 +30,7 @@ module.exports = {
         const token = jwt.sign(payload, JWT_SECRET, {
           expiresIn: "1h",
         });
+        req.token = token;
         return res.status(201).json({
           status: "Success",
           message: "Login sukses",

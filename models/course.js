@@ -13,8 +13,10 @@ module.exports = (sequelize, DataTypes) => {
   }
   Course.init(
     {
+      course_code: DataTypes.STRING,
       course_name: DataTypes.STRING,
       credit: DataTypes.INTEGER, //SKS
+      semester: DataTypes.INTEGER,
     },
     {
       sequelize,

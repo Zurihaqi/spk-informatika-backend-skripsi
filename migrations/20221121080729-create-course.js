@@ -8,10 +8,16 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
+      course_code: {
+        type: Sequelize.STRING,
+      },
       course_name: {
         type: Sequelize.STRING,
       },
       credit: {
+        type: Sequelize.INTEGER,
+      },
+      semester: {
         type: Sequelize.INTEGER,
       },
       createdAt: {

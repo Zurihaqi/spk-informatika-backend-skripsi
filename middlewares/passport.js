@@ -14,7 +14,10 @@ passport.use(
     User.findOne({
       where: {
         id: jwt_payload.id,
+        role: jwt_payload.role,
+        name: jwt_payload.name,
         email: jwt_payload.email,
+        profile_pic: jwt_payload.profile_pic,
       },
     })
       .then((user) => done(null, user))

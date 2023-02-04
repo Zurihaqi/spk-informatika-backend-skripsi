@@ -29,14 +29,17 @@ module.exports = {
   },
   create: async (req, res, next) => {
     try {
-      const { course_name, credit } = req.body;
+      if (req.user.role !== "Admin") throw error.UNAUTHORIZED_ROLE;
+      const { course_code, course_name, credit, semester } = req.body;
       const duplicate = await Course.findOne({
-        where: { course_name: course_name },
+        where: { course_code: course_code },
       });
       if (duplicate) throw error.DUPLICATE_DATA;
       const result = await Course.create({
+        course_code: course_code,
         course_name: course_name,
         credit: credit,
+        semester: semester,
       });
       if (result) {
         return res.status(201).json({
@@ -50,15 +53,18 @@ module.exports = {
   },
   update: async (req, res, next) => {
     try {
-      const { course_name, credit } = req.body;
+      if (req.user.role !== "Admin") throw error.UNAUTHORIZED_ROLE;
+      const { course_code, course_name, credit, semester } = req.body;
       const { id } = req.params;
       if (Object.keys(req.body).length === 0) throw error.EMPTY_BODY;
       const dataExist = await Course.findByPk(id);
       if (!dataExist) throw error.DATA_NOT_FOUND;
       const result = await Course.update(
         {
+          course_code: course_code,
           course_name: course_name,
           credit: credit,
+          semester: semester,
         },
         {
           where: { id: id },
@@ -78,6 +84,7 @@ module.exports = {
   },
   delete: async (req, res, next) => {
     try {
+      if (req.user.role !== "Admin") throw error.UNAUTHORIZED_ROLE;
       const { id } = req.params;
       const result = await Course.destroy({
         where: { id: id },

@@ -11,12 +11,17 @@ module.exports = (sequelize, DataTypes) => {
       Grade.belongsTo(models.Course, {
         foreignKey: "course_id",
       });
+      Grade.belongsTo(models.User, {
+        foreignKey: "user_id",
+      });
     }
   }
   Grade.init(
     {
+      user_id: DataTypes.INTEGER,
       numbered_grade: DataTypes.FLOAT,
       lettered_grade: DataTypes.STRING,
+      credit_grade: DataTypes.FLOAT,
       course_id: DataTypes.INTEGER,
     },
     {

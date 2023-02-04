@@ -4,12 +4,14 @@ const authentication = require("../middlewares/passport");
 const course = require("../routes/course.routes");
 const grade = require("../routes/grade.routes");
 const specialization = require("../routes/specialization.routes");
+const user = require("../routes/user.routes");
 const errorRoutes = require("./error.routes");
 
 router.use(signIn);
 router.use(signUp);
 router.use(authentication);
 
+router.use("/user", user);
 router.use("/course", course);
 router.use("/grade", grade);
 router.use("/specialization", specialization);

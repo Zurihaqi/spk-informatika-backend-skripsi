@@ -41,4 +41,10 @@ module.exports = {
     "Error",
     "Nilai yang dimasukkan tidak valid"
   ),
+  UNAUTHORIZED_ROLE: new apiError(
+    401,
+    "Unauthorized",
+    "Hanya admin yang dapat mengakses endpoint ini"
+  ),
+  FILE_SIZE: new apiError(400, "Error", "Ukuran file gambar terlalu besar"),
 };

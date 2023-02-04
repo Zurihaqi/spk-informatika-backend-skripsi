@@ -1,0 +1,367 @@
+[
+  {
+    "course_code": "MKWU-1101",
+    "course_name": "Bahasa Indonesia",
+    "credit": 2,
+    "practicum_credit": 0,
+    "semester": 2
+  },
+  {
+    "course_code": "MKWU-1102",
+    "course_name": "Character Building",
+    "credit": 2,
+    "practicum_credit": 0,
+    "semester": 1
+  },
+  {
+    "course_code": "INFO-1103",
+    "course_name": "Fisika",
+    "credit": 2,
+    "practicum_credit": 1,
+    "semester": 1
+  },
+  {
+    "course_code": "INFO-1104",
+    "course_name": "Kalkulus 1",
+    "credit": 3,
+    "practicum_credit": 0,
+    "semester": 1
+  },
+  {
+    "course_code": "INFO-1105",
+    "course_name": "Dasar Pemrograman",
+    "credit": 2,
+    "practicum_credit": 0,
+    "semester": 1
+  },
+  {
+    "course_code": "INFO-1106",
+    "course_name": "Struktur Data dan Algoritma",
+    "credit": 2,
+    "practicum_credit": 1,
+    "semester": 1
+  },
+  {
+    "course_code": "INFO-1107",
+    "course_name": "Pengantar Teknologi Informasi",
+    "credit": 2,
+    "practicum_credit": 0,
+    "semester": 1
+  },
+  {
+    "course_code": "INFO-1108",
+    "course_name": "Aljabar Linear",
+    "credit": "3",
+    "practicum_credit": 0,
+    "semester": 1
+  },
+  {
+    "course_code": "MKWU-1003",
+    "course_name": "Pendidikan Agama",
+    "credit": 2,
+    "practicum_credit": 0,
+    "semester": 2
+  },
+  {
+    "course_code": "INFO-1209",
+    "course_name": "Kalkulus 2",
+    "credit": 3,
+    "practicum_credit": 0,
+    "semester": 2
+  },
+  {
+    "course_code": "INFO-1210",
+    "course_name": "Logika Matematika",
+    "credit": 3,
+    "practicum_credit": 0,
+    "semester": 2
+  },
+  {
+    "course_code": "INFO-1211",
+    "course_name": "Matematika Diskrit",
+    "credit": 3,
+    "practicum_credit": 0,
+    "semester": 2
+  },
+  {
+    "course_code": "INFO-1213",
+    "course_name": "Desain Dan Analisis Algoritma",
+    "credit": 3,
+    "practicum_credit": 0,
+    "semester": 2
+  },
+  {
+    "course_code": "INFO-1212",
+    "course_name": "Sistem Basis Data",
+    "credit": 2,
+    "practicum_credit": 1,
+    "semester": 2
+  },
+  {
+    "course_code": "INFO-1215",
+    "course_name": "Pengantar Keamanan Komputer",
+    "credit": 2,
+    "practicum_credit": 1,
+    "semester": 4
+  },
+
+  {
+    "course_code": "MKWU-1001",
+    "course_name": "Kewarganegaraan",
+    "credit": 2,
+    "practicum_credit": 0,
+    "semester": 1
+  },
+  {
+    "course_code": "INFO-2313",
+    "course_name": "Jaringan Komputer I",
+    "credit": 2,
+    "practicum_credit": 1,
+    "semester": 3
+  },
+  {
+    "course_code": "INFO-2318",
+    "course_name": "Pemrograman Berbasis Objek",
+    "credit": 2,
+    "practicum_credit": 1,
+    "semester": 3
+  },
+  {
+    "course_code": "INFO-2319",
+    "course_name": "Analisa Numerik",
+    "credit": 2,
+    "practicum_credit": 1,
+    "semester": 3
+  },
+  {
+    "course_code": "INFO-2320",
+    "course_name": "Sistem Operasi ",
+    "credit": 2,
+    "practicum_credit": 1,
+    "semester": 3
+  },
+  {
+    "course_code": "INFO-2321",
+    "course_name": "Pengantar Sistem Digital",
+    "credit": 2,
+    "practicum_credit": 1,
+    "semester": 3
+  },
+  {
+    "course_code": "INFO-2322",
+    "course_name": "Pengantar Data Sains",
+    "credit": 2,
+    "practicum_credit": 0,
+    "semester": 3
+  },
+  {
+    "course_code": "INFO-2323",
+    "course_name": "Rekayasa Perangkat Lunak",
+    "credit": 2,
+    "practicum_credit": 0,
+    "semester": 3
+  },
+  {
+    "course_code": "MKWU-2423",
+    "course_name": "Pancasila",
+    "credit": 2,
+    "practicum_credit": 0,
+    "semester": 4
+  },
+  {
+    "course_code": "MKWU-2425",
+    "course_name": "Manajemen Sekuriti",
+    "credit": 2,
+    "practicum_credit": 0,
+    "semester": 4
+  },
+  {
+    "course_code": "INFO-2425",
+    "course_name": "Analisis dan Perancangan Sistem Informasi (OOAD)",
+    "credit": 2,
+    "practicum_credit": 1,
+    "semester": 4
+  },
+  {
+    "course_code": "INFO-2426",
+    "course_name": "Teori Bahasa Dan Otomata",
+    "credit": 3,
+    "practicum_credit": 0,
+    "semester": 4
+  },
+  {
+    "course_code": "INFO-2427",
+    "course_name": "Jaringan Komputer II",
+    "credit": 2,
+    "practicum_credit": 1,
+    "semester": 4
+  },
+  {
+    "course_code": "INFO-2428",
+    "course_name": "Statistik Dan Probabilitas",
+    "credit": 2,
+    "practicum_credit": 1,
+    "semester": 4
+  },
+  {
+    "course_code": "INFO—2429",
+    "course_name": "Pemrograman Web",
+    "credit": 2,
+    "practicum_credit": 1,
+    "semester": 4
+  },
+  {
+    "course_code": "INFO—2430",
+    "course_name": "Pengantar Organisasi Komputer",
+    "credit": 3,
+    "practicum_credit": 0,
+    "semester": 4
+  },
+  {
+    "course_code": "MKWU-3531",
+    "course_name": "Bahasa Inggris/English",
+    "credit": 2,
+    "practicum_credit": 0,
+    "semester": 5
+  },
+  {
+    "course_code": "INFO-3533",
+    "course_name": "Interaksi Manusia Dan Komputer",
+    "credit": 3,
+    "practicum_credit": 0,
+    "semester": 5
+  },
+  {
+    "course_code": "INFO-3534",
+    "course_name": "Pemrograman Perangkat Bergerak/Mobile Programming",
+    "credit": 2,
+    "practicum_credit": 1,
+    "semester": 5
+  },
+  {
+    "course_code": "INFO-3535",
+    "course_name": "Kecerdasan Buatan",
+    "credit": 3,
+    "practicum_credit": 0,
+    "semester": 5
+  },
+  {
+    "course_code": "INFO-4749",
+    "course_name": "Keamanan Informasi dan Jaringan",
+    "credit": 2,
+    "practicum_credit": 1,
+    "semester": 7
+  },
+  {
+    "course_code": "INFO-3531",
+    "course_name": "Keamanan Siber",
+    "credit": 2,
+    "practicum_credit": 1,
+    "semester": 5
+  },
+  {
+    "course_code": "INFO-2323",
+    "course_name": "Rekayasa Perangkat Lunak",
+    "credit": 2,
+    "practicum_credit": 0,
+    "semester": 3
+  },
+  {
+    "course_code": "INFO-3639",
+    "course_name": "Riset Teknologi Informasi",
+    "credit": 3,
+    "practicum_credit": 0,
+    "semester": 6
+  },
+  {
+    "course_code": "INFO-3640",
+    "course_name": "Penambangan Data/Data Mining",
+    "credit": 2,
+    "practicum_credit": 1,
+    "semester": 6
+  },
+  {
+    "course_code": "INFO-3641",
+    "course_name": "Desain dan Implementasi",
+    "credit": 3,
+    "practicum_credit": 0,
+    "semester": 6
+  },
+  {
+    "course_code": "INFO-3642",
+    "course_name": "Kerja Praktek",
+    "credit": 2,
+    "practicum_credit": 0,
+    "semester": 6
+  },
+  {
+    "course_code": "INFO-4749",
+    "course_name": "Keamanan Informasi dan Jaringan",
+    "credit": 2,
+    "practicum_credit": 1,
+    "semester": 7
+  },
+  {
+    "course_code": "INFO-3644",
+    "course_name": "Pemrograman Berbasis Framework",
+    "credit": 3,
+    "practicum_credit": 0,
+    "semester": 6
+  },
+  {
+    "course_code": "INFO-3532",
+    "course_name": "Pembelajaran Mesin",
+    "credit": 2,
+    "practicum_credit": 1,
+    "semester": 5
+  },
+  {
+    "course_code": "INFO-3538",
+    "course_name": "Manajemen Proyek Perangkat Lunak",
+    "credit": 2,
+    "practicum_credit": 1,
+    "semester": 5
+  },
+  {
+    "course_code": "INFO-3645 ",
+    "course_name": "IT-Government",
+    "credit": 3,
+    "practicum_credit": 0,
+    "semester": 7
+  },
+  {
+    "course_code": "INFO-4746",
+    "course_name": "KKN",
+    "credit": 3,
+    "practicum_credit": 0,
+    "semester": 7
+  },
+  {
+    "course_code": "INFO-3643",
+    "course_name": "Deep learning",
+    "credit": 3,
+    "practicum_credit": 0,
+    "semester": 7
+  },
+  {
+    "course_code": "INFO-4746",
+    "course_name": "Etika Profesi",
+    "credit": 2,
+    "practicum_credit": 0,
+    "semester": 7
+  },
+  {
+    "course_code": "INFO-3643",
+    "course_name": "Technopreneurship",
+    "credit": 2,
+    "practicum_credit": 0,
+    "semester": 6
+  },
+  {
+    "course_code": "INFO-4752",
+    "course_name": "Skripsi/Thesis",
+    "credit": 6,
+    "practicum_credit": 0,
+    "semester": 8
+  }
+]

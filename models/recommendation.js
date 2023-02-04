@@ -14,6 +14,9 @@ module.exports = (sequelize, DataTypes) => {
       Recommendation.belongsTo(models.Specialization, {
         foreignKey: "specialization_id",
       });
+      Recommendation.belongsTo(models.User, {
+        foreignKey: "user_id",
+      });
     }
   }
   Recommendation.init(
@@ -21,6 +24,7 @@ module.exports = (sequelize, DataTypes) => {
       percentage: DataTypes.INTEGER,
       rule_id: DataTypes.INTEGER,
       specialization_id: DataTypes.INTEGER,
+      user_id: DataTypes.INTEGER,
     },
     {
       sequelize,
