@@ -11,6 +11,8 @@ const mediaStorage = multer.diskStorage({
   filename: (req, file, cb) => {
     const fileType = file.mimetype.split("/")[1];
     const fileName = Date.now() + "-" + file.fieldname + `.${fileType}`;
+    //bypass validasi ketika field sudah terisi file
+    if (file.fieldname === "profile_pic") req.body.profile_pic = true;
     cb(null, fileName);
   },
 });
