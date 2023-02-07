@@ -4,22 +4,22 @@ module.exports = {
   signIn: () => [
     body("email")
       .notEmpty()
-      .withMessage("Masukkan email")
+      .withMessage("masukkan email")
       .normalizeEmail()
       .isEmail(),
-    body("password").notEmpty().withMessage("Masukkan password"),
+    body("password").notEmpty().withMessage("masukkan password"),
   ],
   signUp: () => [
     body("name")
       .isAlpha("en-US", { ignore: " " })
-      .withMessage("Nama tidak boleh mengandung angka atau simbol")
+      .withMessage("name adalah string tanpa angka atau simbol")
       .isLength({ min: 3 })
-      .withMessage("Nama harus memiliki minimal 3 karakter"),
-    body("email").normalizeEmail().isEmail().withMessage("Masukkan email"),
+      .withMessage("name harus memiliki minimal 3 huruf"),
+    body("email").normalizeEmail().isEmail().withMessage("masukkan email"),
     body("password")
       .notEmpty()
-      .withMessage("Masukkan password")
+      .withMessage("masukkan password")
       .isLength({ min: 6 })
-      .withMessage("Password harus memiliki minimal 6 karakter"),
+      .withMessage("password harus memiliki minimal 6 huruf"),
   ],
 };

@@ -1,47 +1,62 @@
-const fuzzyis = require("fuzzyis");
-const { LinguisticVariable, Term, Rule, FIS } = fuzzyis;
+const fuzzy = require("javascript-fuzzylogic");
+const { LinguisticVariable, FuzzySet, FuzzyInferenceSystem } = fuzzy;
 
-const system = new FIS("Sistem Pemilihan Peminatan");
+const fuzzySystem = (rulesCount, rules, inputs) => {
+  const gradeSangatRendah = new FuzzySet("Sangat Rendah", [0.0, 2.2]);
+  const gradeRendah = new FuzzySet("Rendah", [1.9, 2.5]);
+  const gradeSedang = new FuzzySet("Sedang", [2.2, 2.8]);
+  const gradeTinggi = new FuzzySet("Tinggi", [2.5, 3.1]);
+  const gradeSangatTinggi = new FuzzySet("Sangat Tinggi", [2.8, 4.0]);
+  const outputRecommend = new FuzzySet("Direkomendasikan", [0.4, 1.0]);
+  const outputNotRecommend = new FuzzySet("Tidak Direkomendasikan", [0.0, 0.4]);
 
-const output = new LinguisticVariable("Output", [0.0, 1.0]);
+  const firstGradeVariable = new LinguisticVariable("First Grade")
+    .addSet(gradeSangatRendah)
+    .addSet(gradeRendah)
+    .addSet(gradeSedang)
+    .addSet(gradeTinggi)
+    .addSet(gradeSangatTinggi);
 
-const firstCourse = new LinguisticVariable("firstCourse", [0.0, 4.0]);
-const secondCourse = new LinguisticVariable("secondCourse", [0.0, 4.0]);
-const thirdCourse = new LinguisticVariable("thirdCourse", [0.0, 4.0]);
+  const secondGradeVariable = new LinguisticVariable("Second Grade")
+    .addSet(gradeSangatRendah)
+    .addSet(gradeRendah)
+    .addSet(gradeSedang)
+    .addSet(gradeTinggi)
+    .addSet(gradeSangatTinggi);
 
-system.addOutput(output);
-system.addInput(firstCourse);
-system.addInput(secondCourse);
-system.addInput(secondCourse);
+  const thirdGradeVariable = new LinguisticVariable("Third Grade")
+    .addSet(gradeSangatRendah)
+    .addSet(gradeRendah)
+    .addSet(gradeSedang)
+    .addSet(gradeTinggi)
+    .addSet(gradeSangatTinggi);
 
-firstCourse.addTerm(new Term("Sangat rendah", "gauss", [0.0, 2.2]));
-firstCourse.addTerm(new Term("Rendah", "gauss", [1.9, 2.5]));
-firstCourse.addTerm(new Term("Sedang", "gauss", [2.2, 2.8]));
-firstCourse.addTerm(new Term("Tinggi", "gauss", [2.5, 3.1]));
-firstCourse.addTerm(new Term("Sangat tinggi", "gauss", [2.8, 4.0]));
+  const outputVariable = new LinguisticVariable("Output")
+    .addSet(outputRecommend)
+    .addSet(outputNotRecommend);
 
-secondCourse.addTerm(new Term("Sangat rendah", "gauss", [0.0, 2.2]));
-secondCourse.addTerm(new Term("Rendah", "gauss", [1.9, 2.5]));
-secondCourse.addTerm(new Term("Sedang", "gauss", [2.2, 2.8]));
-secondCourse.addTerm(new Term("Tinggi", "gauss", [2.5, 3.1]));
-secondCourse.addTerm(new Term("Sangat tinggi", "gauss", [2.8, 4.0]));
+  const SPKFIS = new FuzzyInferenceSystem("SPK")
+    .addInput(firstGradeVariable)
+    .addInput(secondGradeVariable)
+    .addInput(thirdGradeVariable)
+    .addOutput(outputVariable);
 
-thirdCourse.addTerm(new Term("Sangat rendah", "gauss", [0.0, 2.2]));
-thirdCourse.addTerm(new Term("Rendah", "gauss", [1.9, 2.5]));
-thirdCourse.addTerm(new Term("Sedang", "gauss", [2.2, 2.8]));
-thirdCourse.addTerm(new Term("Tinggi", "gauss", [2.5, 3.1]));
-thirdCourse.addTerm(new Term("Sangat tinggi", "gauss", [2.8, 4.0]));
+  SPKFIS.addRule();
 
-output.addTerm(new Term("Direkomendasikan", "gauss", [0.4, 1.0]));
-output.addTerm(new Term("Tidak direkomendasikan", "gauss", [0.0, 0.4]));
+  rules = [];
+  let grades = [];
 
-system.rules = [
-  new Rule(["Rendah", "Rendah", "Rendah"], ["Tidak direkomendasikan"], "and"),
-  new Rule(
-    ["Sangat tinggi", "Sangat tinggi", "Sangat tinggi"],
-    ["Direkomendasikan"],
-    "and"
-  ),
-];
+  for (let i = 0; i < rulesCount; i++) {
+    system.rules.push(
+      new Rule(rules[i].condition, rules[i].conclusion, rules[i].connection)
+    );
+  }
 
-console.log(`Persentase: ${system.getPreciseOutput([1.0, 2.0, 4.0]) * 100}%`);
+  for (let i = 0; i <= 2; i++) {
+    grades.push(inputs[i].numbered_grade);
+  }
+
+  return result;
+};
+
+module.exports = fuzzySystem;

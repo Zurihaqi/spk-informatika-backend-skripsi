@@ -2,28 +2,53 @@ const { body, param } = require("express-validator");
 
 module.exports = {
   getById: () => [
-    param("id").notEmpty().isNumeric().withMessage("Masukkan id yang valid"),
+    param("id")
+      .notEmpty()
+      .withMessage("param id tidak boleh kosong")
+      .isNumeric()
+      .withMessage("param id adalah integer"),
   ],
   create: () => [
-    body("course_code").notEmpty().withMessage("Tidak boleh kosong"),
+    body("course_code")
+      .isString()
+      .withMessage("course_code adalah string")
+      .notEmpty()
+      .withMessage("course_code tidak boleh kosong"),
     body("course_name")
       .isAlphanumeric("en-US", { ignore: " " })
+      .withMessage("course_name adalah string")
       .isLength({ min: 3 })
-      .withMessage("Minimal 3 huruf tanpa simbol"),
-    body("credit").isNumeric().withMessage("Masukkan angka"),
-    body("semester").isNumeric().withMessage("Masukkan angka"),
+      .withMessage("course_name harus memiliki minimal 3 huruf"),
+    body("credit").isNumeric().withMessage("credit adalah integer"),
+    body("semester").isNumeric().withMessage("semester adalah integer"),
   ],
   update: () => [
-    param("id").notEmpty().isNumeric().withMessage("Masukkan id yang valid"),
+    param("id")
+      .notEmpty()
+      .withMessage("param id tidak boleh kosong")
+      .isNumeric()
+      .withMessage("param id adalah integer"),
+    body("course_code")
+      .optional()
+      .isString()
+      .withMessage("course_code adalah string"),
     body("course_name")
       .optional()
       .isAlphanumeric("en-US", { ignore: " " })
+      .withMessage("course_name adalah string")
       .isLength({ min: 3 })
-      .withMessage("Minimal 3 huruf tanpa simbol"),
-    body("credit").optional().isNumeric().withMessage("Masukkan angka"),
-    body("semester").optional().isNumeric().withMessage("Masukkan angka"),
+      .withMessage("course_name harus memiliki minimal 3 huruf"),
+    body("credit").optional().isNumeric().withMessage("credit adalah integer"),
+    body("semester")
+      .optional()
+      .isNumeric()
+      .withMessage("semester adalah integer"),
   ],
   delete: () => [
-    param("id").notEmpty().isNumeric().withMessage("Masukkan id yang valid"),
+    param("id")
+      .notEmpty()
+      .withMessage("param id tidak boleh kosong")
+      .isNumeric()
+      .withMessage("param id adalah integer"),
   ],
 };

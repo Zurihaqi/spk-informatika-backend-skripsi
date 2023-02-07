@@ -15,7 +15,7 @@ const errorMessages = (error, req, res, next) => {
       message: error.message,
       detail: error.parent.detail,
     });
-  } else {
+  } else if (error.stack) {
     //Internal server error
     const errStack = error.stack.split("\n");
     errStack.shift();
@@ -24,6 +24,11 @@ const errorMessages = (error, req, res, next) => {
       status: "Internal server error",
       message: error.message,
       stack: errLocation,
+    });
+  } else {
+    return res.status(500).json({
+      status: "Internal server error",
+      detail: error,
     });
   }
 };

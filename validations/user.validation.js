@@ -2,15 +2,15 @@ const { body } = require("express-validator");
 
 module.exports = {
   update: () => [
-    body("name")
-      .optional()
-      .isString()
-      .withMessage("Nama hanya dapat berupa huruf"),
+    body("name").optional().isString().withMessage("name adalah string"),
     body("email")
       .optional()
       .normalizeEmail()
       .isEmail()
-      .withMessage("Masukkan email yang valid"),
-    body("student_id").optional().isNumeric().withMessage("Masukkan angka"),
+      .withMessage("email tidak valid"),
+    body("student_id")
+      .optional()
+      .isNumeric()
+      .withMessage("student_id adalah integer"),
   ],
 };

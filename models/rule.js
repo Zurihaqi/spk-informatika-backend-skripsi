@@ -8,19 +8,21 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Rule.belongsTo(models.Course, {
-        foreignKey: "course_id",
+      Rule.belongsTo(models.User, {
+        foreignKey: "user_id",
       });
       Rule.belongsTo(models.Specialization, {
-        foreignKey: "specialization_id",
+        foreignKey: "spec_id",
       });
     }
   }
   Rule.init(
     {
-      rule_name: DataTypes.STRING,
-      course_id: DataTypes.INTEGER,
-      specialization_id: DataTypes.INTEGER,
+      condition: DataTypes.ARRAY(DataTypes.STRING),
+      conclusion: DataTypes.ARRAY(DataTypes.STRING),
+      connection: DataTypes.STRING,
+      user_id: DataTypes.INTEGER,
+      spec_id: DataTypes.INTEGER,
     },
     {
       sequelize,

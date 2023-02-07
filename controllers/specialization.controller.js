@@ -69,7 +69,7 @@ module.exports = {
       if (result) {
         return res.status(201).json({
           status: "Success",
-          data: result,
+          data: result[1],
         });
       }
     } catch (err) {

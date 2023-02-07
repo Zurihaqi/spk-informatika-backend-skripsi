@@ -8,7 +8,13 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      rule_name: {
+      condition: {
+        type: Sequelize.ARRAY(Sequelize.STRING),
+      },
+      conclusion: {
+        type: Sequelize.ARRAY(Sequelize.STRING),
+      },
+      connection: {
         type: Sequelize.STRING,
       },
       createdAt: {

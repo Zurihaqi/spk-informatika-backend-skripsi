@@ -3,7 +3,6 @@ const jwt = require("jsonwebtoken");
 const { JWT_SECRET } = process.env;
 const error = require("../misc/errorHandlers");
 const hash = require("../middlewares/passwordHashing");
-const { request } = require("express");
 
 module.exports = {
   signIn: async (req, res, next) => {

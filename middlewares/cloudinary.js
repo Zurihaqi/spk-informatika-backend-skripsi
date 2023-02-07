@@ -16,6 +16,7 @@ const cloudinaryUpload = async (req, res, next) => {
         folder: foldering,
         use_filename: true,
         resource_type: "image",
+        upload_preset: "glahtyih",
       });
       if (file.fieldname === "profile_pic")
         req.body.profile_pic = uploadResult.secure_url;
