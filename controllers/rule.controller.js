@@ -6,19 +6,13 @@ const updater = require("../helpers/updater");
 module.exports = {
   getAll: async (req, res, next) => {
     try {
+      const { spec_id } = req.query;
       let options = {
         where: {
           user_id: req.user.id,
         },
       };
-      if (
-        Object.keys(req.query) == "spec_id"
-          ? (options.where = {
-              user_id: req.user.id,
-              [Op.or]: { [Object.keys(req.query)]: Object.values(req.query) },
-            })
-          : options
-      );
+      if (spec_id) options.where.spec_id = spec_id;
       const result = await Rule.findAll(options);
       if (result[0] === undefined) throw error.EMPTY_TABLE;
       return res.status(201).json({
