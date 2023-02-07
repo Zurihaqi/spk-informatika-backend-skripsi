@@ -1,5 +1,4 @@
 const { Rule, Specialization } = require("../models/");
-const Op = require("sequelize").Op;
 const error = require("../misc/errorHandlers");
 const updater = require("../helpers/updater");
 
