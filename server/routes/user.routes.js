@@ -16,5 +16,11 @@ router.patch(
   controller.update
 );
 router.delete("/", controller.delete);
+router.patch(
+  "/update-password",
+  validation.updatePassword(),
+  validate,
+  controller.updatePassword
+);
 
 module.exports = router;

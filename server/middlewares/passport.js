@@ -14,7 +14,6 @@ passport.use(
     User.findOne({
       where: {
         id: jwt_payload.id,
-        email: jwt_payload.email,
       },
     })
       .then(() => done(null, jwt_payload))
@@ -22,20 +21,24 @@ passport.use(
   })
 );
 
-module.exports = authentication = async (req, res, next) => {
-  let validToken;
-  if (req.headers.authorization) {
-    const bearerToken = req.headers.authorization.match(/^Bearer (.*)$/)[1];
-    if (bearerToken) {
-      validToken = await Token.findOne({
-        where: { token: bearerToken, isValid: true },
+module.exports = authentication = (req, res, next) => {
+  const token = `${req.headers.authorization.match(/^Bearer (.*)$/)[1]}`;
+
+  passport.authenticate(
+    "jwt",
+    { session: false },
+    async (error, user, info) => {
+      const validToken = await Token.findOne({
+        where: { token: token, isValid: true },
       });
+
+      if (!user || !validToken) error = errors.UNAUTHORIZED;
+      if (error) return next(error);
+
+      req.user = user;
+      req.user.token = token;
+
+      next();
     }
-  }
-  passport.authenticate("jwt", { session: false }, (error, user, info) => {
-    if (!user || !validToken) error = errors.UNAUTHORIZED;
-    if (error) return next(error);
-    req.user = user;
-    next();
-  })(req, res, next);
+  )(req, res, next);
 };

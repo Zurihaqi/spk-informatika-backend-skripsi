@@ -22,8 +22,17 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: "User",
+      scopes: {
+        noPassword: {
+          attributes: { exclude: ["password"] },
+        },
+      },
       hooks: {
         beforeCreate: (user, options) => {
+          user.password = hash(user.password);
+          return user;
+        },
+        beforeUpdate: (user, options) => {
           user.password = hash(user.password);
           return user;
         },

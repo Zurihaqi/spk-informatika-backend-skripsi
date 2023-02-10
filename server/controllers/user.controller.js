@@ -1,16 +1,17 @@
-const { User } = require("../db/models/");
+const { User, Token } = require("../db/models/");
 const error = require("../misc/errorHandlers");
-const hash = require("../middlewares/passwordHashing");
+const updater = require("../helpers/updater");
+const isEmpty = require("../helpers/emptyObjectCheck");
 
 module.exports = {
   get: async (req, res, next) => {
     try {
       const { id } = req.user;
-      const dataExist = await User.findByPk(id);
-      if (!dataExist) throw error.DATA_NOT_FOUND;
-      const result = await User.findByPk(id, {
-        attributes: ["name", "email", "profile_pic", "student_id", "role"],
-      });
+
+      const result = await User.scope("noPassword").findByPk(id, {});
+
+      if (!result) throw error.DATA_NOT_FOUND;
+
       return res.status(201).json({
         status: "Success",
         data: result,
@@ -23,20 +24,17 @@ module.exports = {
     try {
       const { name, email, profile_pic, student_id } = req.body;
       const { id } = req.user;
-      if (Object.keys(req.body).length === 0) throw error.EMPTY_BODY;
-      if (req.body.password) {
-        const passwordHash = hash(req.body.password);
-        req.body.password = passwordHash;
-      }
-      const dataExist = await User.findByPk(id);
-      if (!dataExist) throw error.DATA_NOT_FOUND;
+
+      const incomingUpdate = updater(
+        { name, email, profile_pic, student_id },
+        {}
+      );
+
+      if (isEmpty(incomingUpdate)) throw error.EMPTY_BODY;
+
       const result = await User.update(
         {
-          name: name,
-          email: email,
-          password: req.body.password,
-          profile_pic: profile_pic,
-          student_id: student_id,
+          ...incomingUpdate,
         },
         {
           where: { id: id },
@@ -58,14 +56,44 @@ module.exports = {
   },
   delete: async (req, res, next) => {
     try {
-      const { id } = req.user;
+      const { id, token } = req.user;
+
       const result = await User.destroy({
         where: { id: id },
       });
-      if (!result) throw error.DATA_NOT_FOUND;
-      return res.status(201).json({
-        status: "Success",
-      });
+
+      if (result) {
+        await Token.update({ isValid: false }, { where: { token: token } });
+        return res.status(201).json({
+          status: "Success",
+          message: "Berhasil menghapus akun",
+        });
+      }
+    } catch (err) {
+      next(err);
+    }
+  },
+  updatePassword: async (req, res, next) => {
+    try {
+      const { id, token } = req.user;
+
+      const result = await User.update(
+        {
+          password: req.body.password,
+        },
+        {
+          where: { id: id },
+          individualHooks: true,
+        }
+      );
+
+      if (result) {
+        await Token.update({ isValid: false }, { where: { token: token } });
+        return res.status(200).json({
+          status: "Success",
+          message: "Berhasil merubah password lakukan login ulang",
+        });
+      }
     } catch (err) {
       next(err);
     }

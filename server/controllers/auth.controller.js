@@ -47,6 +47,8 @@ module.exports = {
           isValid: true,
         });
 
+        req.token = token;
+
         return res.status(201).json({
           status: "Success",
           message: "Login sukses",
@@ -85,15 +87,15 @@ module.exports = {
   },
   signOut: async (req, res, next) => {
     try {
-      if (req.headers.authorization) {
-        const bearerToken = req.headers.authorization.match(/^Bearer (.*)$/)[1];
-        if (bearerToken) {
+      if (req.user) {
+        const token = req.user.token;
+        if (token) {
           const invalidateToken = await Token.update(
             {
               isValid: false,
             },
             {
-              where: { token: bearerToken, isValid: true },
+              where: { token: token, isValid: true },
               returning: true,
             }
           );

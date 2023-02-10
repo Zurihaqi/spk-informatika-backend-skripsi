@@ -13,4 +13,11 @@ module.exports = {
       .isNumeric()
       .withMessage("student_id adalah integer"),
   ],
+  updatePassword: () => [
+    body("password")
+      .notEmpty()
+      .withMessage("masukkan password")
+      .isLength({ min: 6 })
+      .withMessage("password harus memiliki minimal 6 huruf"),
+  ],
 };
