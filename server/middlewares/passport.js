@@ -22,21 +22,25 @@ passport.use(
 );
 
 module.exports = authentication = (req, res, next) => {
-  const token = `${req.headers.authorization.match(/^Bearer (.*)$/)[1]}`;
-
   passport.authenticate(
     "jwt",
     { session: false },
     async (error, user, info) => {
-      const validToken = await Token.findOne({
-        where: { token: token, isValid: true },
-      });
+      let validToken;
+      if (req.headers.authorization) {
+        const token = `${req.headers.authorization.match(/^Bearer (.*)$/)[1]}`;
 
-      if (!user || !validToken) error = errors.UNAUTHORIZED;
+        validToken = await Token.findOne({
+          where: { token: token, isValid: true },
+        });
+
+        req.user = user;
+        req.user.token = token;
+      }
+
+      if (!user || !validToken || !req.headers.authorization)
+        error = errors.UNAUTHORIZED;
       if (error) return next(error);
-
-      req.user = user;
-      req.user.token = token;
 
       next();
     }

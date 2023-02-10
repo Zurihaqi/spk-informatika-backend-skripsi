@@ -47,8 +47,6 @@ module.exports = {
           isValid: true,
         });
 
-        req.token = token;
-
         return res.status(201).json({
           status: "Success",
           message: "Login sukses",
