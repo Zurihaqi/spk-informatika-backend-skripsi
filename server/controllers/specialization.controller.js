@@ -1,10 +1,10 @@
-const { Course } = require("../models/");
+const { Specialization } = require("../db/models/");
 const error = require("../misc/errorHandlers");
 
 module.exports = {
   getAll: async (req, res, next) => {
     try {
-      const result = await Course.findAll();
+      const result = await Specialization.findAll();
       if (result[0] === undefined) throw error.EMPTY_TABLE;
       return res.status(201).json({
         status: "Success",
@@ -17,7 +17,7 @@ module.exports = {
   getById: async (req, res, next) => {
     try {
       const { id } = req.params;
-      const result = await Course.findByPk(id);
+      const result = await Specialization.findByPk(id);
       if (!result) throw error.DATA_NOT_FOUND;
       return res.status(201).json({
         status: "Success",
@@ -30,16 +30,13 @@ module.exports = {
   create: async (req, res, next) => {
     try {
       if (req.user.role !== "Admin") throw error.UNAUTHORIZED_ROLE;
-      const { course_code, course_name, credit, semester } = req.body;
-      const duplicate = await Course.findOne({
-        where: { course_code: course_code },
+      const { spec_name } = req.body;
+      const duplicate = await Specialization.findOne({
+        where: { spec_name: spec_name },
       });
       if (duplicate) throw error.DUPLICATE_DATA;
-      const result = await Course.create({
-        course_code: course_code,
-        course_name: course_name,
-        credit: credit,
-        semester: semester,
+      const result = await Specialization.create({
+        spec_name: spec_name,
       });
       if (result) {
         return res.status(201).json({
@@ -54,17 +51,14 @@ module.exports = {
   update: async (req, res, next) => {
     try {
       if (req.user.role !== "Admin") throw error.UNAUTHORIZED_ROLE;
-      const { course_code, course_name, credit, semester } = req.body;
+      const { spec_name } = req.body;
       const { id } = req.params;
       if (Object.keys(req.body).length === 0) throw error.EMPTY_BODY;
-      const dataExist = await Course.findByPk(id);
+      const dataExist = await Specialization.findByPk(id);
       if (!dataExist) throw error.DATA_NOT_FOUND;
-      const result = await Course.update(
+      const result = await Specialization.update(
         {
-          course_code: course_code,
-          course_name: course_name,
-          credit: credit,
-          semester: semester,
+          spec_name: spec_name,
         },
         {
           where: { id: id },
@@ -86,7 +80,7 @@ module.exports = {
     try {
       if (req.user.role !== "Admin") throw error.UNAUTHORIZED_ROLE;
       const { id } = req.params;
-      const result = await Course.destroy({
+      const result = await Specialization.destroy({
         where: { id: id },
       });
       if (!result) throw error.DATA_NOT_FOUND;

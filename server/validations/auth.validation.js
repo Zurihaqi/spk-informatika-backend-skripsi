@@ -6,7 +6,8 @@ module.exports = {
       .notEmpty()
       .withMessage("masukkan email")
       .normalizeEmail()
-      .isEmail(),
+      .isEmail()
+      .withMessage("masukkan email yang valid"),
     body("password").notEmpty().withMessage("masukkan password"),
   ],
   signUp: () => [

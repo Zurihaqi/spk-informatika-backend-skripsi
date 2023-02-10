@@ -1,12 +1,24 @@
-const { User } = require("../models");
-const jwt = require("jsonwebtoken");
+const { User, Token } = require("../db/models");
 const { JWT_SECRET } = process.env;
 const error = require("../misc/errorHandlers");
 const hash = require("../middlewares/passwordHashing");
+const jwt = require("jsonwebtoken");
 
 module.exports = {
   signIn: async (req, res, next) => {
     try {
+      if (req.headers.authorization) {
+        const tokenExist = await Token.findOne({
+          where: {
+            token: req.headers.authorization.match(/^Bearer (.*)$/)[1],
+            isValid: true,
+          },
+        });
+        if (tokenExist) {
+          throw error.IN_SESSION;
+        }
+        throw error.INVALID_TOKEN;
+      }
       const { email } = req.body;
 
       //Cek apakah email belum terdaftar
@@ -29,7 +41,12 @@ module.exports = {
         const token = jwt.sign(payload, JWT_SECRET, {
           expiresIn: "1h",
         });
-        req.token = token;
+
+        await Token.create({
+          token: token,
+          isValid: true,
+        });
+
         return res.status(201).json({
           status: "Success",
           message: "Login sukses",
@@ -44,8 +61,6 @@ module.exports = {
   signUp: async (req, res, next) => {
     try {
       const { name, email } = req.body;
-      const passwordHash = hash(req.body.password);
-      req.body.password = passwordHash;
 
       //Cek apakah email sudah terdaftar
       const userExist = await User.findOne({ where: { email: email } });
@@ -58,16 +73,39 @@ module.exports = {
         password: req.body.password,
       });
       if (createUserResult) {
-        const userData = {
-          name: createUserResult.name,
-          email: createUserResult.email,
-        };
         return res.status(201).json({
           status: "Success",
-          message: "Register sukses.",
-          data: userData,
+          message: "Register sukses",
+          data: { name: createUserResult.name, email: createUserResult.email },
         });
       }
+    } catch (err) {
+      next(err);
+    }
+  },
+  signOut: async (req, res, next) => {
+    try {
+      if (req.headers.authorization) {
+        const bearerToken = req.headers.authorization.match(/^Bearer (.*)$/)[1];
+        if (bearerToken) {
+          const invalidateToken = await Token.update(
+            {
+              isValid: false,
+            },
+            {
+              where: { token: bearerToken, isValid: true },
+              returning: true,
+            }
+          );
+          if (invalidateToken[0] !== 0) {
+            return res.status(200).json({
+              status: "Success",
+              message: "Berhasil Logout",
+            });
+          }
+        }
+      }
+      throw error.OFF_SESSION;
     } catch (err) {
       next(err);
     }

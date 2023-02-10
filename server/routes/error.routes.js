@@ -28,7 +28,7 @@ const errorMessages = (error, req, res, next) => {
   } else {
     return res.status(500).json({
       status: "Internal server error",
-      detail: error,
+      message: error,
     });
   }
 };

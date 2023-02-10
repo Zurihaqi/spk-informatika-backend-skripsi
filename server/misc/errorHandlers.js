@@ -47,4 +47,7 @@ module.exports = {
     "Hanya admin yang dapat mengakses endpoint ini"
   ),
   FILE_SIZE: new apiError(400, "Error", "Ukuran file gambar terlalu besar"),
+  IN_SESSION: new apiError(400, "Error", "Anda sudah melakukan login"),
+  OFF_SESSION: new apiError(400, "Error", "Anda belum melakukan login"),
+  INVALID_TOKEN: new apiError(400, "Error", "Token tidak valid"),
 };

@@ -1,4 +1,4 @@
-const { Grade, Course } = require("../models");
+const { Grade, Course } = require("../db/models/");
 const error = require("../misc/errorHandlers");
 const grading = require("../helpers/letterGrading");
 

@@ -1,4 +1,4 @@
-const { Rule, Specialization } = require("../models/");
+const { Rule, Specialization } = require("../db/models/");
 const error = require("../misc/errorHandlers");
 const updater = require("../helpers/updater");
 
