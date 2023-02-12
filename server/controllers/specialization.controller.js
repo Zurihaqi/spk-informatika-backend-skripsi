@@ -34,7 +34,7 @@ module.exports = {
   },
   create: async (req, res, next) => {
     try {
-      if (req.user.role !== "Admin") throw error.UNAUTHORIZED_ROLE;
+      if (req.user.role !== "ADMIN") throw error.UNAUTHORIZED_ROLE;
 
       const { spec_name } = req.body;
 
@@ -58,7 +58,7 @@ module.exports = {
   },
   update: async (req, res, next) => {
     try {
-      if (req.user.role !== "Admin") throw error.UNAUTHORIZED_ROLE;
+      if (req.user.role !== "ADMIN") throw error.UNAUTHORIZED_ROLE;
       const { spec_name } = req.body;
       const { id } = req.params;
       if (isEmpty(req.body)) throw error.EMPTY_BODY;
@@ -88,7 +88,7 @@ module.exports = {
   },
   delete: async (req, res, next) => {
     try {
-      if (req.user.role !== "Admin") throw error.UNAUTHORIZED_ROLE;
+      if (req.user.role !== "ADMIN") throw error.UNAUTHORIZED_ROLE;
 
       const { id } = req.params;
 

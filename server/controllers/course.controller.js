@@ -34,7 +34,7 @@ module.exports = {
   },
   create: async (req, res, next) => {
     try {
-      if (req.user.role !== "Admin") throw error.UNAUTHORIZED_ROLE;
+      if (req.user.role !== "ADMIN") throw error.UNAUTHORIZED_ROLE;
 
       const { course_code, course_name, credit, semester } = req.body;
 
@@ -61,7 +61,7 @@ module.exports = {
   },
   update: async (req, res, next) => {
     try {
-      if (req.user.role !== "Admin") throw error.UNAUTHORIZED_ROLE;
+      if (req.user.role !== "ADMIN") throw error.UNAUTHORIZED_ROLE;
 
       const { course_code, course_name, credit, semester } = req.body;
       const { id } = req.params;
@@ -97,7 +97,7 @@ module.exports = {
   },
   delete: async (req, res, next) => {
     try {
-      if (req.user.role !== "Admin") throw error.UNAUTHORIZED_ROLE;
+      if (req.user.role !== "ADMIN") throw error.UNAUTHORIZED_ROLE;
 
       const { id } = req.params;
 

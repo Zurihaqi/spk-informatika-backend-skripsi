@@ -65,7 +65,6 @@ module.exports = {
       if (userExist) throw error.EMAIL_EXIST;
 
       const createUserResult = await User.create({
-        role: "User",
         name: name,
         email: email,
         password: req.body.password,

@@ -1,14 +1,14 @@
 "use strict";
 require("dotenv").config();
 const { EMAIL, PASSWORD } = process.env;
-const hash = require("../middlewares/passwordHashing");
+const hash = require("../../middlewares/passwordHashing");
 
 module.exports = {
   async up(queryInterface, Sequelize) {
     const passwordHash = hash(PASSWORD);
     const adminData = [
       {
-        role: "Admin",
+        role: "ADMIN",
         name: "Admin",
         email: EMAIL,
         password: passwordHash,

@@ -6,7 +6,7 @@ const isEmpty = require("../helpers/emptyObjectCheck");
 module.exports = {
   getAll: async (req, res, next) => {
     try {
-      if (req.user.role !== "Admin") throw error.UNAUTHORIZED_ROLE;
+      if (req.user.role !== "ADMIN") throw error.UNAUTHORIZED_ROLE;
 
       let options = { where: {} };
       const { isValid } = req.query;
@@ -18,6 +18,7 @@ module.exports = {
 
       const result = await Token.findAll(options);
       if (isEmpty(result)) throw error.EMPTY_TABLE;
+
       return res.status(200).json({
         status: "Success",
         data: result,
@@ -28,12 +29,16 @@ module.exports = {
   },
   clearToken: async (req, res, next) => {
     try {
-      if (req.user.role !== "Admin") throw error.UNAUTHORIZED_ROLE;
+      if (req.user.role !== "ADMIN") throw error.UNAUTHORIZED_ROLE;
 
       const result = await Token.destroy({
         where: {
-          isValid: false,
-          createdAt: { [Op.lte]: new Date(Date.now() - 60 * 60 * 1000) },
+          [Op.or]: [
+            {
+              isValid: false,
+            },
+            { createdAt: { [Op.lte]: new Date(Date.now() - 60 * 60 * 1000) } },
+          ],
         },
       });
       if (result) {
