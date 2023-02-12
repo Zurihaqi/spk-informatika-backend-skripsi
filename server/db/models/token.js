@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Token.init(
     {
-      token: DataTypes.STRING,
+      token: DataTypes.TEXT,
       isValid: DataTypes.BOOLEAN,
     },
     {

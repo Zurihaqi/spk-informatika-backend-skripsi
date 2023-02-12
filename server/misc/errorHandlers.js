@@ -21,7 +21,7 @@ module.exports = {
   EMPTY_TABLE: new apiError(404, "Not Found", "Tabel kosong."),
   DUPLICATE_DATA: new apiError(
     409,
-    "Error",
+    "Duplicate",
     "Data yang ingin dibuat sudah ada dalam database."
   ),
   DATA_NOT_FOUND: new apiError(
@@ -33,7 +33,7 @@ module.exports = {
   EMPTY_BODY: new apiError(404, "Error", "Masukkan data yang ingin diupdate."),
   FK_NOT_FOUND: new apiError(
     404,
-    "Error",
+    "Not Found",
     "Data FK yang dituju tidak ditemukan"
   ),
   INVALID_GRADE: new apiError(
@@ -50,4 +50,5 @@ module.exports = {
   IN_SESSION: new apiError(400, "Error", "Anda sudah melakukan login"),
   OFF_SESSION: new apiError(400, "Error", "Anda belum melakukan login"),
   INVALID_TOKEN: new apiError(400, "Error", "Token tidak valid"),
+  TOKEN_EXPIRED: new apiError(401, "Unauthorized", "Token expired"),
 };

@@ -1,6 +1,7 @@
 const { Token } = require("../db/models");
 const Op = require("sequelize").Op;
 const error = require("../misc/errorHandlers");
+const isEmpty = require("../helpers/emptyObjectCheck");
 
 module.exports = {
   getAll: async (req, res, next) => {
@@ -16,8 +17,7 @@ module.exports = {
         : options;
 
       const result = await Token.findAll(options);
-
-      if (result[0] === undefined) throw error.EMPTY_TABLE;
+      if (isEmpty(result)) throw error.EMPTY_TABLE;
       return res.status(200).json({
         status: "Success",
         data: result,
@@ -29,6 +29,7 @@ module.exports = {
   clearToken: async (req, res, next) => {
     try {
       if (req.user.role !== "Admin") throw error.UNAUTHORIZED_ROLE;
+
       const result = await Token.destroy({
         where: {
           isValid: false,
@@ -38,7 +39,7 @@ module.exports = {
       if (result) {
         return res.status(200).json({
           status: "Success",
-          message: "Token berhasil dibersihkan",
+          message: "Tabel Token berhasil dibersihkan",
         });
       }
     } catch (err) {

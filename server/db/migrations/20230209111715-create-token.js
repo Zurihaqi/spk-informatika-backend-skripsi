@@ -9,7 +9,7 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       token: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
       },
       isValid: {
         type: Sequelize.BOOLEAN,
@@ -25,6 +25,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("tokens");
+    await queryInterface.dropTable("Tokens");
   },
 };

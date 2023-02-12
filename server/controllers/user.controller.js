@@ -9,7 +9,6 @@ module.exports = {
       const { id } = req.user;
 
       const result = await User.scope("noPassword").findByPk(id, {});
-
       if (!result) throw error.DATA_NOT_FOUND;
 
       return res.status(201).json({
@@ -61,7 +60,6 @@ module.exports = {
       const result = await User.destroy({
         where: { id: id },
       });
-
       if (result) {
         await Token.update({ isValid: false }, { where: { token: token } });
         return res.status(201).json({
@@ -86,7 +84,6 @@ module.exports = {
           individualHooks: true,
         }
       );
-
       if (result) {
         await Token.update({ isValid: false }, { where: { token: token } });
         return res.status(200).json({

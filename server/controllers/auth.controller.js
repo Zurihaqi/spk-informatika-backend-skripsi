@@ -21,7 +21,6 @@ module.exports = {
       }
       const { email } = req.body;
 
-      //Cek apakah email belum terdaftar
       const userExist = await User.findOne({ where: { email: email } });
       if (!userExist) throw error.INVALID_CRED;
 
@@ -53,7 +52,7 @@ module.exports = {
           token: token,
         });
       }
-      throw error.INVALID_CRED; //Password salah
+      throw error.INVALID_CRED;
     } catch (err) {
       next(err);
     }
@@ -62,7 +61,6 @@ module.exports = {
     try {
       const { name, email } = req.body;
 
-      //Cek apakah email sudah terdaftar
       const userExist = await User.findOne({ where: { email: email } });
       if (userExist) throw error.EMAIL_EXIST;
 

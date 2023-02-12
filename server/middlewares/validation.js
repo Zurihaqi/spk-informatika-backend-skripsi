@@ -4,7 +4,8 @@ const validate = (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({
-      errors: errors.array(),
+      status: "Error",
+      message: errors.array()[0].msg,
     });
   }
   return next();
