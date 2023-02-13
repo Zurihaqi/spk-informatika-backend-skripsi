@@ -8,7 +8,7 @@ module.exports = {
       return {
         course_code: e.course_code.replace(/\s/g, ""),
         course_name: e.course_name.trim(),
-        credit: parseInt(e.credit) + e.practicum_credit,
+        credit: parseInt(e.credit + e.practicum_credit),
         semester: e.semester,
         createdAt: new Date(),
         updatedAt: new Date(),

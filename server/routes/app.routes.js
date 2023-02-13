@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const { signIn, signUp, signOut } = require("./auth.routes");
+const authenticate = require("../middlewares/passport");
 const course = require("../routes/course.routes");
 const grade = require("../routes/grade.routes");
 const specialization = require("../routes/specialization.routes");
@@ -7,7 +8,6 @@ const user = require("../routes/user.routes");
 const rule = require("../routes/rule.routes");
 const token = require("../routes/token.routes");
 const errorRoutes = require("./error.routes");
-const authenticate = require("../middlewares/passport");
 
 router.use(signIn);
 router.use(signUp);

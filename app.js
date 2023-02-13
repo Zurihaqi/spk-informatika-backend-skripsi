@@ -1,9 +1,9 @@
 require("dotenv").config();
 const express = require("express");
 const app = express();
+const router = require("./server/routes/app.routes");
 const logger = require("morgan");
 const cors = require("cors");
-const router = require("./server/routes/app.routes");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

@@ -11,7 +11,6 @@ const mediaStorage = multer.diskStorage({
   filename: (req, file, cb) => {
     const fileType = file.mimetype.split("/")[1];
     const fileName = Date.now() + "-" + file.fieldname + `.${fileType}`;
-    //bypass validasi ketika field sudah terisi file
     if (file.fieldname === "profile_pic") req.body.profile_pic = true;
     cb(null, fileName);
   },
@@ -29,9 +28,7 @@ const imageUpload = multer({
       return cb(null, true);
     }
     cb(null, false);
-    return cb(
-      new Error("Invalid image format. Allowed format: png, jpg, jpeg, webp")
-    );
+    return cb(new Error("Format yang diperbolehkan: png, jpg, jpeg, webp"));
   },
   limits: {
     fileSize: 5242880,

@@ -73,7 +73,11 @@ module.exports = {
         return res.status(201).json({
           status: "Success",
           message: "Register sukses",
-          data: { name: createUserResult.name, email: createUserResult.email },
+          data: {
+            id: createUserResult.id,
+            name: createUserResult.name,
+            email: createUserResult.email,
+          },
         });
       }
     } catch (err) {
