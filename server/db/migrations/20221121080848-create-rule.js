@@ -15,7 +15,7 @@ module.exports = {
         type: Sequelize.ARRAY(Sequelize.STRING),
       },
       connection: {
-        type: Sequelize.STRING,
+        type: Sequelize.ENUM("AND", "OR"),
       },
       createdAt: {
         allowNull: false,

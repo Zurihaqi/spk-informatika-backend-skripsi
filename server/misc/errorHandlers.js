@@ -10,19 +10,19 @@ module.exports = {
   UNAUTHORIZED: new apiError(
     401,
     "Unauthorized",
-    "Login untuk menggukanan API."
+    "Login untuk menggukanan API"
   ),
   EMAIL_EXIST: new apiError(
     401,
     "Unauthorized",
-    `User dengan email tersebut sudah terdaftar.`
+    `User dengan email tersebut sudah terdaftar`
   ),
-  INVALID_CRED: new apiError(401, "Unauthorized", "Email atau password salah."),
-  EMPTY_TABLE: new apiError(404, "Not Found", "Tabel kosong."),
+  INVALID_CRED: new apiError(401, "Unauthorized", "Email atau password salah"),
+  EMPTY_TABLE: new apiError(404, "Not Found", "Tabel kosong"),
   DUPLICATE_DATA: new apiError(
     409,
     "Duplicate",
-    "Data yang ingin dibuat sudah ada dalam database."
+    "Data yang ingin dibuat sudah ada dalam database"
   ),
   DATA_NOT_FOUND: new apiError(
     404,
@@ -30,7 +30,7 @@ module.exports = {
     "Data yang dicari tidak ditemukan."
   ),
   DATA_FK: new apiError(401, "Error", "Data masih tersimpan pada tabel lain."),
-  EMPTY_BODY: new apiError(404, "Error", "Masukkan data yang ingin diupdate."),
+  EMPTY_BODY: new apiError(404, "Error", "Masukkan data yang ingin diupdate"),
   FK_NOT_FOUND: new apiError(
     404,
     "Not Found",

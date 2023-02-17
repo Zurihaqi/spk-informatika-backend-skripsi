@@ -20,10 +20,8 @@ module.exports = {
       .withMessage("condition tidak boleh kosong")
       .isAlpha("en-US", { ignore: " " })
       .withMessage("condition adalah string")
-      .isIn(["Sangat rendah", "Rendah", "Sedang", "Tinggi", "Sangat tinggi"])
-      .withMessage(
-        "nilai condition adalah Sangat rendah, Rendah, Sedang, Tinggi, Sangat tinggi"
-      ),
+      .isIn(["Rendah", "Sedang", "Tinggi"])
+      .withMessage("nilai condition adalah Rendah, Sedang, Tinggi"),
     body("conclusion")
       .notEmpty()
       .withMessage("conclusion tidak boleh kosong")
@@ -39,7 +37,7 @@ module.exports = {
       .isAlpha("en-US", { ignore: " " })
       .withMessage("connection adalah string")
       .isIn(["and", "or"])
-      .withMessage("nilai conclusion adalah and, or"),
+      .withMessage("nilai conclusion adalah and atau or"),
     body("spec_id").isNumeric().withMessage("spec_id adalah integer"),
   ],
   update: () => [
@@ -52,10 +50,8 @@ module.exports = {
       .optional()
       .isAlpha("en-US", { ignore: " " })
       .withMessage("condition adalah string")
-      .isIn(["Sangat rendah", "Rendah", "Sedang", "Tinggi", "Sangat tinggi"])
-      .withMessage(
-        "nilai condition adalah Sangat rendah, Rendah Sedang, Tinggi, Sangat tinggi"
-      ),
+      .isIn(["Rendah", "Sedang", "Tinggi"])
+      .withMessage("nilai condition adalah Rendah, Sedang, Tinggi"),
     body("conclusion")
       .optional()
       .isAlpha("en-US", { ignore: " " })
@@ -69,7 +65,7 @@ module.exports = {
       .isAlpha("en-US", { ignore: " " })
       .withMessage("connection adalah string")
       .isIn(["and", "or"])
-      .withMessage("nilai conclusion adalah and, or"),
+      .withMessage("nilai conclusion adalah and atau or"),
     body("spec_id")
       .optional()
       .isNumeric()

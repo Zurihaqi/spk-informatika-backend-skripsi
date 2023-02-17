@@ -1,0 +1,16 @@
+{
+  "folders": [
+	{
+		"path": "."
+	},
+	{
+		"path": "../../MBKM/SI_Binar/FinalProject/be-finalproject-kel7"
+	},
+	{
+		"path": "../../../Projects/fuzzy-master"
+	}
+],
+  "settings": {
+    "javascript.format.enable": true
+  }
+}

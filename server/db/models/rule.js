@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       condition: DataTypes.ARRAY(DataTypes.STRING),
       conclusion: DataTypes.ARRAY(DataTypes.STRING),
-      connection: DataTypes.STRING,
+      connection: DataTypes.ENUM("AND", "OR"),
       user_id: DataTypes.INTEGER,
       spec_id: DataTypes.INTEGER,
     },
