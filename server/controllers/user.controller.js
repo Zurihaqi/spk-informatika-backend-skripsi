@@ -2,6 +2,7 @@ const { User, Token } = require("../db/models/");
 const error = require("../misc/errorHandlers");
 const updater = require("../helpers/updater");
 const isEmpty = require("../helpers/emptyObjectCheck");
+const hash = require("../middlewares/passwordHashing");
 
 module.exports = {
   get: async (req, res, next) => {
@@ -36,9 +37,11 @@ module.exports = {
       }
 
       const incomingUpdate = updater(
-        { normalizedName, email, profile_pic, student_id },
+        { name: normalizedName, email, profile_pic, student_id },
         {}
       );
+
+      console.log(incomingUpdate);
 
       if (isEmpty(incomingUpdate)) throw error.EMPTY_BODY;
 
@@ -66,16 +69,25 @@ module.exports = {
     try {
       const { id, token } = req.user;
 
-      const result = await User.destroy({
-        where: { id: id },
-      });
-      if (result) {
-        await Token.update({ isValid: false }, { where: { token: token } });
-        return res.status(201).json({
-          status: "Success",
-          message: "Berhasil menghapus akun",
+      const userExist = await User.findByPk(req.user.id);
+
+      const passwordField = userExist.password.split("$");
+      const salt = passwordField[0];
+      const validatePassword = hash(req.body.password, salt);
+
+      if (validatePassword === passwordField[1]) {
+        const result = await User.destroy({
+          where: { id: id },
         });
+        if (result) {
+          await Token.update({ isValid: false }, { where: { token: token } });
+          return res.status(201).json({
+            status: "Success",
+            message: "Berhasil menghapus akun",
+          });
+        }
       }
+      throw error.WRONG_PASSWORD;
     } catch (err) {
       next(err);
     }

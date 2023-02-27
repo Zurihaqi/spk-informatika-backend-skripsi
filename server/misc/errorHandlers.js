@@ -17,7 +17,11 @@ module.exports = {
     "Unauthorized",
     `User dengan email tersebut sudah terdaftar`
   ),
-  INVALID_CRED: new apiError(401, "Unauthorized", "Email atau password salah"),
+  INVALID_CRED: new apiError(
+    401,
+    "Unauthorized",
+    "Email atau kata sandi salah"
+  ),
   EMPTY_TABLE: new apiError(404, "Not Found", "Tabel kosong"),
   DUPLICATE_DATA: new apiError(
     409,
@@ -30,17 +34,13 @@ module.exports = {
     "Data yang dicari tidak ditemukan."
   ),
   DATA_FK: new apiError(401, "Error", "Data masih tersimpan pada tabel lain."),
-  EMPTY_BODY: new apiError(404, "Error", "Masukkan data yang ingin diubah"),
+  EMPTY_BODY: new apiError(404, "Error", "Masukan data yang ingin diubah"),
   FK_NOT_FOUND: new apiError(
     404,
     "Not Found",
     "Data FK yang dituju tidak ditemukan"
   ),
-  INVALID_GRADE: new apiError(
-    400,
-    "Error",
-    "Nilai yang dimasukkan tidak valid"
-  ),
+  INVALID_GRADE: new apiError(400, "Error", "Nilai yang dimasukan tidak valid"),
   UNAUTHORIZED_ROLE: new apiError(
     401,
     "Unauthorized",
@@ -66,4 +66,5 @@ module.exports = {
     "Error",
     "Belum ada rule untuk peminatan ini"
   ),
+  WRONG_PASSWORD: new apiError(400, "Error", "Kata sandi salah."),
 };

@@ -15,7 +15,7 @@ router.patch(
   cloudinaryUpload,
   controller.update
 );
-router.delete("/", controller.delete);
+router.post("/delete", validation.delete(), validate, controller.delete);
 router.patch(
   "/update-password",
   validation.updatePassword(),

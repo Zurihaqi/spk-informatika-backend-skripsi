@@ -5,16 +5,16 @@ module.exports = {
     body("name")
       .optional()
       .isAlpha("en-US", { ignore: " " })
-      .withMessage("name adalah string tanpa angka atau simbol"),
+      .withMessage("Nama tidak dapat mengandung angka atau simbol."),
     body("email")
       .optional()
       .normalizeEmail()
       .isEmail()
-      .withMessage("email tidak valid"),
+      .withMessage("Masukan alamat email yang valid."),
     body("student_id")
       .optional()
       .isInt()
-      .withMessage("student_id adalah integer"),
+      .withMessage("Nomor Pokok Mahasiswa hanya dapat mengandung angka."),
   ],
   updatePassword: () => [
     body("password")
@@ -23,4 +23,5 @@ module.exports = {
       .isLength({ min: 6 })
       .withMessage("password harus memiliki minimal 6 huruf"),
   ],
+  delete: () => [body("password").notEmpty().withMessage("masukkan password")],
 };

@@ -78,7 +78,12 @@ module.exports = {
       if (userExist) throw error.EMAIL_EXIST;
 
       const createUserResult = await User.create({
-        name: name,
+        name: name
+          .replace(/\s+/g, " ")
+          .replace(
+            /(^\w|\s\w)(\S*)/g,
+            (_, m1, m2) => m1.toUpperCase() + m2.toLowerCase()
+          ),
         email: email,
         password: req.body.password,
       });

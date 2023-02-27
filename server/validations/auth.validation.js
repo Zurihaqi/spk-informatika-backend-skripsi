@@ -8,14 +8,17 @@ module.exports = {
   signUp: () => [
     body("name")
       .isAlpha("en-US", { ignore: " " })
-      .withMessage("name adalah string tanpa angka atau simbol")
+      .withMessage("Nama tidak dapat mengandung angka atau simbol.")
       .isLength({ min: 3 })
-      .withMessage("name harus memiliki minimal 3 huruf"),
-    body("email").normalizeEmail().isEmail().withMessage("masukkan email"),
+      .withMessage("Nama harus memiliki minimal 3 huruf."),
+    body("email")
+      .normalizeEmail()
+      .isEmail()
+      .withMessage("Masukan alamat email yang valid."),
     body("password")
       .notEmpty()
-      .withMessage("masukkan password")
+      .withMessage("Masukan kata sandi.")
       .isLength({ min: 6 })
-      .withMessage("password harus memiliki minimal 6 huruf"),
+      .withMessage("Kata sandi harus memiliki minimal 6 huruf."),
   ],
 };

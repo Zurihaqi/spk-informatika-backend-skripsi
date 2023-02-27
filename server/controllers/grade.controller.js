@@ -46,7 +46,7 @@ module.exports = {
       const course = await Course.findByPk(course_id);
       if (!course) throw error.FK_NOT_FOUND;
 
-      const graded = grading(lettered_grade, parseInt(course.credit));
+      const graded = grading(lettered_grade, +course.credit);
 
       const duplicate = await Grade.findOne({
         where: { course_id: course_id, user_id: req.user.id },
@@ -94,10 +94,7 @@ module.exports = {
 
       let grades = [];
       if (lettered_grade) {
-        const calculateGrades = grading(
-          lettered_grade,
-          parseInt(course.credit)
-        );
+        const calculateGrades = grading(lettered_grade, +course.credit);
         grades.push(
           calculateGrades.numbered_grade,
           calculateGrades.credit_grade
