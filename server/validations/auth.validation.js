@@ -2,12 +2,7 @@ const { body } = require("express-validator");
 
 module.exports = {
   signIn: () => [
-    body("email")
-      .notEmpty()
-      .withMessage("masukkan email")
-      .normalizeEmail()
-      .isEmail()
-      .withMessage("masukkan email yang valid"),
+    body("email").notEmpty().withMessage("masukkan email/npm"),
     body("password").notEmpty().withMessage("masukkan password"),
   ],
   signUp: () => [

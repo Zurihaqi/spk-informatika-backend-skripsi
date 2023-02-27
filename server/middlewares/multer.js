@@ -4,6 +4,9 @@ const errorHandler = (error, req, res, next) => {
   if (error.code === "LIMIT_FILE_SIZE") {
     throw errors.FILE_SIZE;
   }
+  if (error.code === "LIMIT_UNEXPECTED_FILE") {
+    console.log(error);
+  }
   next(error);
 };
 
@@ -28,7 +31,7 @@ const imageUpload = multer({
       return cb(null, true);
     }
     cb(null, false);
-    return cb(new Error("Format yang diperbolehkan: png, jpg, jpeg, webp"));
+    return cb(errors.INVALID_FORMAT);
   },
   limits: {
     fileSize: 5242880,

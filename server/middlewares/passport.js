@@ -39,6 +39,8 @@ module.exports = authentication = (req, res, next) => {
         req.user.token = token;
       }
 
+      console.log(req.headers.authorization);
+
       if (!user || !validToken || !req.headers.authorization)
         error = errors.UNAUTHORIZED;
       if (error) return next(error);

@@ -8,10 +8,10 @@ const controller = require("../controllers/user.controller");
 router.get("/", controller.get);
 router.patch(
   "/",
-  validation.update(),
-  validate,
   multer.imageUpload.single("profile_pic"),
   multer.errorHandler,
+  validation.update(),
+  validate,
   cloudinaryUpload,
   controller.update
 );

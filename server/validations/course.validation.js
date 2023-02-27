@@ -43,6 +43,10 @@ module.exports = {
       .optional()
       .isNumeric()
       .withMessage("semester adalah integer"),
+    body("spec_id")
+      .optional()
+      .isNumeric()
+      .withMessage("spec_id adalah integer"),
   ],
   delete: () => [
     param("id")

@@ -20,16 +20,16 @@ module.exports = {
       .withMessage("condition tidak boleh kosong")
       .isAlpha("en-US", { ignore: " " })
       .withMessage("condition adalah string")
-      .isIn(["Rendah", "Sedang", "Tinggi"])
-      .withMessage("nilai condition adalah Rendah, Sedang, Tinggi"),
+      .isIn(["rendah", "sedang", "tinggi"])
+      .withMessage("nilai condition adalah rendah, sedang, tinggi"),
     body("conclusion")
       .notEmpty()
       .withMessage("conclusion tidak boleh kosong")
       .isAlpha("en-US", { ignore: " " })
       .withMessage("condition adalah string")
-      .isIn(["Direkomendasikan", "Tidak direkomendasikan"])
+      .isIn(["tidak-disarankan", "disarankan", "sangat-disarankan"])
       .withMessage(
-        "nilai conclusion adalah Direkomendasikan, Tidak direkomendasikan"
+        "nilai conclusion adalah tidak-disarankan, disarankan, sangat-disarankan"
       ),
     body("connection")
       .notEmpty()
@@ -50,15 +50,15 @@ module.exports = {
       .optional()
       .isAlpha("en-US", { ignore: " " })
       .withMessage("condition adalah string")
-      .isIn(["Rendah", "Sedang", "Tinggi"])
-      .withMessage("nilai condition adalah Rendah, Sedang, Tinggi"),
+      .isIn(["rendah", "sedang", "tinggi"])
+      .withMessage("nilai condition adalah rendah, sedang, tinggi"),
     body("conclusion")
       .optional()
       .isAlpha("en-US", { ignore: " " })
       .withMessage("condition adalah string")
-      .isIn(["Direkomendasikan", "Tidak direkomendasikan"])
+      .isIn(["tidak-disarankan", "disarankan", "sangat-disarankan"])
       .withMessage(
-        "nilai conclusion adalah Direkomendasikan, Tidak direkomendasikan"
+        "nilai conclusion adalah tidak-disarankan, disarankan, sangat-disarankan"
       ),
     body("connection")
       .optional()

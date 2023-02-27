@@ -10,6 +10,7 @@ module.exports = {
         course_name: e.course_name.trim(),
         credit: parseInt(e.credit + e.practicum_credit),
         semester: e.semester,
+        spec_id: e.spec_id,
         createdAt: new Date(),
         updatedAt: new Date(),
       };

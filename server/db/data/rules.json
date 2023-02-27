@@ -1,5 +1,140 @@
 [
   {
-    "condition": "a"
+    "condition": ["rendah", "rendah", "rendah"],
+    "conclusion": ["tidak-disarankan"],
+    "connection": "and",
+    "spec_id": 3
+  },
+  {
+    "condition": ["sedang", "rendah", "rendah"],
+    "conclusion": ["tidak-disarankan"],
+    "connection": "and",
+    "spec_id": 3
+  },
+  {
+    "condition": ["sedang", "rendah", "rendah"],
+    "conclusion": ["tidak-disarankan"],
+    "connection": "and",
+    "spec_id": 3
+  },
+  {
+    "condition": ["tinggi", "rendah", "rendah"],
+    "conclusion": ["disarankan"],
+    "connection": "and",
+    "spec_id": 3
+  },
+  {
+    "condition": ["rendah", "sedang", "rendah"],
+    "conclusion": ["tidak-disarankan"],
+    "connection": "and",
+    "spec_id": 3
+  },
+  {
+    "condition": ["rendah", "tinggi", "rendah"],
+    "conclusion": ["disarankan"],
+    "connection": "and",
+    "spec_id": 3
+  },
+  {
+    "condition": ["rendah", "rendah", "sedang"],
+    "conclusion": ["tidak-disarankan"],
+    "connection": "and",
+    "spec_id": 3
+  },
+  {
+    "condition": ["rendah", "rendah", "tinggi"],
+    "conclusion": ["disarankan"],
+    "connection": "and",
+    "spec_id": 3
+  },
+  {
+    "condition": ["sedang", "sedang", "sedang"],
+    "conclusion": ["disarankan"],
+    "connection": "and",
+    "spec_id": 3
+  },
+  {
+    "condition": ["tinggi", "sedang", "sedang"],
+    "conclusion": ["disarankan"],
+    "connection": "and",
+    "spec_id": 3
+  },
+  {
+    "condition": ["sedang", "tinggi", "sedang"],
+    "conclusion": ["disarankan"],
+    "connection": "and",
+    "spec_id": 3
+  },
+  {
+    "condition": ["sedang", "sedang", "tinggi"],
+    "conclusion": ["disarankan"],
+    "connection": "and",
+    "spec_id": 3
+  },
+  {
+    "condition": ["tinggi", "tinggi", "tinggi"],
+    "conclusion": ["disarankan"],
+    "connection": "and",
+    "spec_id": 3
+  },
+  {
+    "condition": ["rendah", "tinggi", "rendah", null, null, null],
+    "conclusion": ["tidak-disarankan"],
+    "connection": "or",
+    "spec_id": 2
+  },
+  {
+    "condition": ["sedang", "sedang", "sedang", "rendah", "rendah", "tinggi"],
+    "conclusion": ["tidak-disarankan"],
+    "connection": "and",
+    "spec_id": 2
+  },
+  {
+    "condition": ["tinggi", "rendah", "tinggi", "tinggi", "rendah"],
+    "conclusion": ["disarankan"],
+    "connection": "and",
+    "spec_id": 2
+  },
+  {
+    "condition": ["tinggi", "tinggi", "rendah", "sedang", "tinggi", "rendah"],
+    "conclusion": ["disarankan"],
+    "connection": "and",
+    "spec_id": 2
+  },
+  {
+    "condition": ["rendah", "rendah", "rendah", "tinggi", "tinggi", "rendah"],
+    "conclusion": ["disarankan"],
+    "connection": "and",
+    "spec_id": 2
+  },
+  {
+    "condition": ["rendah", "tinggi", "rendah", null, null, null],
+    "conclusion": ["tidak-disarankan"],
+    "connection": "or",
+    "spec_id": 1
+  },
+  {
+    "condition": ["sedang", "sedang", "sedang", "rendah", "rendah", "tinggi"],
+    "conclusion": ["tidak-disarankan"],
+    "connection": "and",
+    "spec_id": 1
+  },
+  {
+    "condition": ["tinggi", "rendah", "tinggi", "tinggi", "rendah"],
+    "conclusion": ["disarankan"],
+    "connection": "and",
+    "spec_id": 1
+  },
+  {
+    "condition": ["tinggi", "tinggi", "rendah", "sedang", "tinggi", "rendah"],
+    "conclusion": ["disarankan"],
+    "connection": "and",
+    "spec_id": 1
+  },
+  {
+    "condition": ["rendah", "rendah", "rendah", "tinggi", "tinggi", "rendah"],
+    "conclusion": ["disarankan"],
+    "connection": "and",
+    "spec_id": 1
   }
 ]

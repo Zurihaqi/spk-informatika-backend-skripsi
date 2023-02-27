@@ -63,14 +63,14 @@ module.exports = {
     try {
       if (req.user.role !== "ADMIN") throw error.UNAUTHORIZED_ROLE;
 
-      const { course_code, course_name, credit, semester } = req.body;
+      const { course_code, course_name, credit, semester, spec_id } = req.body;
       const { id } = req.params;
 
       const dataExist = await Course.findByPk(id);
       if (!dataExist) throw error.DATA_NOT_FOUND;
 
       const incomingUpdate = updater(
-        { course_code, course_name, credit, semester },
+        { course_code, course_name, credit, semester, spec_id },
         {}
       );
       if (isEmpty(incomingUpdate)) throw error.EMPTY_BODY;

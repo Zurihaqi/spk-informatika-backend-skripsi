@@ -1,13 +1,17 @@
 const fuzzyis = require("fuzzyis");
 const { LinguisticVariable, Term, Rule, FIS } = fuzzyis;
 
-const system = new FIS("Fan Speed System");
+const system = new FIS("Sistem Pendukung Keputusan");
 
-const [matkul1, matkul2, matkul3] = [
-  new LinguisticVariable("matkul1", [0, 4]),
-  new LinguisticVariable("matkul2", [0, 4]),
-  new LinguisticVariable("matkul3", [0, 4]),
-];
+let matkul = [];
+const validCourses = courses.filter((e) => {
+  return e.semester < 6;
+});
+
+validCourses.forEach((validCourses) => {
+  matkul.push(new LinguisticVariable(validCourses.course_name, [0, 4]));
+});
+
 const peminatan = new LinguisticVariable("peminatan", [0, 1]);
 
 const inputTerms = [
@@ -18,24 +22,23 @@ const inputTerms = [
 
 const outputTerms = [
   new Term("tidak-disarankan", "triangle", [0, 0, 0.3]),
-  new Term("disarankan", "triangle", [0, 0.3, 0.7]),
-  new Term("sangat-disarankan", "triangle", [0.3, 0.7, 1]),
+  new Term("disarankan", "triangle", [0.3, 0.7, 1]),
 ];
 
-system.addInput(matkul1);
-system.addInput(matkul2);
-system.addInput(matkul3);
-system.addOutput(peminatan);
-
-inputTerms.forEach((e) => {
-  matkul1.addTerm(e);
-  matkul2.addTerm(e);
-  matkul3.addTerm(e);
-});
+for (let j = 0; j < matkul.length; j++) {
+  inputTerms.forEach((terms) => {
+    matkul[j].addTerm(terms);
+  });
+  system.addInput(matkul[j]);
+}
 
 outputTerms.forEach((e) => {
   peminatan.addTerm(e);
 });
+
+system.addOutput(peminatan);
+
+console.log(system);
 
 // system.rules = [
 //   new Rule(["sedang", null, "rendah"], ["tidak-disarankan"], "and"),
@@ -50,4 +53,4 @@ outputTerms.forEach((e) => {
 
 // console.log("Persentase rekomendasi: " + result + "%");
 
-module.exports = system;
+module.exports = { system, matkul };

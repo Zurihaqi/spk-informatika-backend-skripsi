@@ -2,7 +2,10 @@ const { body } = require("express-validator");
 
 module.exports = {
   update: () => [
-    body("name").optional().isString().withMessage("name adalah string"),
+    body("name")
+      .optional()
+      .isAlpha("en-US", { ignore: " " })
+      .withMessage("name adalah string tanpa angka atau simbol"),
     body("email")
       .optional()
       .normalizeEmail()
@@ -10,7 +13,7 @@ module.exports = {
       .withMessage("email tidak valid"),
     body("student_id")
       .optional()
-      .isNumeric()
+      .isInt()
       .withMessage("student_id adalah integer"),
   ],
   updatePassword: () => [

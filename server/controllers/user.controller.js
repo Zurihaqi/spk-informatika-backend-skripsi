@@ -24,8 +24,19 @@ module.exports = {
       const { name, email, profile_pic, student_id } = req.body;
       const { id } = req.user;
 
+      let normalizedName;
+
+      if (name) {
+        normalizedName = name
+          .replace(/\s+/g, " ")
+          .replace(
+            /(^\w|\s\w)(\S*)/g,
+            (_, m1, m2) => m1.toUpperCase() + m2.toLowerCase()
+          );
+      }
+
       const incomingUpdate = updater(
-        { name, email, profile_pic, student_id },
+        { normalizedName, email, profile_pic, student_id },
         {}
       );
 
@@ -42,8 +53,6 @@ module.exports = {
         }
       );
       if (result) {
-        result[1].password = undefined;
-        delete result[1].password;
         return res.status(201).json({
           status: "Success",
           data: result[1],
@@ -86,7 +95,7 @@ module.exports = {
       );
       if (result) {
         await Token.update({ isValid: false }, { where: { token: token } });
-        return res.status(200).json({
+        return res.status(201).json({
           status: "Success",
           message: "Berhasil merubah password lakukan login ulang",
         });

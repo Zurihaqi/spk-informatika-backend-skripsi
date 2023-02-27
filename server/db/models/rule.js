@@ -8,9 +8,6 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Rule.belongsTo(models.User, {
-        foreignKey: "user_id",
-      });
       Rule.belongsTo(models.Specialization, {
         foreignKey: "spec_id",
       });
@@ -20,8 +17,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       condition: DataTypes.ARRAY(DataTypes.STRING),
       conclusion: DataTypes.ARRAY(DataTypes.STRING),
-      connection: DataTypes.ENUM("AND", "OR"),
-      user_id: DataTypes.INTEGER,
+      connection: DataTypes.ENUM("and", "or"),
       spec_id: DataTypes.INTEGER,
     },
     {

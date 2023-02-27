@@ -21,7 +21,20 @@ module.exports = {
       }
       const { email } = req.body;
 
-      const userExist = await User.findOne({ where: { email: email } });
+      const validateEmail = (email) => {
+        var re = /\S+@\S+\.\S+/;
+        return re.test(email);
+      };
+
+      const isEmail = validateEmail(email);
+
+      let options = {};
+
+      isEmail
+        ? (options = { where: { email: email } })
+        : (options = { where: { student_id: email } });
+
+      const userExist = await User.findOne(options);
       if (!userExist) throw error.INVALID_CRED;
 
       const passwordField = userExist.password.split("$");
@@ -86,8 +99,8 @@ module.exports = {
   },
   signOut: async (req, res, next) => {
     try {
-      if (req.user) {
-        const token = req.user.token;
+      if (req.headers.authorization) {
+        const token = req.headers.authorization.match(/^Bearer (.*)$/)[1];
         if (token) {
           const invalidateToken = await Token.update(
             {

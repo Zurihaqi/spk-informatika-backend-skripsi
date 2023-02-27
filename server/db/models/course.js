@@ -8,7 +8,9 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Course.belongsTo(models.Specialization, {
+        foreignKey: "spec_id",
+      });
     }
   }
   Course.init(
@@ -17,6 +19,7 @@ module.exports = (sequelize, DataTypes) => {
       course_name: DataTypes.STRING,
       credit: DataTypes.INTEGER, //SKS
       semester: DataTypes.INTEGER,
+      spec_id: DataTypes.INTEGER,
     },
     {
       sequelize,

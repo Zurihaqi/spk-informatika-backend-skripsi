@@ -7,6 +7,7 @@ const specialization = require("../routes/specialization.routes");
 const user = require("../routes/user.routes");
 const rule = require("../routes/rule.routes");
 const token = require("../routes/token.routes");
+const fis = require("../routes/fis.routes");
 const errorRoutes = require("./error.routes");
 
 router.use(signIn);
@@ -20,6 +21,7 @@ router.use("/grade", grade);
 router.use("/specialization", specialization);
 router.use("/rule", rule);
 router.use("/token", token);
+router.use("/fis", fis);
 
 // error handlers
 router.use((error, req, res, next) => errorRoutes(error, req, res, next));

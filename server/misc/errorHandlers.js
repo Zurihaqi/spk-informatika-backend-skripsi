@@ -30,7 +30,7 @@ module.exports = {
     "Data yang dicari tidak ditemukan."
   ),
   DATA_FK: new apiError(401, "Error", "Data masih tersimpan pada tabel lain."),
-  EMPTY_BODY: new apiError(404, "Error", "Masukkan data yang ingin diupdate"),
+  EMPTY_BODY: new apiError(404, "Error", "Masukkan data yang ingin diubah"),
   FK_NOT_FOUND: new apiError(
     404,
     "Not Found",
@@ -51,4 +51,19 @@ module.exports = {
   OFF_SESSION: new apiError(400, "Error", "Anda belum melakukan login"),
   INVALID_TOKEN: new apiError(400, "Error", "Token tidak valid"),
   TOKEN_EXPIRED: new apiError(401, "Unauthorized", "Token expired"),
+  INVALID_FORMAT: new apiError(
+    400,
+    "Error",
+    "Format yang diperbolehkan: png, jpg, jpeg, webp"
+  ),
+  GRADE_NOT_FOUND: new apiError(
+    400,
+    "Error",
+    "Nilai tidak lengkap untuk menghitung rekomendasi peminatan"
+  ),
+  RULE_NOT_FOUND: new apiError(
+    400,
+    "Error",
+    "Belum ada rule untuk peminatan ini"
+  ),
 };

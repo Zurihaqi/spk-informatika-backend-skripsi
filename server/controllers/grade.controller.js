@@ -79,11 +79,11 @@ module.exports = {
         where: { user_id: req.user.id },
       });
 
-      const gradeExist = findGrade.find((o) => o.id == id);
+      const gradeExist = findGrade.find((o) => o.id === id);
       if (!gradeExist) throw error.DATA_NOT_FOUND;
 
       if (course_id) {
-        const courseExist = findGrade.find((o) => o.course_id == course_id);
+        const courseExist = findGrade.find((o) => o.course_id === course_id);
         if (courseExist) throw error.DUPLICATE_DATA;
       }
 
