@@ -51,7 +51,7 @@
   {
     "course_code": "INFO-1108",
     "course_name": "Aljabar Linear",
-    "credit": "3",
+    "credit": 3,
     "practicum_credit": 0,
     "semester": 1
   },

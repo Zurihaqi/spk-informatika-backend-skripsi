@@ -96,22 +96,31 @@ module.exports = {
     try {
       const { id, token } = req.user;
 
-      const result = await User.update(
-        {
-          password: req.body.password,
-        },
-        {
-          where: { id: id },
-          individualHooks: true,
+      const userExist = await User.findByPk(req.user.id);
+
+      const passwordField = userExist.password.split("$");
+      const salt = passwordField[0];
+      const validatePassword = hash(req.body.oldPassword, salt);
+
+      if (validatePassword === passwordField[1]) {
+        const result = await User.update(
+          {
+            password: req.body.password,
+          },
+          {
+            where: { id: id },
+            individualHooks: true,
+          }
+        );
+        if (result) {
+          await Token.update({ isValid: false }, { where: { token: token } });
+          return res.status(201).json({
+            status: "Success",
+            message: "Berhasil merubah password lakukan login ulang",
+          });
         }
-      );
-      if (result) {
-        await Token.update({ isValid: false }, { where: { token: token } });
-        return res.status(201).json({
-          status: "Success",
-          message: "Berhasil merubah password lakukan login ulang",
-        });
       }
+      throw error.WRONG_PASSWORD;
     } catch (err) {
       next(err);
     }
