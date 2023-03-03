@@ -43,6 +43,8 @@ module.exports = {
   },
   create: async (req, res, next) => {
     try {
+      if (req.user.role !== "ADMIN") throw error.UNAUTHORIZED_ROLE;
+
       const { condition, conclusion, connection, spec_id } = req.body;
 
       const specExist = Specialization.findByPk(spec_id);
@@ -76,6 +78,8 @@ module.exports = {
   },
   update: async (req, res, next) => {
     try {
+      if (req.user.role !== "ADMIN") throw error.UNAUTHORIZED_ROLE;
+
       const { condition, conclusion, connection, spec_id } = req.body;
       const { id } = req.params;
 
@@ -123,6 +127,8 @@ module.exports = {
   },
   delete: async (req, res, next) => {
     try {
+      if (req.user.role !== "ADMIN") throw error.UNAUTHORIZED_ROLE;
+
       const { id } = req.params;
 
       const result = await Rule.destroy({
