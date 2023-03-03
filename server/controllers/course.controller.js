@@ -7,7 +7,7 @@ module.exports = {
   getAll: async (req, res, next) => {
     try {
       const result = await Course.findAll();
-      if (result[0] === undefined) throw error.EMPTY_TABLE;
+      // if (isEmpty(result)) throw error.EMPTY_TABLE;
 
       return res.status(201).json({
         status: "Success",

@@ -17,7 +17,7 @@ module.exports = {
         : options;
 
       const result = await Token.findAll(options);
-      if (isEmpty(result)) throw error.EMPTY_TABLE;
+      // if (isEmpty(result)) throw error.EMPTY_TABLE;
 
       return res.status(200).json({
         status: "Success",

@@ -11,7 +11,7 @@ module.exports = {
         where: { user_id: req.user.id },
         include: { model: Course },
       });
-      if (isEmpty(result)) throw error.EMPTY_TABLE;
+      // if (isEmpty(result)) throw error.EMPTY_TABLE;
 
       return res.status(201).json({
         status: "Success",

@@ -7,7 +7,7 @@ module.exports = {
     try {
       const result = await Specialization.findAll();
 
-      if (isEmpty(result)) throw error.EMPTY_TABLE;
+      // if (isEmpty(result)) throw error.EMPTY_TABLE;
 
       return res.status(201).json({
         status: "Success",

@@ -15,7 +15,7 @@ module.exports = {
       if (spec_id) options.where.spec_id = spec_id;
 
       const result = await Rule.findAll(options);
-      if (isEmpty(result)) throw error.EMPTY_TABLE;
+      // if (isEmpty(result)) throw error.EMPTY_TABLE;
       return res.status(201).json({
         status: "Success",
         data: result,
