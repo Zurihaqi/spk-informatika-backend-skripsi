@@ -77,13 +77,14 @@ module.exports = {
 
       const findGrade = await Grade.findAll({
         where: { user_id: req.user.id },
+        raw: true,
       });
 
-      const gradeExist = findGrade.find((o) => o.id === id);
-      if (!gradeExist) throw error.DATA_NOT_FOUND;
+      const gradeExist = findGrade.find((e) => +e.id === +id);
+      if (isEmpty(gradeExist)) throw error.DATA_NOT_FOUND;
 
       if (course_id) {
-        const courseExist = findGrade.find((o) => o.course_id === course_id);
+        const courseExist = findGrade.find((o) => +o.course_id === +course_id);
         if (courseExist) throw error.DUPLICATE_DATA;
       }
 
