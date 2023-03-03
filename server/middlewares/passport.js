@@ -39,8 +39,8 @@ module.exports = authentication = (req, res, next) => {
         req.user.token = token;
       }
 
-      console.log(req.headers.authorization);
-
+      if (new Date() - validToken.createdAt > 60 * 60 * 1000)
+        error = errors.TOKEN_EXPIRED;
       if (!user || !validToken || !req.headers.authorization)
         error = errors.UNAUTHORIZED;
       if (error) return next(error);

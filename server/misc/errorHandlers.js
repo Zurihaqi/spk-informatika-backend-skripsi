@@ -50,7 +50,11 @@ module.exports = {
   IN_SESSION: new apiError(400, "Error", "Anda sudah melakukan login"),
   OFF_SESSION: new apiError(400, "Error", "Anda belum melakukan login"),
   INVALID_TOKEN: new apiError(400, "Error", "Token tidak valid"),
-  TOKEN_EXPIRED: new apiError(401, "Unauthorized", "Token expired"),
+  TOKEN_EXPIRED: new apiError(
+    401,
+    "Unauthorized",
+    "Sesi sudah habis. Lakukan login ulang."
+  ),
   INVALID_FORMAT: new apiError(
     400,
     "Error",

@@ -18,9 +18,11 @@ module.exports = {
       .isAlphanumeric("en-US", { ignore: " " })
       .withMessage("course_name adalah string")
       .isLength({ min: 3 })
-      .withMessage("course_name harus memiliki minimal 3 huruf"),
-    body("credit").isNumeric().withMessage("credit adalah integer"),
-    body("semester").isNumeric().withMessage("semester adalah integer"),
+      .withMessage("Nama mata kuliah harus memiliki minimal 3 huruf."),
+    body("credit").isNumeric().withMessage("SKS hanya boleh mengandung angka."),
+    body("semester")
+      .isNumeric()
+      .withMessage("Semester hanya boleh mengandung angka."),
   ],
   update: () => [
     param("id")
