@@ -106,7 +106,7 @@ module.exports = {
     try {
       if (req.headers.authorization) {
         const token = req.headers.authorization.match(/^Bearer (.*)$/)[1];
-        if (token) {
+        if (token === req.user.token) {
           const invalidateToken = await Token.update(
             {
               isValid: false,
