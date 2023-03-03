@@ -41,8 +41,6 @@ module.exports = {
         {}
       );
 
-      console.log(incomingUpdate);
-
       if (isEmpty(incomingUpdate)) throw error.EMPTY_BODY;
 
       const result = await User.update(
