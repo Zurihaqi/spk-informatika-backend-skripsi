@@ -1,8 +1,10 @@
 const { User, Token, Grade } = require("../db/models/");
+const { WEBHOOK_URL } = process.env;
 const error = require("../misc/errorHandlers");
 const updater = require("../helpers/updater");
 const isEmpty = require("../helpers/emptyObjectCheck");
 const hash = require("../middlewares/passwordHashing");
+const webhook = require("webhook-discord");
 
 module.exports = {
   get: async (req, res, next) => {
@@ -122,6 +124,29 @@ module.exports = {
         }
       }
       throw error.WRONG_PASSWORD;
+    } catch (err) {
+      next(err);
+    }
+  },
+  sendMessage: async (req, res, next) => {
+    try {
+      const { title, message } = req.body;
+      const Hook = new webhook.Webhook(WEBHOOK_URL);
+      const msg = new webhook.MessageBuilder()
+        .setDescription(`${message}`)
+        .setTitle(`${title}`)
+        .setName("Kang Kritik")
+        .setColor("#c73230")
+        .setAuthor(`${req.user.name}`)
+        .setThumbnail(`${req.user.profile_pic}`);
+
+      const result = Hook.send(msg);
+      if (result) {
+        return res.status(201).json({
+          status: "Success",
+          message: "Pesan terkirim",
+        });
+      }
     } catch (err) {
       next(err);
     }

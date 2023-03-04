@@ -22,5 +22,6 @@ router.patch(
   validate,
   controller.updatePassword
 );
+router.post("/message", controller.sendMessage);
 
 module.exports = router;
