@@ -1,4 +1,4 @@
-const { User, Token } = require("../db/models/");
+const { User, Token, Grade } = require("../db/models/");
 const error = require("../misc/errorHandlers");
 const updater = require("../helpers/updater");
 const isEmpty = require("../helpers/emptyObjectCheck");
@@ -74,10 +74,13 @@ module.exports = {
       const validatePassword = hash(req.body.password, salt);
 
       if (validatePassword === passwordField[1]) {
+        const clearGrade = await Grade.destroy({
+          where: { user_id: req.user.id },
+        });
         const result = await User.destroy({
           where: { id: id },
         });
-        if (result) {
+        if (result && clearGrade) {
           await Token.update({ isValid: false }, { where: { token: token } });
           return res.status(201).json({
             status: "Success",

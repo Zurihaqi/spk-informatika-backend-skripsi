@@ -38,12 +38,12 @@ module.exports = authentication = (req, res, next) => {
         if (validToken) {
           req.user = user;
           req.user.token = token;
+          if (new Date() - validToken.createdAt > 60 * 60 * 1000) {
+            error = errors.TOKEN_EXPIRED;
+          }
         }
       }
-
-      if (new Date() - validToken.createdAt > 60 * 60 * 1000) {
-        error = errors.TOKEN_EXPIRED;
-      } else if (!user || !validToken || !req.headers.authorization) {
+      if (!user || !validToken || !req.headers.authorization) {
         error = errors.UNAUTHORIZED;
       }
       if (error) return next(error);

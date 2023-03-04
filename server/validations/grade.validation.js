@@ -13,9 +13,7 @@ module.exports = {
       .notEmpty()
       .withMessage("lettered_grade tidak boleh kosong")
       .isIn(["E", "D", "C-", "C", "C+", "B-", "B", "B+", "A-", "A"])
-      .withMessage(
-        "nilai lettered_grade adalah E, D, C-, C, C+, B-, B, B+, A-, A"
-      ),
+      .withMessage("Masukan nilai yang valid."),
     body("course_id")
       .notEmpty()
       .withMessage("course_id tidak boleh kosong")
@@ -31,9 +29,7 @@ module.exports = {
     body("lettered_grade")
       .optional()
       .isIn(["E", "D", "C-", "C", "C+", "B-", "B", "B+", "A-", "A"])
-      .withMessage(
-        "nilai lettered_grade adalah E, D, C-, C, C+, B-, B, B+, A-, A"
-      ),
+      .withMessage("Masukan nilai yang valid."),
     body("course_id")
       .optional()
       .isNumeric()
