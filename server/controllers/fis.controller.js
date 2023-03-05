@@ -29,11 +29,17 @@ module.exports = {
       //Membuat variabel masukan linguistik berdasarkan nama matkul
       courses.forEach((e) => {
         e.spec_id === 1
-          ? softDevCourses.push(new LinguisticVariable(e.course_name, [0, 4]))
+          ? softDevCourses.push(
+              new LinguisticVariable(e.course_name, [0.0, 4.0])
+            )
           : e.spec_id === 2
-          ? dataSciCourses.push(new LinguisticVariable(e.course_name, [0, 4]))
+          ? dataSciCourses.push(
+              new LinguisticVariable(e.course_name, [0.0, 4.0])
+            )
           : e.spec_id === 3
-          ? networkCourses.push(new LinguisticVariable(e.course_name, [0, 4]))
+          ? networkCourses.push(
+              new LinguisticVariable(e.course_name, [0.0, 4.0])
+            )
           : false;
       });
 
@@ -42,15 +48,15 @@ module.exports = {
 
       //Himpunan fuzzy untuk variabel masukan
       const inputTerms = [
-        new Term("rendah", "triangle", [0, 0, 2.0]),
-        new Term("sedang", "triangle", [2.0, 2.75, 3.5]),
-        new Term("tinggi", "triangle", [3.5, 4.0, 4.0]),
+        new Term("rendah", "triangle", [0.0, 0.0, 2.0]),
+        new Term("sedang", "triangle", [0.0, 2.0, 4.0]),
+        new Term("tinggi", "triangle", [2.0, 4.0, 4.0]),
       ];
 
       //Himpunan fuzzy untuk variabel keluaran
       const outputTerms = [
-        new Term("tidak-disarankan", "triangle", [0, 0, 0.3]),
-        new Term("disarankan", "triangle", [0.3, 0.7, 1]),
+        new Term("tidak-disarankan", "triangle", [0, 0, 0.5]),
+        new Term("disarankan", "triangle", [0.5, 1, 1]),
       ];
 
       outputTerms.forEach((e) => {
@@ -164,12 +170,17 @@ module.exports = {
 
         if (networkingGrades.length !== networkCourses.length)
           throw error.GRADE_NOT_FOUND;
-        result.networking = +networking
-          .getPreciseOutput(networkingGrades)[0]
-          .toFixed(2);
+        result.networking =
+          +networking.getPreciseOutput(networkingGrades)[0].toFixed(2) / 2;
       }
 
       if (result) {
+        if (
+          result.software_development === 0 ||
+          result.data_science === 0 ||
+          result.networking === 0
+        )
+          throw error.FIS_ERROR;
         if (
           result.software_development &&
           result.data_science &&
@@ -180,14 +191,17 @@ module.exports = {
             result.data_science +
             result.networking;
 
-          result.softDevPercentage =
-            Math.round((result.software_development / sum) * 100) + "%";
-          result.dataSciPercentage =
-            Math.round((result.data_science / sum) * 100) + "%";
-          result.networkingPercentage =
-            Math.round((result.networking / sum) * 100) + "%";
+          result.softDevPercentage = Math.round(
+            (result.software_development / sum) * 100
+          );
+          result.dataSciPercentage = Math.round(
+            (result.data_science / sum) * 100
+          );
+          result.networkingPercentage = Math.round(
+            (result.networking / sum) * 100
+          );
         }
-        return res.status(200).json({
+        return res.status(201).json({
           status: "Success",
           result: result,
         });

@@ -6,15 +6,7 @@ const isEmpty = require("../helpers/emptyObjectCheck");
 module.exports = {
   getAll: async (req, res, next) => {
     try {
-      const { spec_id } = req.query;
-      let options = {
-        where: {
-          user_id: req.user.id,
-        },
-      };
-      if (spec_id) options.where.spec_id = spec_id;
-
-      const result = await Rule.findAll(options);
+      const result = await Rule.findAll();
       // if (isEmpty(result)) throw error.EMPTY_TABLE;
       return res.status(201).json({
         status: "Success",
@@ -29,7 +21,7 @@ module.exports = {
       const { id } = req.params;
 
       const result = await Rule.findOne({
-        where: { id: id, user_id: req.user.id },
+        where: { id: id },
       });
 
       if (!result) throw error.DATA_NOT_FOUND;
@@ -54,7 +46,6 @@ module.exports = {
         where: {
           condition: condition,
           conclusion: conclusion,
-          user_id: req.user.id,
         },
       });
       if (duplicate) throw error.DUPLICATE_DATA;
@@ -63,7 +54,6 @@ module.exports = {
         condition: [condition],
         conclusion: [conclusion],
         connection: connection,
-        user_id: req.user.id,
         spec_id: spec_id,
       });
       if (result) {
@@ -89,7 +79,7 @@ module.exports = {
       }
 
       const dataExist = await Rule.findOne({
-        where: { id: id, user_id: req.user.id },
+        where: { id: id },
       });
       if (!dataExist) throw error.DATA_NOT_FOUND;
 
@@ -132,7 +122,7 @@ module.exports = {
       const { id } = req.params;
 
       const result = await Rule.destroy({
-        where: { id: id, user_id: req.user.id },
+        where: { id: id },
       });
       if (!result) throw error.DATA_NOT_FOUND;
 

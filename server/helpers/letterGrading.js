@@ -15,13 +15,13 @@ module.exports = letterGrading = (grade, credit) => {
     case grade == "C+":
       return { credit_grade: credit * (2.3).toFixed(2), numbered_grade: 2.3 };
     case grade == "C":
-      return { credit_grade: credit * (2.0).toFixed(2), numbered_grade: 2.0 };
+      return { credit_grade: credit * (1.9).toFixed(2), numbered_grade: 1.9 };
     case grade == "C-":
       return { credit_grade: credit * (1.7).toFixed(2), numbered_grade: 1.7 };
     case grade == "D":
       return { credit_grade: credit * (1.0).toFixed(2), numbered_grade: 1.0 };
     case grade == "E":
-      return { credit_grade: 0, numbered_grade: 0 };
+      return { credit_grade: 0.1, numbered_grade: 0.1 };
     default:
       throw error.INVALID_GRADE;
   }

@@ -76,13 +76,13 @@ module.exports = {
       const validatePassword = hash(req.body.password, salt);
 
       if (validatePassword === passwordField[1]) {
-        const clearGrade = await Grade.destroy({
+        await Grade.destroy({
           where: { user_id: req.user.id },
         });
         const result = await User.destroy({
           where: { id: id },
         });
-        if (result && clearGrade) {
+        if (result) {
           await Token.update({ isValid: false }, { where: { token: token } });
           return res.status(201).json({
             status: "Success",
@@ -137,8 +137,19 @@ module.exports = {
         .setTitle(`${title}`)
         .setName("Kang Kritik")
         .setColor("#c73230")
-        .setAuthor(`${req.user.name}`)
-        .setThumbnail(`${req.user.profile_pic}`);
+        .setName(`${req.user.name}`)
+        .setThumbnail(
+          "https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Warning.svg/1200px-Warning.svg.png"
+        )
+        .setAuthor(`${req.user.email}`);
+
+      if (!req.user.profile_pic) {
+        msg.setAvatar(
+          "https://media.istockphoto.com/id/1327592506/vector/default-avatar-photo-placeholder-icon-grey-profile-picture-business-man.jpg?s=612x612&w=0&k=20&c=BpR0FVaEa5F24GIw7K8nMWiiGmbb8qmhfkpXcp1dhQg="
+        );
+      } else {
+        msg.setAvatar(`${req.user.profile_pic}`);
+      }
 
       const result = Hook.send(msg);
       if (result) {

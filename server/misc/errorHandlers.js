@@ -63,7 +63,7 @@ module.exports = {
   GRADE_NOT_FOUND: new apiError(
     400,
     "Error",
-    "Nilai tidak lengkap untuk menghitung rekomendasi peminatan"
+    "Harap masukan semua nilai terlebih dahulu."
   ),
   RULE_NOT_FOUND: new apiError(
     400,
@@ -71,4 +71,9 @@ module.exports = {
     "Belum ada rule untuk peminatan ini"
   ),
   WRONG_PASSWORD: new apiError(400, "Error", "Kata sandi salah."),
+  FIS_ERROR: new apiError(
+    500,
+    "Error",
+    "Terjadi kesalahan dalam perhitungan. Harap laporkan masalah ini."
+  ),
 };
