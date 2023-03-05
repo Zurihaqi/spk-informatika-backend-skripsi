@@ -38,6 +38,7 @@
   "homepage": "https://gitlab.com/zurihaqi/proyek-skripsi#readme",
   "description": "",
   "devDependencies": {
+    "netlify-lambda": "^2.0.16",
     "nodemon": "^2.0.20",
     "sequelize-cli": "^6.5.2"
   }
