@@ -35,7 +35,7 @@ module.exports = {
         : (options = { where: { student_id: email } });
 
       const userExist = await User.findOne(options);
-      if (!userExist) throw error.INVALID_CRED;
+      if (!userExist) throw error.UNREGISTERED;
 
       const passwordField = userExist.password.split("$");
       const salt = passwordField[0];
@@ -65,7 +65,7 @@ module.exports = {
           token: token,
         });
       }
-      throw error.INVALID_CRED;
+      throw error.WRONG_PASSWORD;
     } catch (err) {
       next(err);
     }

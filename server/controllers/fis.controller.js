@@ -1,7 +1,7 @@
 const { Rule, Grade, Course } = require("../db/models/");
-const fuzzyis = require("fuzzyis");
+const fuzzyis = require("../helpers/fuzzyis/");
 const { LinguisticVariable, Term, FIS } = fuzzyis;
-const Rules = require("fuzzyis").Rule;
+const Rules = fuzzyis.Rule;
 const error = require("../misc/errorHandlers");
 
 module.exports = {

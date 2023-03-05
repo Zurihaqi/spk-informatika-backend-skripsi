@@ -76,4 +76,5 @@ module.exports = {
     "Error",
     "Terjadi kesalahan dalam perhitungan. Harap laporkan masalah ini."
   ),
+  UNREGISTERED: new apiError(401, "Unauthorized", "Email/NPM belum terdaftar."),
 };
