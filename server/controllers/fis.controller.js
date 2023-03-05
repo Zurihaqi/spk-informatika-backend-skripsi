@@ -98,9 +98,8 @@ module.exports = {
 
         if (softDevGrades.length !== softDevCourses.length)
           throw error.GRADE_NOT_FOUND;
-        result.software_development = +softDev
-          .getPreciseOutput(softDevGrades)[0]
-          .toFixed(2);
+        result.software_development =
+          +softDev.getPreciseOutput(softDevGrades)[0];
       }
 
       //Menghitung crisp output untuk peminatan data science
@@ -134,9 +133,7 @@ module.exports = {
 
         if (dataSciGrades.length !== dataSciCourses.length)
           throw error.GRADE_NOT_FOUND;
-        result.data_science = +dataSci
-          .getPreciseOutput(dataSciGrades)[0]
-          .toFixed(2);
+        result.data_science = +dataSci.getPreciseOutput(dataSciGrades)[0];
       }
 
       //Menghitung crisp output untuk peminatan networking
@@ -170,8 +167,7 @@ module.exports = {
 
         if (networkingGrades.length !== networkCourses.length)
           throw error.GRADE_NOT_FOUND;
-        result.networking =
-          +networking.getPreciseOutput(networkingGrades)[0].toFixed(2) / 2;
+        result.networking = +networking.getPreciseOutput(networkingGrades)[0];
       }
 
       if (result) {
