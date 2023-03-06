@@ -12,9 +12,6 @@ app.use(logger("dev"));
 app.use(cors());
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use("/.netlify/functions/server", router);
 app.use("/api", router);
 
 module.exports = app;
-
-//!SELF REMINDER! use FIS as middleware at route
