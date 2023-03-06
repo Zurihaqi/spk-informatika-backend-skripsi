@@ -23,7 +23,7 @@
     "start": "node ./bin/www",
     "dev": "nodemon ./bin/www",
     "test": "jest --forceExit --detectOpenHandles",
-    "build": "npm install && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all"
+    "build": "npm install && npx sequelize-cli db:migrate --env production && npx sequelize-cli db:seed:all --env production"
   },
   "repository": {
     "type": "git",
