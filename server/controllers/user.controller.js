@@ -156,6 +156,7 @@ module.exports = {
         return res.status(201).json({
           status: "Success",
           message: "Pesan terkirim",
+          result: result,
         });
       }
     } catch (err) {
