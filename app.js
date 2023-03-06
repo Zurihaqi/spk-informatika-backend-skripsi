@@ -16,10 +16,3 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/", router);
 
 module.exports = app;
-
-// "builds": [
-//   {
-//     "src": "app.js",
-//     "use": "@vercel/node"
-//   }
-// ],
