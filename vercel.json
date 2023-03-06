@@ -3,7 +3,7 @@
   "builds": [
     {
       "src": "app.js",
-      "use": "@vercel/node && npx sequelize-cli db:migrate:undo && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all"
+      "use": "@vercel/node"
     }
   ],
   "routes": [
