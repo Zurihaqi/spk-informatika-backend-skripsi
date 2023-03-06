@@ -133,7 +133,7 @@ module.exports = {
       const { title, message } = req.body;
       const url = WEBHOOK_URL;
 
-      const result = fetch(url, {
+      const result = await fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
