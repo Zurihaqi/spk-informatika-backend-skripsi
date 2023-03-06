@@ -144,7 +144,7 @@ module.exports = {
               "https://images-ext-2.discordapp.net/external/MJYCQ9ca5vHr6KGEljX70Ehg8Gt3H-NxWtTiqq0y100/https/upload.wikimedia.org/wikipedia/commons/thumb/1/17/Warning.svg/1200px-Warning.svg.png?width=539&height=498",
             author: {
               name: `${req.user.name}`,
-              icon_url: `${req.user.profile.pic}`,
+              icon_url: `${req.user.profile_pic}`,
             },
           },
         }),
