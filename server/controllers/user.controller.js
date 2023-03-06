@@ -1,10 +1,10 @@
 const { User, Token, Grade } = require("../db/models/");
 const { WEBHOOK_URL } = process.env;
+const fetch = require("node-fetch");
 const error = require("../misc/errorHandlers");
 const updater = require("../helpers/updater");
 const isEmpty = require("../helpers/emptyObjectCheck");
 const hash = require("../middlewares/passwordHashing");
-const webhook = require("webhook-discord");
 
 module.exports = {
   get: async (req, res, next) => {
@@ -131,32 +131,29 @@ module.exports = {
   sendMessage: async (req, res, next) => {
     try {
       const { title, message } = req.body;
-      const Hook = new webhook.Webhook(WEBHOOK_URL);
-      const msg = new webhook.MessageBuilder()
-        .setDescription(`${message}`)
-        .setTitle(`${title}`)
-        .setName("Kang Kritik")
-        .setColor("#c73230")
-        .setName(`${req.user.name}`)
-        .setThumbnail(
-          "https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Warning.svg/1200px-Warning.svg.png"
-        )
-        .setAuthor(`${req.user.email}`);
+      const url = WEBHOOK_URL;
 
-      if (!req.user.profile_pic) {
-        msg.setAvatar(
-          "https://media.istockphoto.com/id/1327592506/vector/default-avatar-photo-placeholder-icon-grey-profile-picture-business-man.jpg?s=612x612&w=0&k=20&c=BpR0FVaEa5F24GIw7K8nMWiiGmbb8qmhfkpXcp1dhQg="
-        );
-      } else {
-        msg.setAvatar(`${req.user.profile_pic}`);
-      }
+      const result = fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          embeds: {
+            title: `${title}`,
+            description: `${message}`,
+            thumbnail:
+              "https://images-ext-2.discordapp.net/external/MJYCQ9ca5vHr6KGEljX70Ehg8Gt3H-NxWtTiqq0y100/https/upload.wikimedia.org/wikipedia/commons/thumb/1/17/Warning.svg/1200px-Warning.svg.png?width=539&height=498",
+            author: {
+              name: `${req.user.name}`,
+              icon_url: `${req.user.profile.pic}`,
+            },
+          },
+        }),
+      });
 
-      const result = Hook.send(msg);
       if (result) {
         return res.status(201).json({
           status: "Success",
           message: "Pesan terkirim",
-          result: result,
         });
       }
     } catch (err) {

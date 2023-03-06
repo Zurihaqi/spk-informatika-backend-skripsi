@@ -2,3 +2,4 @@
 **/.env
 **/codeTesting.*
 .vercel
+webhookTest.js
