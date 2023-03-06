@@ -133,21 +133,26 @@ module.exports = {
       const { title, message } = req.body;
       const url = WEBHOOK_URL;
 
-      const result = await fetch(url, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          embeds: {
-            title: `${title}`,
-            description: `${message}`,
-            thumbnail:
-              "https://images-ext-2.discordapp.net/external/MJYCQ9ca5vHr6KGEljX70Ehg8Gt3H-NxWtTiqq0y100/https/upload.wikimedia.org/wikipedia/commons/thumb/1/17/Warning.svg/1200px-Warning.svg.png?width=539&height=498",
-            author: {
-              name: `${req.user.name}`,
-              icon_url: `${req.user.profile_pic}`,
-            },
+      const webhookBody = {
+        embeds: [
+          {
+            title: "Kendala Dilaporkan",
+            fields: [
+              { name: "Pengirim:", value: req.user.name },
+              { name: "Email:", value: req.user.email },
+              { name: "Judul:", value: title },
+              { name: "Pesan:", value: message },
+            ],
           },
-        }),
+        ],
+      };
+
+      const result = fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(webhookBody),
       });
 
       if (result) {
