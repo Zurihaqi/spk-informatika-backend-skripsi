@@ -46,6 +46,7 @@ module.exports = {
           id: userExist.id,
           role: userExist.role,
           name: userExist.name,
+          student_id: userExist.student_id,
           email: userExist.email,
           profile_pic: userExist.profile_pic,
         };
