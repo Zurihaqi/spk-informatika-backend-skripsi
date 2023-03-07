@@ -15,6 +15,12 @@ router.use(signUp);
 router.use(signOut);
 router.use(authenticate);
 
+router.use("/check-connection", (req, res) => {
+  return res.status(201).json({
+    status: "Success",
+    message: "Connected",
+  });
+});
 router.use("/user", user);
 router.use("/course", course);
 router.use("/grade", grade);
