@@ -6,7 +6,6 @@ const router = require("./server/routes/app.routes");
 const logger = require("morgan");
 const cors = require("cors");
 var path = require("path");
-const authenticate = require("./server/middlewares/passport");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
