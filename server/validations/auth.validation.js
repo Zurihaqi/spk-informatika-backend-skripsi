@@ -15,6 +15,9 @@ module.exports = {
       .normalizeEmail()
       .isEmail()
       .withMessage("Masukan alamat email yang valid."),
+    body("student_id")
+      .isNumeric()
+      .withMessage("NPM tidak dapat mengandung huruf."),
     body("password")
       .notEmpty()
       .withMessage("Masukan kata sandi.")
