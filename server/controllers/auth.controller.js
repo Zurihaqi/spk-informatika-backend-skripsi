@@ -73,10 +73,13 @@ module.exports = {
   },
   signUp: async (req, res, next) => {
     try {
-      const { name, email } = req.body;
+      const { name, email, student_id } = req.body;
 
       const userExist = await User.findOne({ where: { email: email } });
       if (userExist) throw error.EMAIL_EXIST;
+
+      const idExist = await User.findOne({ where: { student_id: student_id } });
+      if (idExist) throw error.STUD_ID_EXIST;
 
       const createUserResult = await User.create({
         name: name
@@ -86,6 +89,7 @@ module.exports = {
             (_, m1, m2) => m1.toUpperCase() + m2.toLowerCase()
           ),
         email: email,
+        student_id: student_id,
         password: req.body.password,
       });
       if (createUserResult) {

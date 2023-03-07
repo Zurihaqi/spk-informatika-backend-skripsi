@@ -77,4 +77,9 @@ module.exports = {
     "Terjadi kesalahan dalam perhitungan. Harap laporkan masalah ini."
   ),
   UNREGISTERED: new apiError(401, "Unauthorized", "Email/NPM belum terdaftar."),
+  STUD_ID_EXIST: new apiError(
+    400,
+    "Error",
+    "Nomor Pokok Mahasiswa tersebut sudah terdaftar."
+  ),
 };

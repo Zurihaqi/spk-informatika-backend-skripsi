@@ -27,6 +27,12 @@ module.exports = {
       const { name, email, profile_pic, student_id } = req.body;
       const { id } = req.user;
 
+      const emailExist = await User.findOne({ where: { email: email } });
+      if (emailExist) throw error.EMAIL_EXIST;
+
+      const idExist = await User.findOne({ where: { student_id: student_id } });
+      if (idExist) throw error.STUD_ID_EXIST;
+
       let normalizedName;
 
       if (name) {
