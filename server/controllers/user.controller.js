@@ -68,6 +68,11 @@ module.exports = {
         }
       );
       if (result) {
+        result[1].password = undefined;
+        result[1].role = undefined;
+        delete result[1].password;
+        delete result[1].role;
+
         return res.status(201).json({
           status: "Success",
           data: result[1],
