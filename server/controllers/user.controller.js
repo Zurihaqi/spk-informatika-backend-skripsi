@@ -70,8 +70,15 @@ module.exports = {
       if (result) {
         result[1].password = undefined;
         result[1].role = undefined;
+        result[1].id = undefined;
+        result[1].createdAt = undefined;
+        result[1].updatedAt = undefined;
+
+        delete result[1].id;
         delete result[1].password;
         delete result[1].role;
+        delete result[1].createdAt;
+        delete result[1].updatedAt;
 
         return res.status(201).json({
           status: "Success",
