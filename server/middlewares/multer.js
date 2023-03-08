@@ -4,8 +4,8 @@ const errorHandler = (error, req, res, next) => {
   if (error.code === "LIMIT_FILE_SIZE") {
     throw errors.FILE_SIZE;
   }
-  if (error.code === "LIMIT_UNEXPECTED_FILE") {
-    console.log(error);
+  if (error.code === "LIMIT_FILE_COUNT") {
+    throw errors.FILE_COUNT;
   }
   next(error);
 };
@@ -35,6 +35,7 @@ const imageUpload = multer({
   },
   limits: {
     fileSize: 5242880,
+    files: 1,
   },
 });
 

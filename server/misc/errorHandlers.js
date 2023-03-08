@@ -82,4 +82,5 @@ module.exports = {
     "Error",
     "Nomor Pokok Mahasiswa tersebut sudah terdaftar."
   ),
+  FILE_COUNT: new apiError(400, "Error", "Hanya dapat mengunggah 1 gambar."),
 };
