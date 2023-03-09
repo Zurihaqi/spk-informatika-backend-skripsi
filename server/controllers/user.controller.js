@@ -1,5 +1,5 @@
 const { User, Grade } = require("../db/models/");
-const Op = require("Sequelize").Op;
+const Op = require("sequelize").Op;
 const { WEBHOOK_URL } = process.env;
 const fetch = require("node-fetch");
 const error = require("../misc/errorHandlers");
