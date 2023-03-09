@@ -7,18 +7,6 @@ const jwt = require("jsonwebtoken");
 module.exports = {
   signIn: async (req, res, next) => {
     try {
-      if (req.headers.authorization) {
-        const tokenExist = await Token.findOne({
-          where: {
-            token: req.headers.authorization.match(/^Bearer (.*)$/)[1],
-            isValid: true,
-          },
-        });
-        if (tokenExist) {
-          throw error.IN_SESSION;
-        }
-        throw error.INVALID_TOKEN;
-      }
       const { email } = req.body;
 
       const validateEmail = (email) => {
@@ -53,11 +41,6 @@ module.exports = {
 
         const token = jwt.sign(payload, JWT_SECRET, {
           expiresIn: "1h",
-        });
-
-        await Token.create({
-          token: token,
-          isValid: true,
         });
 
         return res.status(201).json({
@@ -103,33 +86,6 @@ module.exports = {
           },
         });
       }
-    } catch (err) {
-      next(err);
-    }
-  },
-  signOut: async (req, res, next) => {
-    try {
-      if (req.headers.authorization) {
-        const token = req.headers.authorization.match(/^Bearer (.*)$/)[1];
-        if (token === req.user.token) {
-          const invalidateToken = await Token.update(
-            {
-              isValid: false,
-            },
-            {
-              where: { token: token, isValid: true },
-              returning: true,
-            }
-          );
-          if (invalidateToken[0] !== 0) {
-            return res.status(200).json({
-              status: "Success",
-              message: "Berhasil Logout",
-            });
-          }
-        }
-      }
-      throw error.OFF_SESSION;
     } catch (err) {
       next(err);
     }

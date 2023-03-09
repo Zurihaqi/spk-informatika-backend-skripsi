@@ -1,18 +1,16 @@
 const router = require("express").Router();
-const { signIn, signUp, signOut } = require("./auth.routes");
+const { signIn, signUp } = require("./auth.routes");
 const authenticate = require("../middlewares/passport");
 const course = require("../routes/course.routes");
 const grade = require("../routes/grade.routes");
 const specialization = require("../routes/specialization.routes");
 const user = require("../routes/user.routes");
 const rule = require("../routes/rule.routes");
-const token = require("../routes/token.routes");
 const fis = require("../routes/fis.routes");
 const errorRoutes = require("./error.routes");
 
 router.use(signIn);
 router.use(signUp);
-router.use(signOut);
 router.use(authenticate);
 
 router.use("/check-connection", (req, res) => {
@@ -26,7 +24,6 @@ router.use("/course", course);
 router.use("/grade", grade);
 router.use("/specialization", specialization);
 router.use("/rule", rule);
-router.use("/token", token);
 router.use("/fis", fis);
 
 // error handlers

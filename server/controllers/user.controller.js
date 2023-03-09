@@ -1,4 +1,5 @@
-const { User, Token, Grade } = require("../db/models/");
+const { User, Grade } = require("../db/models/");
+const Op = require("Sequelize").Op;
 const { WEBHOOK_URL } = process.env;
 const fetch = require("node-fetch");
 const error = require("../misc/errorHandlers");
@@ -7,6 +8,29 @@ const isEmpty = require("../helpers/emptyObjectCheck");
 const hash = require("../middlewares/passwordHashing");
 
 module.exports = {
+  getAllUser: async (req, res, next) => {
+    try {
+      if (req.user.role !== "ADMIN") throw error.UNAUTHORIZED_ROLE;
+      const { name } = req.query;
+      let options = {};
+
+      if (name) {
+        options = { where: { name: { [Op.iLike]: name } } };
+      }
+
+      const result = await User.scope("noPassword").findAll(options);
+
+      if (result) {
+        return res.status(201).json({
+          status: "Success",
+          result: result,
+        });
+      }
+      throw error.USER_NOT_FOUND;
+    } catch (err) {
+      next(err);
+    }
+  },
   get: async (req, res, next) => {
     try {
       const { id } = req.user;
@@ -68,18 +92,8 @@ module.exports = {
         }
       );
       if (result) {
-        result[1].password = undefined;
-        result[1].role = undefined;
-        result[1].id = undefined;
-        result[1].createdAt = undefined;
-        result[1].updatedAt = undefined;
-
-        delete result[1].id;
-        delete result[1].password;
-        delete result[1].role;
-        delete result[1].createdAt;
-        delete result[1].updatedAt;
-
+        delete result[1].dataValues.password;
+        delete result[1].dataValues.role;
         return res.status(201).json({
           status: "Success",
           data: result[1],
@@ -91,7 +105,7 @@ module.exports = {
   },
   delete: async (req, res, next) => {
     try {
-      const { id, token } = req.user;
+      const { id } = req.user;
 
       const userExist = await User.findByPk(req.user.id);
 
@@ -107,7 +121,6 @@ module.exports = {
           where: { id: id },
         });
         if (result) {
-          await Token.update({ isValid: false }, { where: { token: token } });
           return res.status(201).json({
             status: "Success",
             message: "Berhasil menghapus akun",
@@ -121,7 +134,7 @@ module.exports = {
   },
   updatePassword: async (req, res, next) => {
     try {
-      const { id, token } = req.user;
+      const { id } = req.user;
 
       const userExist = await User.findByPk(req.user.id);
 
@@ -140,7 +153,6 @@ module.exports = {
           }
         );
         if (result) {
-          await Token.update({ isValid: false }, { where: { token: token } });
           return res.status(201).json({
             status: "Success",
             message: "Berhasil merubah password lakukan login ulang",
@@ -185,6 +197,26 @@ module.exports = {
           message: "Pesan terkirim",
         });
       }
+    } catch (err) {
+      next(err);
+    }
+  },
+  addAdmin: async (req, res, next) => {
+    try {
+      if (req.user.role !== "ADMIN") throw error.UNAUTHORIZED_ROLE;
+      const { id } = req.params;
+
+      const result = await User.update(
+        { role: "ADMIN" },
+        { where: { id: id } }
+      );
+      if (result) {
+        res.status(201).json({
+          status: "Success",
+          message: "Berhasil menambahkan admin.",
+        });
+      }
+      throw error.USER_NOT_FOUND;
     } catch (err) {
       next(err);
     }

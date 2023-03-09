@@ -1,6 +1,12 @@
-const { body } = require("express-validator");
+const { body, param, query } = require("express-validator");
 
 module.exports = {
+  getAll: () => [
+    query("name")
+      .optional()
+      .isAlpha("en-US", { ignore: " " })
+      .withMessage("query name hanya dapat mengandung huruf."),
+  ],
   update: () => [
     body("name")
       .optional()
@@ -24,4 +30,7 @@ module.exports = {
       .withMessage("password harus memiliki minimal 6 huruf"),
   ],
   delete: () => [body("password").notEmpty().withMessage("masukkan password")],
+  addAdmin: () => [
+    param("id").isNumeric().withMessage("param id adalah integer"),
+  ],
 };

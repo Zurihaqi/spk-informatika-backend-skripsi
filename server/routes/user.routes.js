@@ -23,5 +23,12 @@ router.patch(
   controller.updatePassword
 );
 router.post("/message", controller.sendMessage);
+router.get("/get-all", validation.getAll(), validate, controller.getAllUser);
+router.patch(
+  "/add-admin/:id",
+  validation.addAdmin(),
+  validate,
+  controller.addAdmin
+);
 
 module.exports = router;

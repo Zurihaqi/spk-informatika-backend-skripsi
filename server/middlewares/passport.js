@@ -17,38 +17,20 @@ passport.use(
         email: jwt_payload.email,
       },
     })
-      .then(() => done(null, jwt_payload))
+      .then((result) => done(null, result))
       .catch((error) => done(error, false));
   })
 );
 
 module.exports = authentication = (req, res, next) => {
-  passport.authenticate(
-    "jwt",
-    { session: false },
-    async (error, user, info) => {
-      let validToken;
-      if (req.headers.authorization) {
-        const token = `${req.headers.authorization.match(/^Bearer (.*)$/)[1]}`;
-
-        validToken = await Token.findOne({
-          where: { token: token, isValid: true },
-        });
-
-        if (validToken) {
-          req.user = user;
-          req.user.token = token;
-          if (new Date() - validToken.createdAt > 60 * 60 * 1000) {
-            error = errors.TOKEN_EXPIRED;
-          }
-        }
-      }
-      if (!user || !validToken || !req.headers.authorization) {
-        error = errors.UNAUTHORIZED;
-      }
-      if (error) return next(error);
-
-      next();
+  passport.authenticate("jwt", { session: false }, (error, user, info) => {
+    if (!user) {
+      error = errors.UNAUTHORIZED;
     }
-  )(req, res, next);
+    if (error) return next(error);
+
+    req.user = user;
+
+    next();
+  })(req, res, next);
 };
