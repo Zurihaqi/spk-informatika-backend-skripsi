@@ -1,8 +1,9 @@
-const { User, Token } = require("../db/models");
-const { JWT_SECRET } = process.env;
+const { User } = require("../db/models");
+const { JWT_SECRET, AES_SECRET } = process.env;
 const error = require("../misc/errorHandlers");
 const hash = require("../middlewares/passwordHashing");
 const jwt = require("jsonwebtoken");
+const CryptoJS = require("crypto-js");
 
 module.exports = {
   signIn: async (req, res, next) => {
@@ -29,10 +30,15 @@ module.exports = {
       const salt = passwordField[0];
       const validatePassword = hash(req.body.password, salt);
 
+      const encryptedRole = CryptoJS.AES.encrypt(
+        userExist.role,
+        AES_SECRET
+      ).toString();
+
       if (validatePassword === passwordField[1]) {
         const payload = {
           id: userExist.id,
-          role: userExist.role,
+          role: encryptedRole,
           name: userExist.name,
           student_id: userExist.student_id,
           email: userExist.email,
