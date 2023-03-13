@@ -4,6 +4,7 @@ const validate = require("../middlewares/validation");
 const multer = require("../middlewares/multer");
 const cloudinaryUpload = require("../middlewares/cloudinary");
 const controller = require("../controllers/user.controller");
+const { isAdmin } = require("../middlewares/passport");
 
 router.get("/", controller.get);
 router.patch(
@@ -23,12 +24,26 @@ router.patch(
   controller.updatePassword
 );
 router.post("/message", controller.sendMessage);
-router.get("/get-all", validation.getAll(), validate, controller.getAllUser);
+router.get(
+  "/get-all",
+  isAdmin,
+  validation.getAll(),
+  validate,
+  controller.getAllUser
+);
 router.patch(
   "/add-admin/:id",
+  isAdmin,
   validation.addAdmin(),
   validate,
   controller.addAdmin
+);
+router.delete(
+  "/remove-admin/:id",
+  isAdmin,
+  validation.removeAdmin(),
+  validate,
+  controller.removeAdmin
 );
 
 module.exports = router;

@@ -41,10 +41,10 @@ module.exports = {
     "Data FK yang dituju tidak ditemukan"
   ),
   INVALID_GRADE: new apiError(400, "Error", "Nilai yang dimasukan tidak valid"),
-  UNAUTHORIZED_ROLE: new apiError(
+  UNAUTHORIZED_ADMIN: new apiError(
     401,
     "Unauthorized",
-    "Hanya admin yang dapat mengakses endpoint ini"
+    "Anda tidak memiliki hak akses ke endpoint ini."
   ),
   FILE_SIZE: new apiError(400, "Error", "Ukuran file gambar terlalu besar"),
   INVALID_FORMAT: new apiError(

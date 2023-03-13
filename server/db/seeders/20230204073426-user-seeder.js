@@ -8,8 +8,8 @@ module.exports = {
     const passwordHash = hash(PASSWORD);
     const adminData = [
       {
-        role: "ADMIN",
-        name: "Admin",
+        role: "Admin",
+        name: "Zul",
         email: EMAIL,
         password: passwordHash,
         createdAt: new Date(),

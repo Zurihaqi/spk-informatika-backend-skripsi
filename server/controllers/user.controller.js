@@ -10,7 +10,6 @@ const hash = require("../middlewares/passwordHashing");
 module.exports = {
   getAllUser: async (req, res, next) => {
     try {
-      if (req.user.role !== "ADMIN") throw error.UNAUTHORIZED_ROLE;
       const { name } = req.query;
       let options = {};
 
@@ -152,7 +151,7 @@ module.exports = {
             individualHooks: true,
           }
         );
-        if (result) {
+        if (result[0]) {
           return res.status(201).json({
             status: "Success",
             message: "Berhasil merubah password lakukan login ulang",
@@ -203,17 +202,35 @@ module.exports = {
   },
   addAdmin: async (req, res, next) => {
     try {
-      if (req.user.role !== "ADMIN") throw error.UNAUTHORIZED_ROLE;
       const { id } = req.params;
 
       const result = await User.update(
-        { role: "ADMIN" },
+        { role: "Pengelola" },
         { where: { id: id } }
       );
-      if (result) {
-        res.status(201).json({
+      if (result[0]) {
+        return res.status(201).json({
           status: "Success",
-          message: "Berhasil menambahkan admin.",
+          message: "Berhasil menambahkan pengelola.",
+        });
+      }
+      throw error.USER_NOT_FOUND;
+    } catch (err) {
+      next(err);
+    }
+  },
+  removeAdmin: async (req, res, next) => {
+    try {
+      const { id } = req.params;
+
+      const result = await User.update(
+        { role: "Mahasiswa" },
+        { where: { id: id } }
+      );
+      if (result[0]) {
+        return res.status(201).json({
+          status: "Success",
+          message: "Berhasil menghapus pengelola.",
         });
       }
       throw error.USER_NOT_FOUND;

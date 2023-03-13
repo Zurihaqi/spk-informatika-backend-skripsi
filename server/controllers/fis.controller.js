@@ -1,8 +1,9 @@
-const { Rule, Grade, Course } = require("../db/models/");
+const { Rule, Grade, Course, Recommendation } = require("../db/models/");
 const fuzzyis = require("../helpers/fuzzyis/");
 const { LinguisticVariable, Term, FIS } = fuzzyis;
 const Rules = fuzzyis.Rule;
 const error = require("../misc/errorHandlers");
+const isEmpty = require("../helpers/emptyObjectCheck");
 
 module.exports = {
   calculate: async (req, res, next) => {
@@ -196,6 +197,42 @@ module.exports = {
           result.networkingPercentage = Math.round(
             (result.networking / sum) * 100
           );
+
+          const checkRecs = await Recommendation.findOne({
+            where: { user_id: req.user.id },
+          });
+
+          if (checkRecs) {
+            await Recommendation.update(
+              {
+                crispOutput: [
+                  result.software_development,
+                  result.data_science,
+                  result.networking,
+                ],
+                percentage: [
+                  result.softDevPercentage,
+                  result.dataSciPercentage,
+                  result.networkingPercentage,
+                ],
+              },
+              { where: { user_id: req.user.id } }
+            );
+          } else {
+            await Recommendation.create({
+              crispOutput: [
+                result.software_development,
+                result.data_science,
+                result.networking,
+              ],
+              percentage: [
+                result.softDevPercentage,
+                result.dataSciPercentage,
+                result.networkingPercentage,
+              ],
+              user_id: req.user.id,
+            });
+          }
         }
         return res.status(201).json({
           status: "Success",
