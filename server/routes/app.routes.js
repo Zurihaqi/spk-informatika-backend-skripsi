@@ -15,7 +15,9 @@ router.use(signUp);
 router.use(authentication);
 
 router.use("/check-connection", (req, res) => {
-  return res.status(201);
+  return res.status(201).json({
+    status: "Success",
+  });
 });
 router.use("/user", user);
 router.use("/course", course);
