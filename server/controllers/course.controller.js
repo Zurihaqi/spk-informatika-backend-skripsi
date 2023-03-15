@@ -95,6 +95,9 @@ module.exports = {
     try {
       const { id } = req.params;
 
+      const course = await Course.findByPk(id);
+      if (course.spec_id !== null) throw error.COURSE_SPEC_ASSOC;
+
       const result = await Course.destroy({
         where: { id: id },
       });

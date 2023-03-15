@@ -52,6 +52,11 @@ module.exports = {
     "Error",
     "Format yang diperbolehkan: png, jpg, jpeg, webp"
   ),
+  INVALID_FORMAT_GIF: new apiError(
+    400,
+    "Error",
+    "Format yang diperbolehkan: png, jpg, jpeg, webp, gif"
+  ),
   GRADE_NOT_FOUND: new apiError(
     400,
     "Error",
@@ -79,5 +84,10 @@ module.exports = {
     404,
     "Not Found",
     "User yang dicari tidak ditemukan."
+  ),
+  COURSE_SPEC_ASSOC: new apiError(
+    401,
+    "Error",
+    "Mata kuliah masih digunakan untuk perhitungan SPK."
   ),
 };

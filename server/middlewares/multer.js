@@ -22,6 +22,19 @@ const mediaStorage = multer.diskStorage({
 const imageUpload = multer({
   storage: mediaStorage,
   fileFilter: (req, file, cb) => {
+    if (req.user.role === "Admin") {
+      if (
+        file.mimetype == "image/png" ||
+        file.mimetype == "image/webp" ||
+        file.mimetype == "image/jpg" ||
+        file.mimetype == "image/jpeg" ||
+        file.mimetype == "image/gif"
+      ) {
+        return cb(null, true);
+      }
+      cb(null, false);
+      return cb(errors.INVALID_FORMAT_GIF);
+    }
     if (
       file.mimetype == "image/png" ||
       file.mimetype == "image/webp" ||
