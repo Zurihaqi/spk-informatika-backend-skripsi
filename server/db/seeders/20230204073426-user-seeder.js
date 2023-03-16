@@ -1,6 +1,6 @@
 "use strict";
 require("dotenv").config();
-const { EMAIL, PASSWORD, PROFILE_PIC } = process.env;
+const { EMAIL, PASSWORD } = process.env;
 const hash = require("../../middlewares/passwordHashing");
 
 module.exports = {
@@ -12,7 +12,6 @@ module.exports = {
         name: "Zul",
         email: EMAIL,
         password: passwordHash,
-        profile_pic: PROFILE_PIC,
         createdAt: new Date(),
         updatedAt: new Date(),
       },

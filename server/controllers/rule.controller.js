@@ -37,19 +37,21 @@ module.exports = {
     try {
       const { condition, conclusion, connection, spec_id } = req.body;
 
+      console.log(condition);
+
       const specExist = Specialization.findByPk(spec_id);
       if (!specExist) throw error.DATA_FK;
 
       const duplicate = await Rule.findOne({
         where: {
           condition: condition,
-          conclusion: conclusion,
+          conclusion: [conclusion],
         },
       });
       if (duplicate) throw error.DUPLICATE_DATA;
 
       const result = await Rule.create({
-        condition: [condition],
+        condition: condition,
         conclusion: [conclusion],
         connection: connection,
         spec_id: spec_id,

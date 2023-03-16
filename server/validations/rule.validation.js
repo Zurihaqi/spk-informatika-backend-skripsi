@@ -15,27 +15,21 @@ module.exports = {
       .withMessage("param id adalah integer"),
   ],
   create: () => [
-    body("condition")
+    body("condition.*")
       .notEmpty()
       .withMessage("condition tidak boleh kosong")
-      .isAlpha("en-US", { ignore: " " })
-      .withMessage("condition adalah string")
       .isIn(["rendah", "sedang", "tinggi"])
       .withMessage("nilai condition adalah rendah, sedang, tinggi"),
-    body("conclusion")
+    body("conclusion.*")
       .notEmpty()
       .withMessage("conclusion tidak boleh kosong")
-      .isAlpha("en-US", { ignore: " " })
-      .withMessage("condition adalah string")
       .isIn(["tidak-disarankan", "disarankan", "sangat-disarankan"])
       .withMessage(
         "nilai conclusion adalah tidak-disarankan, disarankan, sangat-disarankan"
       ),
-    body("connection")
+    body("connection.*")
       .notEmpty()
       .withMessage("connection tidak boleh kosong")
-      .isAlpha("en-US", { ignore: " " })
-      .withMessage("connection adalah string")
       .isIn(["and", "or"])
       .withMessage("nilai conclusion adalah and atau or"),
     body("spec_id").isNumeric().withMessage("spec_id adalah integer"),
@@ -46,24 +40,18 @@ module.exports = {
       .withMessage("param id tidak boleh kosong")
       .isNumeric()
       .withMessage("param id adalah integer"),
-    body("condition")
+    body("condition.*")
       .optional()
-      .isAlpha("en-US", { ignore: " " })
-      .withMessage("condition adalah string")
       .isIn(["rendah", "sedang", "tinggi"])
       .withMessage("nilai condition adalah rendah, sedang, tinggi"),
-    body("conclusion")
+    body("conclusion.*")
       .optional()
-      .isAlpha("en-US", { ignore: " " })
-      .withMessage("condition adalah string")
       .isIn(["tidak-disarankan", "disarankan", "sangat-disarankan"])
       .withMessage(
         "nilai conclusion adalah tidak-disarankan, disarankan, sangat-disarankan"
       ),
-    body("connection")
+    body("connection.*")
       .optional()
-      .isAlpha("en-US", { ignore: " " })
-      .withMessage("connection adalah string")
       .isIn(["and", "or"])
       .withMessage("nilai conclusion adalah and atau or"),
     body("spec_id")
