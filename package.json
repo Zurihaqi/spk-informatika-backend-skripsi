@@ -23,8 +23,7 @@
   "scripts": {
     "start": "node ./bin/www",
     "dev": "nodemon ./bin/www",
-    "test": "jest --forceExit --detectOpenHandles",
-    "postinstall": "NODE_ENV=production npx sequelize-cli db:migrate:undo:all && NODE_ENV=production npx sequelize-cli db:migrate && NODE_ENV=production npx sequelize-cli db:seed:all"
+    "test": "jest --forceExit --detectOpenHandles"
   },
   "repository": {
     "type": "git",

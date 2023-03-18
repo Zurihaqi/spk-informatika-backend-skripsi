@@ -1,4 +1,4 @@
-const { User, Grade } = require("../db/models/");
+const { User, Grade, Recommendation } = require("../db/models/");
 const Op = require("sequelize").Op;
 const { WEBHOOK_URL } = process.env;
 const fetch = require("node-fetch");
@@ -113,6 +113,7 @@ module.exports = {
       const validatePassword = hash(req.body.password, salt);
 
       if (validatePassword === passwordField[1]) {
+        await Recommendation.destroy({ where: { user_id: req.user.id } });
         await Grade.destroy({
           where: { user_id: req.user.id },
         });
