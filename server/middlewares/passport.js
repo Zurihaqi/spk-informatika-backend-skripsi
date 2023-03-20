@@ -15,6 +15,7 @@ passport.use(
       where: {
         id: jwt_payload.id,
         email: jwt_payload.email,
+        role: jwt_payload.role,
       },
     })
       .then((result) => done(null, result))
