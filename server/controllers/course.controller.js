@@ -62,6 +62,8 @@ module.exports = {
       const { course_code, course_name, credit, semester, spec_id } = req.body;
       const { id } = req.params;
 
+      console.log(typeof spec_id);
+
       const dataExist = await Course.findByPk(id);
       if (!dataExist) throw error.DATA_NOT_FOUND;
 
@@ -69,6 +71,7 @@ module.exports = {
         { course_code, course_name, credit, semester, spec_id },
         {}
       );
+      if (incomingUpdate.spec_id == 0) incomingUpdate.spec_id = null;
       if (isEmpty(incomingUpdate)) throw error.EMPTY_BODY;
 
       const result = await Course.update(
