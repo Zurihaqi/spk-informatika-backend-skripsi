@@ -38,7 +38,7 @@ router.patch(
   validate,
   controller.addAdmin
 );
-router.delete(
+router.patch(
   "/remove-admin/:id",
   isAdmin,
   validation.removeAdmin(),
