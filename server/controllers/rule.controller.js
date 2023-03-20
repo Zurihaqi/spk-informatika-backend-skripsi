@@ -46,6 +46,7 @@ module.exports = {
         where: {
           condition: condition,
           conclusion: [conclusion],
+          spec_id: spec_id,
         },
       });
       if (duplicate) throw error.DUPLICATE_DATA;
