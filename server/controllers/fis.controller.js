@@ -49,9 +49,9 @@ module.exports = {
 
       //Himpunan fuzzy untuk variabel masukan
       const inputTerms = [
-        new Term("rendah", "triangle", [0.0, 2.0, 2.75]),
-        new Term("sedang", "triangle", [2.75, 3.0, 3.5]),
-        new Term("tinggi", "triangle", [3.5, 4.0, 4.0]),
+        new Term("rendah", "triangle", [0.0, 1.0, 2.0]),
+        new Term("sedang", "triangle", [1.5, 2.5, 3.5]),
+        new Term("tinggi", "triangle", [3.0, 4.0, 4.0]),
       ];
 
       //Himpunan fuzzy untuk variabel keluaran
