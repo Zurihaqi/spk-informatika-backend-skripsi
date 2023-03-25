@@ -16,11 +16,16 @@ passport.use(
       jwt_payload.email,
       AES_SECRET
     ).toString(CryptoJS.enc.Utf8);
+    const decryptedRole = CryptoJS.AES.decrypt(
+      jwt_payload.role,
+      AES_SECRET
+    ).toString(CryptoJS.enc.Utf8);
 
     User.findOne({
       where: {
         id: jwt_payload.id,
         email: `${decryptedEmail}`,
+        role: `${decryptedRole}`,
       },
     })
       .then((result) => done(null, result))
