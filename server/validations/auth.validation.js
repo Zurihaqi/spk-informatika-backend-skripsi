@@ -9,19 +9,21 @@ module.exports = {
     body("name")
       .isAlpha("en-US", { ignore: " " })
       .withMessage("Nama tidak dapat mengandung angka atau simbol.")
-      .isLength({ min: 3 })
-      .withMessage("Nama harus memiliki minimal 3 huruf."),
+      .isLength({ min: 3, max: 15 })
+      .withMessage("Panjang nama adalah minimal 3 huruf maksimal 15 huruf."),
     body("email")
       .normalizeEmail()
       .isEmail()
       .withMessage("Masukan alamat email yang valid."),
     body("student_id")
       .isNumeric()
-      .withMessage("NPM tidak dapat mengandung huruf."),
+      .withMessage("NPM hanya boleh berupa angka.")
+      .isLength({ max: 13 })
+      .withMessage("Panjang maksimal NPM adalah 13 angka."),
     body("password")
       .notEmpty()
       .withMessage("Masukan kata sandi.")
       .isLength({ min: 6 })
-      .withMessage("Kata sandi harus memiliki minimal 6 huruf."),
+      .withMessage("Kata sandi harus memiliki minimal 6 karakter."),
   ],
 };

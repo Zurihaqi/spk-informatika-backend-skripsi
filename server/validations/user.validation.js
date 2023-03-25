@@ -11,7 +11,9 @@ module.exports = {
     body("name")
       .optional()
       .isAlpha("en-US", { ignore: " " })
-      .withMessage("Nama tidak dapat mengandung angka atau simbol."),
+      .withMessage("Nama tidak dapat mengandung angka atau simbol.")
+      .isLength({ min: 3, max: 15 })
+      .withMessage("Panjang nama adalah minimal 3 huruf maksimal 15 huruf."),
     body("email")
       .optional()
       .normalizeEmail()
@@ -20,14 +22,16 @@ module.exports = {
     body("student_id")
       .optional()
       .isInt()
-      .withMessage("Nomor Pokok Mahasiswa hanya dapat mengandung angka."),
+      .withMessage("Nomor Pokok Mahasiswa hanya dapat mengandung angka.")
+      .isLength({ max: 13 })
+      .withMessage("Panjang maksimal NPM adalah 13 angka."),
   ],
   updatePassword: () => [
     body("password")
       .notEmpty()
       .withMessage("masukkan password")
       .isLength({ min: 6 })
-      .withMessage("password harus memiliki minimal 6 huruf"),
+      .withMessage("password harus memiliki minimal 6 karakter"),
   ],
   delete: () => [body("password").notEmpty().withMessage("masukkan password")],
   addAdmin: () => [
