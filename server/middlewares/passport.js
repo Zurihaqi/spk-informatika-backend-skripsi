@@ -1,20 +1,26 @@
-const { JWT_SECRET } = process.env;
+const { JWT_SECRET, AES_SECRET } = process.env;
 const passport = require("passport");
 const JwtStrategy = require("passport-jwt").Strategy,
   ExtractJwt = require("passport-jwt").ExtractJwt;
 const opts = {};
 const errors = require("../misc/errorHandlers");
 const { User } = require("../db/models");
+const CryptoJS = require("crypto-js");
 
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
 opts.secretOrKey = JWT_SECRET;
 
 passport.use(
   new JwtStrategy(opts, (jwt_payload, done) => {
+    const decryptedEmail = CryptoJS.AES.decrypt(
+      jwt_payload.email,
+      AES_SECRET
+    ).toString(CryptoJS.enc.Utf8);
+
     User.findOne({
       where: {
         id: jwt_payload.id,
-        email: jwt_payload.email,
+        email: `${decryptedEmail}`,
       },
     })
       .then((result) => done(null, result))

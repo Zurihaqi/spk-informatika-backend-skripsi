@@ -34,14 +34,26 @@ module.exports = {
         userExist.role,
         AES_SECRET
       ).toString();
+      const encryptedEmail = CryptoJS.AES.encrypt(
+        userExist.email,
+        AES_SECRET
+      ).toString();
+      const encryptedStudentId = CryptoJS.AES.encrypt(
+        userExist.student_id,
+        AES_SECRET
+      ).toString();
+      const encryptedName = CryptoJS.AES.encrypt(
+        userExist.name,
+        AES_SECRET
+      ).toString();
 
       if (validatePassword === passwordField[1]) {
         const payload = {
           id: userExist.id,
           role: encryptedRole,
-          name: userExist.name,
-          student_id: userExist.student_id,
-          email: userExist.email,
+          name: encryptedName,
+          student_id: encryptedStudentId,
+          email: encryptedEmail,
           profile_pic: userExist.profile_pic,
         };
 
