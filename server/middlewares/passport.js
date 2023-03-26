@@ -12,10 +12,6 @@ opts.secretOrKey = JWT_SECRET;
 
 passport.use(
   new JwtStrategy(opts, (jwt_payload, done) => {
-    const decryptedEmail = CryptoJS.AES.decrypt(
-      jwt_payload.email,
-      AES_SECRET
-    ).toString(CryptoJS.enc.Utf8);
     const decryptedRole = CryptoJS.AES.decrypt(
       jwt_payload.role,
       AES_SECRET
@@ -24,7 +20,6 @@ passport.use(
     User.findOne({
       where: {
         id: jwt_payload.id,
-        email: `${decryptedEmail}`,
         role: `${decryptedRole}`,
       },
     })
