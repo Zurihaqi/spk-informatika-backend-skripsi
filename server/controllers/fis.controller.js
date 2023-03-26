@@ -3,7 +3,6 @@ const fuzzyis = require("../helpers/fuzzyis/");
 const { LinguisticVariable, Term, FIS } = fuzzyis;
 const Rules = fuzzyis.Rule;
 const error = require("../misc/errorHandlers");
-const isEmpty = require("../helpers/emptyObjectCheck");
 
 module.exports = {
   calculate: async (req, res, next) => {

@@ -17,21 +17,21 @@ module.exports = {
   create: () => [
     body("condition.*")
       .notEmpty()
-      .withMessage("condition tidak boleh kosong")
+      .withMessage("Kondisi tidak lengkap")
       .isIn(["rendah", "sedang", "tinggi"])
-      .withMessage("nilai condition adalah rendah, sedang, tinggi"),
+      .withMessage("nilai kondisi adalah rendah, sedang, tinggi"),
     body("conclusion.*")
       .notEmpty()
-      .withMessage("conclusion tidak boleh kosong")
+      .withMessage("Konklusi tidak boleh kosong")
       .isIn(["tidak-disarankan", "disarankan", "sangat-disarankan"])
       .withMessage(
-        "nilai conclusion adalah tidak-disarankan, disarankan, sangat-disarankan"
+        "nilai konklusi adalah tidak-disarankan, disarankan, sangat-disarankan"
       ),
     body("connection.*")
       .notEmpty()
-      .withMessage("connection tidak boleh kosong")
+      .withMessage("Koneksi tidak boleh kosong")
       .isIn(["and", "or"])
-      .withMessage("nilai conclusion adalah and atau or"),
+      .withMessage("nilai koneksi adalah and atau or"),
     body("spec_id").isNumeric().withMessage("spec_id adalah integer"),
   ],
   update: () => [
