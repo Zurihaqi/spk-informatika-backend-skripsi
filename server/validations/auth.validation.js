@@ -9,8 +9,8 @@ module.exports = {
     body("name")
       .isAlpha("en-US", { ignore: " " })
       .withMessage("Nama tidak dapat mengandung angka atau simbol.")
-      .isLength({ min: 3, max: 15 })
-      .withMessage("Panjang nama adalah minimal 3 huruf maksimal 15 huruf."),
+      .isLength({ min: 3, max: 30 })
+      .withMessage("Panjang nama adalah minimal 3 huruf maksimal 30 huruf."),
     body("email")
       .normalizeEmail()
       .isEmail()
