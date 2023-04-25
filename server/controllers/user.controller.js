@@ -187,7 +187,7 @@ module.exports = {
         ],
       };
 
-      const result = fetch(url, {
+      const result = await fetch(url, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

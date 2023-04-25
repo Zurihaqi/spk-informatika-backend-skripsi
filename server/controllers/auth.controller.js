@@ -133,7 +133,7 @@ module.exports = {
         ],
       };
 
-      const sendMessage = fetch(url, {
+      const sendMessage = await fetch(url, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
