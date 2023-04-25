@@ -90,4 +90,10 @@ module.exports = {
     "Error",
     "Mata kuliah masih digunakan untuk perhitungan SPK."
   ),
+  NOT_VERIFIED: new apiError(
+    401,
+    "Unauthorized",
+    "Akun menunggu persetujuan admin."
+  ),
+  WEBHOOK_FAIL: new apiError(404, "Error", "Gagal mengirimkan pesan."),
 };

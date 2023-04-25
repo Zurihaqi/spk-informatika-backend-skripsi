@@ -40,4 +40,7 @@ module.exports = {
   removeAdmin: () => [
     param("id").isNumeric().withMessage("param id adalah integer"),
   ],
+  approveAdmin: () => [
+    param("id").isNumeric().withMessage("param id adalah integer"),
+  ],
 };

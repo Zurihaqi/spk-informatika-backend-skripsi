@@ -15,8 +15,15 @@ const signUp = router.post(
   validate,
   controller.signUp
 );
+const adminSignUp = router.post(
+  "/admin-register",
+  validation.adminSignUp(),
+  validate,
+  controller.adminSignUp
+);
 
 module.exports = {
   signIn,
   signUp,
+  adminSignUp,
 };

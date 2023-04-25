@@ -1,9 +1,10 @@
 const { User } = require("../db/models");
-const { JWT_SECRET, AES_SECRET } = process.env;
+const { JWT_SECRET, AES_SECRET, WEBHOOK_URL_SECOND } = process.env;
 const error = require("../misc/errorHandlers");
 const hash = require("../middlewares/passwordHashing");
 const jwt = require("jsonwebtoken");
 const CryptoJS = require("crypto-js");
+const fetch = require("node-fetch");
 
 module.exports = {
   signIn: async (req, res, next) => {
@@ -25,6 +26,7 @@ module.exports = {
 
       const userExist = await User.findOne(options);
       if (!userExist) throw error.UNREGISTERED;
+      if (userExist.isVerified === false) throw error.NOT_VERIFIED;
 
       const passwordField = userExist.password.split("$");
       const salt = passwordField[0];
@@ -92,11 +94,70 @@ module.exports = {
         email: email,
         student_id: student_id,
         password: req.body.password,
+        isVerified: true,
       });
       if (createUserResult) {
         return res.status(201).json({
           status: "Success",
           message: "Register sukses",
+          data: {
+            id: createUserResult.id,
+            name: createUserResult.name,
+            email: createUserResult.email,
+          },
+        });
+      }
+    } catch (err) {
+      next(err);
+    }
+  },
+  adminSignUp: async (req, res, next) => {
+    try {
+      const { name, email, reason } = req.body;
+
+      const userExist = await User.findOne({ where: { email: email } });
+      if (userExist) throw error.EMAIL_EXIST;
+
+      const url = WEBHOOK_URL_SECOND;
+
+      const webhookBody = {
+        embeds: [
+          {
+            title: "Pendaftaran Pengelola",
+            fields: [
+              { name: "Pengirim:", value: name },
+              { name: "Email:", value: email },
+              { name: "Alasan:", value: reason },
+            ],
+          },
+        ],
+      };
+
+      const sendMessage = fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(webhookBody),
+      });
+
+      if (!sendMessage) throw error.WEBHOOK_FAIL;
+
+      const createUserResult = await User.create({
+        name: name
+          .replace(/\s+/g, " ")
+          .replace(
+            /(^\w|\s\w)(\S*)/g,
+            (_, m1, m2) => m1.toUpperCase() + m2.toLowerCase()
+          ),
+        email: email,
+        password: req.body.password,
+        role: "Pengelola",
+      });
+      if (createUserResult) {
+        return res.status(201).json({
+          status: "Success",
+          message: "Register pengelola sukses",
           data: {
             id: createUserResult.id,
             name: createUserResult.name,

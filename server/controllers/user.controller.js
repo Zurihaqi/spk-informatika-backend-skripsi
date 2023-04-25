@@ -10,11 +10,15 @@ const hash = require("../middlewares/passwordHashing");
 module.exports = {
   getAllUser: async (req, res, next) => {
     try {
-      const { name } = req.query;
+      const { name, isVerified } = req.query;
       let options = {};
 
       if (name) {
-        options = { where: { name: { [Op.iLike]: name } } };
+        options.where = { name: { [Op.iLike]: name } };
+      }
+
+      if (isVerified) {
+        options.where = { isVerified: isVerified };
       }
 
       const result = await User.scope("noPassword").findAll(options);
@@ -197,6 +201,7 @@ module.exports = {
           message: "Pesan terkirim",
         });
       }
+      throw error.WEBHOOK_FAIL;
     } catch (err) {
       next(err);
     }
@@ -232,6 +237,25 @@ module.exports = {
         return res.status(201).json({
           status: "Success",
           message: "Berhasil menghapus pengelola.",
+        });
+      }
+      throw error.USER_NOT_FOUND;
+    } catch (err) {
+      next(err);
+    }
+  },
+  approveAdmin: async (req, res, next) => {
+    try {
+      const { id } = req.params;
+
+      const result = await User.update(
+        { isVerified: true },
+        { where: { id: id } }
+      );
+      if (result[0]) {
+        return res.status(201).json({
+          status: "Success",
+          message: "Berhasil menyetujui pengelola",
         });
       }
       throw error.USER_NOT_FOUND;

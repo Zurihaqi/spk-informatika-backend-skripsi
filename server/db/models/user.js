@@ -18,6 +18,7 @@ module.exports = (sequelize, DataTypes) => {
       profile_pic: DataTypes.STRING,
       student_id: DataTypes.STRING,
       role: DataTypes.ENUM("Mahasiswa", "Pengelola", "Admin"),
+      isVerified: DataTypes.BOOLEAN,
     },
     {
       sequelize,

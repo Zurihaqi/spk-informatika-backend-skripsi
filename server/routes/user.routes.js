@@ -45,5 +45,12 @@ router.patch(
   validate,
   controller.removeAdmin
 );
+router.patch(
+  "/approve-admin/:id",
+  isAdmin,
+  validation.approveAdmin(),
+  validate,
+  controller.approveAdmin
+);
 
 module.exports = router;
