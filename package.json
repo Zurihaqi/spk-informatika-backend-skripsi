@@ -24,7 +24,7 @@
     "start": "node ./bin/www",
     "dev": "nodemon ./bin/www",
     "test": "jest --forceExit --detectOpenHandles",
-    "postinstall": "npx sequelize-cli db:migrate"
+    "postinstall": "npx sequelize-cli db:migrate --env Production"
   },
   "repository": {
     "type": "git",
