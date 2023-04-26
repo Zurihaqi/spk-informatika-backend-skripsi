@@ -1,5 +1,6 @@
 const { User } = require("../db/models");
-const { JWT_SECRET, AES_SECRET, WEBHOOK_URL_SECOND } = process.env;
+const { JWT_SECRET, AES_SECRET, WEBHOOK_URL_SECOND, RECAPTCHA_SECRET } =
+  process.env;
 const error = require("../misc/errorHandlers");
 const hash = require("../middlewares/passwordHashing");
 const jwt = require("jsonwebtoken");
@@ -165,6 +166,26 @@ module.exports = {
           },
         });
       }
+    } catch (err) {
+      next(err);
+    }
+  },
+  verifyCaptcha: async (req, res, next) => {
+    try {
+      const { response_key } = req.body;
+      const url = `https://www.google.com/recaptcha/api/siteverify?secret=${RECAPTCHA_SECRET}&response=${response_key}`;
+
+      const verify = await fetch(url, {
+        method: "post",
+      });
+      const google_response = await verify.json();
+
+      if (!google_response.success) throw error.RECAPTCHA_FAIL;
+
+      return res.status(201).json({
+        status: "Success",
+        message: "Recaptcha berhasil diverifikasi.",
+      });
     } catch (err) {
       next(err);
     }

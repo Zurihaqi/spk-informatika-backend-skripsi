@@ -21,9 +21,11 @@ const adminSignUp = router.post(
   validate,
   controller.adminSignUp
 );
+const verifyReCaptcha = router.post("/verify", controller.verifyCaptcha);
 
 module.exports = {
   signIn,
   signUp,
   adminSignUp,
+  verifyReCaptcha,
 };

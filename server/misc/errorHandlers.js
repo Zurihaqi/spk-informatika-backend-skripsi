@@ -95,5 +95,6 @@ module.exports = {
     "Unauthorized",
     "Akun menunggu persetujuan admin."
   ),
-  WEBHOOK_FAIL: new apiError(404, "Error", "Gagal mengirimkan pesan."),
+  WEBHOOK_FAIL: new apiError(400, "Error", "Gagal mengirimkan pesan."),
+  RECAPTCHA_FAIL: new apiError(400, "Error", "Gagal memverifikasi reCAPTCHA."),
 };
