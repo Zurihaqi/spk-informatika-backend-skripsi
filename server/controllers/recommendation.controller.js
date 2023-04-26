@@ -16,11 +16,9 @@ module.exports = {
   },
   get: async (req, res, next) => {
     try {
-      const result = await Recommendation.findOne({
+      const result = await Recommendation.findAll({
         where: { user_id: req.user.id },
       });
-
-      if (!result) throw error.DATA_NOT_FOUND;
 
       return res.status(201).json({
         status: "Success",

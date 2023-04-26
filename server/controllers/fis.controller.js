@@ -98,8 +98,9 @@ module.exports = {
 
         if (softDevGrades.length !== softDevCourses.length)
           throw error.GRADE_NOT_FOUND;
-        result.software_development =
-          +softDev.getPreciseOutput(softDevGrades)[0];
+        result.software_development = +softDev
+          .getPreciseOutput(softDevGrades)[0]
+          .toFixed(2);
       }
 
       //Menghitung crisp output untuk peminatan data science
@@ -133,7 +134,9 @@ module.exports = {
 
         if (dataSciGrades.length !== dataSciCourses.length)
           throw error.GRADE_NOT_FOUND;
-        result.data_science = +dataSci.getPreciseOutput(dataSciGrades)[0];
+        result.data_science = +dataSci
+          .getPreciseOutput(dataSciGrades)[0]
+          .toFixed(2);
       }
 
       //Menghitung crisp output untuk peminatan networking
@@ -167,7 +170,9 @@ module.exports = {
 
         if (networkingGrades.length !== networkCourses.length)
           throw error.GRADE_NOT_FOUND;
-        result.networking = +networking.getPreciseOutput(networkingGrades)[0];
+        result.networking = +networking
+          .getPreciseOutput(networkingGrades)[0]
+          .toFixed(2);
       }
 
       if (result) {
@@ -197,46 +202,38 @@ module.exports = {
             (result.networking / sum) * 100
           );
 
-          const checkRecs = await Recommendation.findOne({
+          const recsCount = await Recommendation.count({
             where: { user_id: req.user.id },
           });
 
-          if (checkRecs) {
-            await Recommendation.update(
-              {
-                crispOutput: [
-                  result.software_development,
-                  result.data_science,
-                  result.networking,
-                ],
-                percentage: [
-                  result.softDevPercentage,
-                  result.dataSciPercentage,
-                  result.networkingPercentage,
-                ],
-              },
-              { where: { user_id: req.user.id } }
-            );
-          } else {
-            await Recommendation.create({
-              crispOutput: [
-                result.software_development,
-                result.data_science,
-                result.networking,
-              ],
-              percentage: [
-                result.softDevPercentage,
-                result.dataSciPercentage,
-                result.networkingPercentage,
-              ],
-              user_id: req.user.id,
+          const createRecs = await Recommendation.create({
+            crispOutput: [
+              result.software_development.toFixed(2),
+              result.data_science.toFixed(2),
+              result.networking.toFixed(2),
+            ],
+            percentage: [
+              result.softDevPercentage,
+              result.dataSciPercentage,
+              result.networkingPercentage,
+            ],
+            user_id: req.user.id,
+          });
+
+          const latestRecId = +createRecs.id;
+
+          if (recsCount >= 3) {
+            await Recommendation.destroy({
+              where: { user_id: req.user.id, id: latestRecId - 2 },
+            });
+          }
+          if (createRecs) {
+            return res.status(201).json({
+              status: "Success",
+              result: result,
             });
           }
         }
-        return res.status(201).json({
-          status: "Success",
-          result: result,
-        });
       }
     } catch (err) {
       next(err);
