@@ -62,8 +62,6 @@ module.exports = {
       const { course_code, course_name, credit, semester, spec_id } = req.body;
       const { id } = req.params;
 
-      console.log(typeof spec_id);
-
       const dataExist = await Course.findByPk(id);
       if (!dataExist) throw error.DATA_NOT_FOUND;
 

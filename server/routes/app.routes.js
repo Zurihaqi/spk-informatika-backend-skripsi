@@ -8,6 +8,7 @@ const user = require("../routes/user.routes");
 const rule = require("../routes/rule.routes");
 const fis = require("../routes/fis.routes");
 const recommendation = require("../routes/recommendation.routes");
+const notification = require("../routes/notification.routes");
 const errorRoutes = require("./error.routes");
 
 router.use(signIn);
@@ -21,6 +22,7 @@ router.use("/specialization", specialization);
 router.use("/rule", rule);
 router.use("/fis", fis);
 router.use("/recommendation", recommendation);
+router.use("/notification", notification);
 
 // error handlers
 router.use((error, req, res, next) => errorRoutes(error, req, res, next));

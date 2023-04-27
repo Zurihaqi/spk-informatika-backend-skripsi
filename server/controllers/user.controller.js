@@ -1,4 +1,4 @@
-const { User, Grade, Recommendation } = require("../db/models/");
+const { User, Grade, Recommendation, Notification } = require("../db/models/");
 const Op = require("sequelize").Op;
 const { WEBHOOK_URL } = process.env;
 const fetch = require("node-fetch");
@@ -215,6 +215,11 @@ module.exports = {
         { where: { id: id } }
       );
       if (result[0]) {
+        await Notification.create({
+          content: "Anda telah dijadikan pengelola.",
+          user_id: id,
+        });
+
         return res.status(201).json({
           status: "Success",
           message: "Berhasil menambahkan pengelola.",
@@ -234,6 +239,11 @@ module.exports = {
         { where: { id: id } }
       );
       if (result[0]) {
+        await Notification.create({
+          content: "Anda bukan lagi pengelola.",
+          user_id: id,
+        });
+
         return res.status(201).json({
           status: "Success",
           message: "Berhasil menghapus pengelola.",
@@ -247,12 +257,39 @@ module.exports = {
   approveAdmin: async (req, res, next) => {
     try {
       const { id } = req.params;
+      const { declined } = req.query;
+
+      if (declined) {
+        const result = await User.update(
+          {
+            isVerified: true,
+            role: "Mahasiswa",
+          },
+          { where: { id: id } }
+        );
+        if (result[0]) {
+          await Notification.create({
+            content: "Pengajuan pengelola anda ditolak.",
+            user_id: id,
+          });
+
+          return res.status(201).json({
+            status: "Success",
+            message: "Berhasil menolak pengelola",
+          });
+        }
+      }
 
       const result = await User.update(
         { isVerified: true },
         { where: { id: id } }
       );
       if (result[0]) {
+        await Notification.create({
+          content: "Pengajuan pengelola anda disetujui.",
+          user_id: id,
+        });
+
         return res.status(201).json({
           status: "Success",
           message: "Berhasil menyetujui pengelola",
