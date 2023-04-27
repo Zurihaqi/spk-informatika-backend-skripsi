@@ -110,17 +110,18 @@ module.exports = {
     try {
       const { id } = req.user;
 
-      const userExist = await User.findByPk(req.user.id);
+      const userExist = await User.findByPk(id);
 
       const passwordField = userExist.password.split("$");
       const salt = passwordField[0];
       const validatePassword = hash(req.body.password, salt);
 
       if (validatePassword === passwordField[1]) {
-        await Recommendation.destroy({ where: { user_id: req.user.id } });
+        await Recommendation.destroy({ where: { user_id: id } });
         await Grade.destroy({
-          where: { user_id: req.user.id },
+          where: { user_id: id },
         });
+        await Notification.destroy({ where: { user_id: id } });
         const result = await User.destroy({
           where: { id: id },
         });
@@ -140,7 +141,7 @@ module.exports = {
     try {
       const { id } = req.user;
 
-      const userExist = await User.findByPk(req.user.id);
+      const userExist = await User.findByPk(id);
 
       const passwordField = userExist.password.split("$");
       const salt = passwordField[0];
