@@ -202,8 +202,14 @@ module.exports = {
             (result.networking / sum) * 100
           );
 
-          const recsCount = await Recommendation.count({
+          const getRecs = await Recommendation.findAll({
             where: { user_id: req.user.id },
+          });
+
+          let recIds = [];
+
+          getRecs.forEach((e) => {
+            recIds.push(e.id);
           });
 
           const createRecs = await Recommendation.create({
@@ -220,11 +226,9 @@ module.exports = {
             user_id: req.user.id,
           });
 
-          const latestRecId = +createRecs.id;
-
-          if (recsCount >= 3) {
+          if (recIds.length >= 3) {
             await Recommendation.destroy({
-              where: { user_id: req.user.id, id: latestRecId - 2 },
+              where: { user_id: req.user.id, id: +Math.min(...recIds) },
             });
           }
           if (createRecs) {
