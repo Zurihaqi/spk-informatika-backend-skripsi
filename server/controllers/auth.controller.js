@@ -1,4 +1,4 @@
-const { User } = require("../db/models");
+const { User, Notification } = require("../db/models");
 const { JWT_SECRET, AES_SECRET, WEBHOOK_URL_SECOND, RECAPTCHA_SECRET } =
   process.env;
 const error = require("../misc/errorHandlers");
@@ -98,6 +98,11 @@ module.exports = {
         isVerified: true,
       });
       if (createUserResult) {
+        await Notification.create({
+          content: "Selamat datang di SPK Informatika!",
+          user_id: createUserResult.id,
+        });
+
         return res.status(201).json({
           status: "Success",
           message: "Register sukses",
@@ -156,6 +161,11 @@ module.exports = {
         role: "Pengelola",
       });
       if (createUserResult) {
+        await Notification.create({
+          content: "Selamat datang di SPK Informatika!",
+          user_id: createUserResult.id,
+        });
+
         return res.status(201).json({
           status: "Success",
           message: "Register pengelola sukses",
