@@ -11,7 +11,6 @@ const cloudinaryUpload = async (req, res, next) => {
   try {
     if (req.file) {
       if (req.user.profile_pic) {
-        console.log(req.user.profile_pic);
         const myAssetIndex = req.user.profile_pic.indexOf("my-asset");
         const extractedString = req.user.profile_pic
           .substring(myAssetIndex)
