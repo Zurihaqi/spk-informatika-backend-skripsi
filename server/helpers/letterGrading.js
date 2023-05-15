@@ -1,28 +1,26 @@
 const error = require("../misc/errorHandlers");
 
-module.exports = letterGrading = (grade, credit) => {
-  switch (grade !== undefined) {
-    case grade == "A":
-      return { credit_grade: credit * (4.0).toFixed(2), numbered_grade: 4.0 };
-    case grade == "A-":
-      return { credit_grade: credit * (3.75).toFixed(2), numbered_grade: 3.75 };
-    case grade == "B+":
-      return { credit_grade: credit * (3.25).toFixed(2), numbered_grade: 3.25 };
-    case grade == "B":
-      return { credit_grade: credit * (3.0).toFixed(2), numbered_grade: 3.0 };
-    case grade == "B-":
-      return { credit_grade: credit * (2.75).toFixed(2), numbered_grade: 2.75 };
-    case grade == "C+":
-      return { credit_grade: credit * (2.25).toFixed(2), numbered_grade: 2.25 };
-    case grade == "C":
-      return { credit_grade: credit * (2.0).toFixed(2), numbered_grade: 2.0 };
-    case grade == "C-":
-      return { credit_grade: credit * (1.75).toFixed(2), numbered_grade: 1.75 };
-    case grade == "D":
-      return { credit_grade: credit * (1.0).toFixed(2), numbered_grade: 1.0 };
-    case grade == "E":
-      return { credit_grade: 0.1, numbered_grade: 0.1 };
-    default:
-      throw error.INVALID_GRADE;
+module.exports = function letterGrading(grade, credit) {
+  const gradeMapping = {
+    A: { credit_grade: 4.0, numbered_grade: 4.0 },
+    "A-": { credit_grade: 3.75, numbered_grade: 3.75 },
+    "B+": { credit_grade: 3.25, numbered_grade: 3.25 },
+    B: { credit_grade: 3.0, numbered_grade: 3.0 },
+    "B-": { credit_grade: 2.75, numbered_grade: 2.75 },
+    "C+": { credit_grade: 2.25, numbered_grade: 2.25 },
+    C: { credit_grade: 2.0, numbered_grade: 2.0 },
+    "C-": { credit_grade: 1.75, numbered_grade: 1.75 },
+    D: { credit_grade: 1.0, numbered_grade: 1.0 },
+    E: { credit_grade: 0.1, numbered_grade: 0.1 },
+  };
+
+  if (grade in gradeMapping) {
+    const { credit_grade, numbered_grade } = gradeMapping[grade];
+    return {
+      credit_grade: (credit * credit_grade).toFixed(2),
+      numbered_grade: numbered_grade,
+    };
+  } else {
+    throw error.INVALID_GRADE;
   }
 };
