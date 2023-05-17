@@ -1,33 +1,36 @@
 const router = require("express").Router();
 const { signIn, signUp } = require("./auth.routes");
 const { authentication } = require("../middlewares/passport");
-const course = require("../routes/course.routes");
-const grade = require("../routes/grade.routes");
-const specialization = require("../routes/specialization.routes");
-const user = require("../routes/user.routes");
-const rule = require("../routes/rule.routes");
-const fis = require("../routes/fis.routes");
-const recommendation = require("../routes/recommendation.routes");
-const notification = require("../routes/notification.routes");
+const routes = [
+  { path: "/user", module: require("../routes/user.routes") },
+  { path: "/course", module: require("../routes/course.routes") },
+  { path: "/grade", module: require("../routes/grade.routes") },
+  {
+    path: "/specialization",
+    module: require("../routes/specialization.routes"),
+  },
+  { path: "/rule", module: require("../routes/rule.routes") },
+  { path: "/fis", module: require("../routes/fis.routes") },
+  {
+    path: "/recommendation",
+    module: require("../routes/recommendation.routes"),
+  },
+  { path: "/notification", module: require("../routes/notification.routes") },
+];
 const errorRoutes = require("./error.routes");
 
 router.use(signIn);
 router.use(signUp);
 router.use(authentication);
 
-router.use("/user", user);
-router.use("/course", course);
-router.use("/grade", grade);
-router.use("/specialization", specialization);
-router.use("/rule", rule);
-router.use("/fis", fis);
-router.use("/recommendation", recommendation);
-router.use("/notification", notification);
+for (const route of routes) {
+  router.use(route.path, route.module);
+}
 
-// error handlers
+// Error handlers
 router.use((error, req, res, next) => errorRoutes(error, req, res, next));
 
-// page not found handler
+// Page not found handler
 router.use((req, res) => {
   return res.status(404).json({
     status: "Not found",

@@ -1,100 +1,81 @@
-class apiError extends Error {
-  constructor(code, status, message) {
+class ApiError extends Error {
+  constructor(code, message) {
     super(message);
     this.code = code;
-    this.status = status;
+  }
+
+  toJson() {
+    return {
+      code: this.code,
+      status: this.getStatus(),
+      message: this.message,
+    };
+  }
+
+  getStatus() {
+    switch (this.code) {
+      case 401:
+        return "Unauthorized";
+      case 404:
+        return "Not Found";
+      case 409:
+        return "Duplicate";
+      case 400:
+      default:
+        return "Error";
+    }
   }
 }
 
 module.exports = {
-  UNAUTHORIZED: new apiError(
-    401,
-    "Unauthorized",
-    "Login untuk menggukanan API"
-  ),
-  EMAIL_EXIST: new apiError(
-    401,
-    "Unauthorized",
-    `User dengan email tersebut sudah terdaftar`
-  ),
-  INVALID_CRED: new apiError(
-    401,
-    "Unauthorized",
-    "Email atau kata sandi salah"
-  ),
-  EMPTY_TABLE: new apiError(404, "Not Found", "Tabel kosong"),
-  DUPLICATE_DATA: new apiError(
+  UNAUTHORIZED: new ApiError(401, "Login untuk menggunakan API"),
+  EMAIL_EXIST: new ApiError(401, "User dengan email tersebut sudah terdaftar"),
+  INVALID_CRED: new ApiError(401, "Email atau kata sandi salah"),
+  EMPTY_TABLE: new ApiError(404, "Tabel kosong"),
+  DUPLICATE_DATA: new ApiError(
     409,
-    "Duplicate",
     "Data yang ingin dibuat sudah ada dalam database"
   ),
-  DATA_NOT_FOUND: new apiError(
-    404,
-    "Not Found",
-    "Data yang dicari tidak ditemukan."
-  ),
-  DATA_FK: new apiError(401, "Error", "Data masih tersimpan pada tabel lain."),
-  EMPTY_BODY: new apiError(404, "Error", "Masukan data yang ingin diubah"),
-  FK_NOT_FOUND: new apiError(
-    404,
-    "Not Found",
-    "Data FK yang dituju tidak ditemukan"
-  ),
-  INVALID_GRADE: new apiError(400, "Error", "Nilai yang dimasukan tidak valid"),
-  UNAUTHORIZED_ADMIN: new apiError(
+  DATA_NOT_FOUND: new ApiError(404, "Data yang dicari tidak ditemukan."),
+  DATA_FK: new ApiError(401, "Data masih tersimpan pada tabel lain."),
+  EMPTY_BODY: new ApiError(404, "Masukkan data yang ingin diubah"),
+  FK_NOT_FOUND: new ApiError(404, "Data FK yang dituju tidak ditemukan"),
+  INVALID_GRADE: new ApiError(400, "Nilai yang dimasukkan tidak valid"),
+  UNAUTHORIZED_ADMIN: new ApiError(
     401,
-    "Unauthorized",
     "Anda tidak memiliki hak akses ke endpoint ini."
   ),
-  FILE_SIZE: new apiError(400, "Error", "Ukuran file gambar terlalu besar"),
-  INVALID_FORMAT: new apiError(
+  FILE_SIZE: new ApiError(400, "Ukuran file gambar terlalu besar"),
+  INVALID_FORMAT: new ApiError(
     400,
-    "Error",
     "Format yang diperbolehkan: png, jpg, jpeg, webp"
   ),
-  INVALID_FORMAT_GIF: new apiError(
+  INVALID_FORMAT_GIF: new ApiError(
     400,
-    "Error",
     "Format yang diperbolehkan: png, jpg, jpeg, webp, gif"
   ),
-  GRADE_NOT_FOUND: new apiError(
+  GRADE_NOT_FOUND: new ApiError(
     400,
-    "Error",
-    "Harap masukan semua nilai terlebih dahulu."
+    "Harap masukkan semua nilai terlebih dahulu."
   ),
-  RULE_NOT_FOUND: new apiError(
-    400,
-    "Error",
-    "Belum ada rule untuk peminatan ini"
-  ),
-  WRONG_PASSWORD: new apiError(400, "Error", "Kata sandi salah."),
-  FIS_ERROR: new apiError(
+  RULE_NOT_FOUND: new ApiError(400, "Belum ada rule untuk peminatan ini"),
+  WRONG_PASSWORD: new ApiError(400, "Kata sandi salah."),
+  FIS_ERROR: new ApiError(
     500,
-    "Error",
     "Terjadi kesalahan dalam perhitungan. Harap laporkan masalah ini."
   ),
-  UNREGISTERED: new apiError(401, "Unauthorized", "Email/NPM belum terdaftar."),
-  STUD_ID_EXIST: new apiError(
+  UNREGISTERED: new ApiError(401, "Email/NPM belum terdaftar."),
+  STUD_ID_EXIST: new ApiError(
     400,
-    "Error",
     "Nomor Pokok Mahasiswa tersebut sudah terdaftar."
   ),
-  FILE_COUNT: new apiError(400, "Error", "Hanya dapat mengunggah 1 gambar."),
-  USER_NOT_FOUND: new apiError(
-    404,
-    "Not Found",
-    "User yang dicari tidak ditemukan."
-  ),
-  COURSE_SPEC_ASSOC: new apiError(
+  FILE_COUNT: new ApiError(400, "Hanya dapat mengunggah 1 gambar."),
+  USER_NOT_FOUND: new ApiError(404, "User yang dicari tidak ditemukan."),
+  COURSE_SPEC_ASSOC: new ApiError(
     401,
-    "Error",
     "Mata kuliah masih digunakan untuk perhitungan SPK."
   ),
-  NOT_VERIFIED: new apiError(
-    401,
-    "Unauthorized",
-    "Akun menunggu persetujuan admin."
-  ),
-  WEBHOOK_FAIL: new apiError(400, "Error", "Gagal mengirimkan pesan."),
-  RECAPTCHA_FAIL: new apiError(400, "Error", "Gagal memverifikasi reCAPTCHA."),
+  NOT_VERIFIED: new ApiError(401, "Akun menunggu persetujuan admin."),
+  WEBHOOK_FAIL: new ApiError(400, "Gagal mengirimkan pesan."),
+  RECAPTCHA_FAIL: new ApiError(400, "Gagal memverifikasi reCAPTCHA."),
 };
