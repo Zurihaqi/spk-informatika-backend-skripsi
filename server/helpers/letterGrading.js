@@ -1,5 +1,6 @@
 const error = require("../misc/errorHandlers");
 
+//Mengubah nilai huruf menjadi angka
 module.exports = function letterGrading(grade, credit) {
   const gradeMapping = {
     A: { credit_grade: 4.0, numbered_grade: 4.0 },

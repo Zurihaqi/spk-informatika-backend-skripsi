@@ -5,6 +5,7 @@ const updater = require("../helpers/updater");
 const isEmpty = require("../helpers/emptyObjectCheck");
 
 module.exports = {
+  //Mengambil seluruh data nilai mahasiswa
   getAll: async (req, res, next) => {
     try {
       const result = await Grade.findAll({
@@ -21,6 +22,8 @@ module.exports = {
       next(err);
     }
   },
+
+  //Mengambil nilai sesuai ID
   getById: async (req, res, next) => {
     try {
       const { id } = req.params;
@@ -39,6 +42,8 @@ module.exports = {
       next(err);
     }
   },
+
+  //Membuat nilai baru
   create: async (req, res, next) => {
     try {
       const { lettered_grade, course_id } = req.body;
@@ -70,6 +75,8 @@ module.exports = {
       next(err);
     }
   },
+
+  //Update data nilai mahasiswa
   update: async (req, res, next) => {
     try {
       const { lettered_grade, course_id } = req.body;
@@ -131,6 +138,8 @@ module.exports = {
       next(err);
     }
   },
+
+  //Menghapus data nilai
   delete: async (req, res, next) => {
     try {
       const { id } = req.params;

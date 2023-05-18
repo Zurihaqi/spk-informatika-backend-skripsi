@@ -8,19 +8,25 @@ const CryptoJS = require("crypto-js");
 const fetch = require("node-fetch");
 
 module.exports = {
+  //Controller untuk login
   signIn: async (req, res, next) => {
     try {
       const { email } = req.body;
       const isEmail = validateEmail(email);
 
+      //Cek apakah kolom email berisi alamat email atau NPM
       const options = isEmail
         ? { where: { email } }
         : { where: { student_id: email } };
       const userExist = await User.findOne(options);
 
+      //Error ketika user belum terdaftar
       if (!userExist) throw error.UNREGISTERED;
+
+      //Error ketika pengelola belum diverifikasi admin
       if (!userExist.isVerified) throw error.NOT_VERIFIED;
 
+      //Validasi password yang dimasukkan
       const validatePassword = hash(
         req.body.password,
         userExist.password.split("$")[0]
@@ -29,6 +35,7 @@ module.exports = {
         throw error.WRONG_PASSWORD;
       }
 
+      //Enkripsi data user untuk digunakan dalam payload
       const encryptedUser = encryptUserFields(userExist);
 
       const token = jwt.sign(encryptedUser, JWT_SECRET, { expiresIn: "1h" });
@@ -43,13 +50,16 @@ module.exports = {
     }
   },
 
+  //Controller untuk pendaftaran akun mahasiswa
   signUp: async (req, res, next) => {
     try {
       const { name, email, student_id } = req.body;
 
+      //Cek apakah email sudah terdaftar
       const userExist = await User.findOne({ where: { email } });
       if (userExist) throw error.EMAIL_EXIST;
 
+      //Cek apakah NPM sudah terdaftar
       const idExist = await User.findOne({ where: { student_id } });
       if (idExist) throw error.STUD_ID_EXIST;
 
@@ -61,6 +71,7 @@ module.exports = {
         isVerified: true,
       });
 
+      //Mengirimkan notifikasi pada user ketika akun berhasil dibuat
       await Notification.create({
         content: "Selamat datang di SPK Informatika!",
         user_id: createUserResult.id,
@@ -80,10 +91,12 @@ module.exports = {
     }
   },
 
+  //Controller untuk pendaftaran akun pengelola
   adminSignUp: async (req, res, next) => {
     try {
       const { name, email, reason } = req.body;
 
+      //Cek apakah email sudah terdaftar
       const userExist = await User.findOne({ where: { email } });
       if (userExist) throw error.EMAIL_EXIST;
 
@@ -102,6 +115,7 @@ module.exports = {
         ],
       };
 
+      //Mengirimkan pesan melalui webhook Discord apabila ada pendaftar pengelola baru
       const sendMessage = await fetch(url, {
         method: "POST",
         headers: {
@@ -121,6 +135,7 @@ module.exports = {
         role: "Pengelola",
       });
 
+      //Mengirimkan notifikasi pada user ketika akun berhasil dibuat
       await Notification.create({
         content: "Selamat datang di SPK Informatika!",
         user_id: createUserResult.id,
@@ -140,6 +155,7 @@ module.exports = {
     }
   },
 
+  //Verifikasi recaptcha
   verifyCaptcha: async (req, res, next) => {
     try {
       const { response_key } = req.body;
@@ -163,11 +179,13 @@ module.exports = {
   },
 };
 
+//Validasi email
 function validateEmail(email) {
   const re = /\S+@\S+\.\S+/;
   return re.test(email);
 }
 
+//Sanitasi nama
 function formatName(name) {
   return name
     .replace(/\s+/g, " ")
@@ -177,6 +195,7 @@ function formatName(name) {
     );
 }
 
+//Enkripsi data payload jwt
 function encryptUserFields(user) {
   const { role, name, student_id, email } = user;
 

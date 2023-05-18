@@ -4,6 +4,7 @@ const updater = require("../helpers/updater");
 const isEmpty = require("../helpers/emptyObjectCheck");
 
 module.exports = {
+  //Ambil seluruh data mata kuliah dalam database
   getAll: async (req, res, next) => {
     try {
       const result = await Course.findAll();
@@ -17,6 +18,8 @@ module.exports = {
       next(err);
     }
   },
+
+  //Ambil data mata kuliah sesuai ID yang dicari dari database
   getById: async (req, res, next) => {
     try {
       const { id } = req.params;
@@ -32,6 +35,8 @@ module.exports = {
       next(err);
     }
   },
+
+  //Membuat data mata kuliah baru
   create: async (req, res, next) => {
     try {
       const { course_code, course_name, credit, semester } = req.body;
@@ -57,6 +62,8 @@ module.exports = {
       next(err);
     }
   },
+
+  //Update data mata kuliah yang dipilih sesuai ID
   update: async (req, res, next) => {
     try {
       const { course_code, course_name, credit, semester, spec_id } = req.body;
@@ -92,6 +99,8 @@ module.exports = {
       next(err);
     }
   },
+
+  //Menghapus data mata kuliah sesuai ID yang dipilih
   delete: async (req, res, next) => {
     try {
       const { id } = req.params;
