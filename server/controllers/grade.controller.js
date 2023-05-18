@@ -5,8 +5,23 @@ const updater = require("../helpers/updater");
 const isEmpty = require("../helpers/emptyObjectCheck");
 
 module.exports = {
-  //Mengambil seluruh data nilai mahasiswa
   getAll: async (req, res, next) => {
+    try {
+      const result = await Grade.findAll({
+        include: { model: Course },
+      });
+
+      return res.status(201).json({
+        status: "Success",
+        data: result,
+      });
+    } catch (err) {
+      next(err);
+    }
+  },
+
+  //Mengambil nilai mahasiswa
+  get: async (req, res, next) => {
     try {
       const result = await Grade.findAll({
         where: { user_id: req.user.id },
