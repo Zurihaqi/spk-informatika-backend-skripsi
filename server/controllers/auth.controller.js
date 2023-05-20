@@ -5,7 +5,9 @@ const error = require("../misc/errorHandlers");
 const hash = require("../middlewares/passwordHashing");
 const jwt = require("jsonwebtoken");
 const CryptoJS = require("crypto-js");
+const crypto = require("crypto");
 const fetch = require("node-fetch");
+const mailer = require("../middlewares/mailer");
 
 module.exports = {
   //Controller untuk login
@@ -172,6 +174,65 @@ module.exports = {
       return res.status(201).json({
         status: "Success",
         message: "Recaptcha berhasil diverifikasi.",
+      });
+    } catch (err) {
+      next(err);
+    }
+  },
+
+  //Lupa Password
+  forgotPass: async (req, res, next) => {
+    try {
+      const { email } = req.body;
+      const otp = crypto.randomBytes(20).toString("hex");
+
+      const userExist = await User.findOne({ where: { email } });
+      if (!userExist) throw error.UNREGISTERED2;
+
+      const insertOTP = await User.update(
+        {
+          otp: otp,
+        },
+        { where: { email } }
+      );
+
+      if (insertOTP) {
+        const emailResponse = await mailer(
+          email,
+          "Atur ulang kata sandi",
+          `Untuk mengatur ulang kata sandi, klik link berikut:\nhttps://spk-informatika.vercel.app/reset-password/${otp}`
+        );
+
+        if (emailResponse) {
+          return res.status(201).json({
+            status: "Success",
+          });
+        }
+      }
+    } catch (err) {
+      next(err);
+    }
+  },
+
+  //Validasi lupa sandi
+  forgotPassValidate: async (req, res, next) => {
+    try {
+      const { otp, password } = req.body;
+
+      const user = await User.findOne({ where: { otp } });
+      if (!user) {
+        throw error.INVALID_OTP;
+      }
+
+      await User.update(
+        { password },
+        { where: { id: user.id }, individualHooks: true }
+      );
+
+      await User.update({ otp: "" }, { where: { id: user.id } });
+
+      return res.status(201).json({
+        status: "Success",
       });
     } catch (err) {
       next(err);

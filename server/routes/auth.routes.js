@@ -22,10 +22,22 @@ const adminSignUp = router.post(
   controller.adminSignUp
 );
 const verifyReCaptcha = router.post("/verify", controller.verifyCaptcha);
+const forgotPass = router.post(
+  "/forgot-pass",
+  validation.forgotPass(),
+  validate,
+  controller.forgotPass
+);
+const forgotPassValidate = router.post(
+  "/forgot-pass/validate",
+  controller.forgotPassValidate
+);
 
 module.exports = {
   signIn,
   signUp,
   adminSignUp,
   verifyReCaptcha,
+  forgotPass,
+  forgotPassValidate,
 };

@@ -42,4 +42,10 @@ module.exports = {
       .isLength({ min: 6 })
       .withMessage("Kata sandi harus memiliki minimal 6 karakter."),
   ],
+  forgotPass: () => [
+    body("email")
+      .normalizeEmail()
+      .isEmail()
+      .withMessage("Masukan alamat email yang valid."),
+  ],
 };

@@ -64,7 +64,8 @@ module.exports = {
     500,
     "Terjadi kesalahan dalam perhitungan. Harap laporkan masalah ini."
   ),
-  UNREGISTERED: new ApiError(401, "Email/NPM belum terdaftar."),
+  UNREGISTERED: new ApiError(401, "Email/NPM tidak terdaftar."),
+  UNREGISTERED2: new ApiError(401, "Email tidak terdaftar."),
   STUD_ID_EXIST: new ApiError(
     400,
     "Nomor Pokok Mahasiswa tersebut sudah terdaftar."
@@ -78,4 +79,6 @@ module.exports = {
   NOT_VERIFIED: new ApiError(401, "Akun menunggu persetujuan admin."),
   WEBHOOK_FAIL: new ApiError(400, "Gagal mengirimkan pesan."),
   RECAPTCHA_FAIL: new ApiError(400, "Gagal memverifikasi reCAPTCHA."),
+  MAILER_FAIL: new ApiError(500, "Gagal mengirim email."),
+  INVALID_OTP: new ApiError(400, "Link reset kata sandi sudah tidak berlaku."),
 };

@@ -19,13 +19,14 @@ module.exports = (sequelize, DataTypes) => {
       student_id: DataTypes.STRING,
       role: DataTypes.ENUM("Mahasiswa", "Pengelola", "Admin"),
       isVerified: DataTypes.BOOLEAN,
+      otp: DataTypes.STRING,
     },
     {
       sequelize,
       modelName: "User",
       scopes: {
         noPassword: {
-          attributes: { exclude: ["password"] },
+          attributes: { exclude: ["password", "otp"] },
         },
       },
       hooks: {
