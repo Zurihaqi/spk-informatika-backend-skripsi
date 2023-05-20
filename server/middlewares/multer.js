@@ -20,17 +20,18 @@ const imageUpload = multer({
       "image/jpeg",
     ];
     const isAdmin = req.user.role === "Admin";
+    const isGifFile = file.mimetype === "image/gif";
 
-    if (isAdmin && file.mimetype === "image/gif") {
+    if (isAdmin || (isGifFile && !isAdmin)) {
       return cb(null, true);
-    } else if (!isAdmin && allowedMimeTypes.includes(file.mimetype)) {
+    } else if (allowedMimeTypes.includes(file.mimetype)) {
       return cb(null, true);
     } else {
       return cb(errors.INVALID_FORMAT);
     }
   },
   limits: {
-    fileSize: 5242880,
+    fileSize: 5242880, // 5MB
     files: 1,
   },
 });
