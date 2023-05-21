@@ -5,7 +5,7 @@ const errorMessages = (error, req, res, next) => {
   };
 
   switch (true) {
-    case error.code !== undefined:
+    case error.code !== undefined && Number.isInteger(error.code):
       response = {
         status: error.status,
         message: error.message,

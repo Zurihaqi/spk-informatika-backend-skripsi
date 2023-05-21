@@ -5,6 +5,7 @@ const { google } = require("googleapis");
 const OAuth2 = google.auth.OAuth2;
 const { promisify } = require("util");
 const error = require("../misc/errorHandlers");
+const path = require("path");
 
 const oauth2Client = new OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URL);
 
@@ -12,7 +13,9 @@ oauth2Client.setCredentials({
   refresh_token: REFRESH_TOKEN,
 });
 
-const sendEmail = async (receiver, subject, message) => {
+const imagePath = path.join(__dirname, "../../public/mailer-template/images");
+
+const sendEmail = async (receiver, subject, content) => {
   try {
     const transporter = nodemailer.createTransport({
       service: "gmail",
@@ -33,7 +36,7 @@ const sendEmail = async (receiver, subject, message) => {
       from: SENDER_EMAIL,
       to: receiver,
       subject: subject,
-      text: message,
+      html: content,
     };
 
     const sendMailAsync = promisify(transporter.sendMail).bind(transporter);

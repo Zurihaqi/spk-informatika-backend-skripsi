@@ -8,6 +8,8 @@ const CryptoJS = require("crypto-js");
 const crypto = require("crypto");
 const fetch = require("node-fetch");
 const mailer = require("../middlewares/mailer");
+const fs = require("fs");
+const path = require("path");
 
 module.exports = {
   //Controller untuk login
@@ -189,6 +191,15 @@ module.exports = {
       const userExist = await User.findOne({ where: { email } });
       if (!userExist) throw error.UNREGISTERED2;
 
+      const filePath = path.join(
+        __dirname,
+        "../../public/mailer-template/password-reset.html"
+      );
+
+      let htmlContent = fs.readFileSync(filePath, "utf-8");
+      const resetLink = `https://spk-informatika.vercel.app/reset-password/${otp}`;
+      htmlContent = htmlContent.replace("{{resetLink}}", resetLink);
+
       const insertOTP = await User.update(
         {
           otp: otp,
@@ -200,7 +211,7 @@ module.exports = {
         const emailResponse = await mailer(
           email,
           "Atur ulang kata sandi",
-          `Untuk mengatur ulang kata sandi, klik link berikut:\nhttps://spk-informatika.vercel.app/reset-password/${otp}`
+          htmlContent
         );
 
         if (emailResponse) {
