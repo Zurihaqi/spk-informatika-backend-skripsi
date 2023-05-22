@@ -8,10 +8,12 @@ module.exports = {
         include: { model: User, attributes: ["name"] },
       });
 
-      return res.status(201).json({
-        status: "Success",
-        data: result,
-      });
+      if (result) {
+        return res.status(201).json({
+          status: "Success",
+          data: result,
+        });
+      }
     } catch (err) {
       next(err);
     }
