@@ -5,15 +5,12 @@ const { google } = require("googleapis");
 const OAuth2 = google.auth.OAuth2;
 const { promisify } = require("util");
 const error = require("../misc/errorHandlers");
-const path = require("path");
 
 const oauth2Client = new OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URL);
 
 oauth2Client.setCredentials({
   refresh_token: REFRESH_TOKEN,
 });
-
-const imagePath = path.join(__dirname, "../../public/mailer-template/images");
 
 const sendEmail = async (receiver, subject, content) => {
   try {

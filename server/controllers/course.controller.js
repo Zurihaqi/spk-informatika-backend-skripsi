@@ -1,4 +1,4 @@
-const { Course } = require("../db/models/");
+const { Course, Audit } = require("../db/models/");
 const error = require("../misc/errorHandlers");
 const updater = require("../helpers/updater");
 const isEmpty = require("../helpers/emptyObjectCheck");
@@ -53,6 +53,11 @@ module.exports = {
         semester: semester,
       });
       if (result) {
+        await Audit.create({
+          action: `Membuat mata kuliah "${course_name}" dengan id ${result.id}`,
+          user_id: req.user.id,
+        });
+
         return res.status(201).json({
           status: "Success",
           data: result,
@@ -90,6 +95,11 @@ module.exports = {
         }
       );
       if (result) {
+        await Audit.create({
+          action: `Mengubah data mata kuliah "${result[1].course_name}" dengan id ${id}`,
+          user_id: req.user.id,
+        });
+
         return res.status(201).json({
           status: "Success",
           data: result[1],
@@ -112,6 +122,11 @@ module.exports = {
         where: { id: id },
       });
       if (!result) throw error.DATA_NOT_FOUND;
+
+      await Audit.create({
+        action: `Menghapus mata kuliah "${course.course_name}" dengan id ${id}`,
+        user_id: req.user.id,
+      });
 
       return res.status(201).json({
         status: "Success",

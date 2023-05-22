@@ -17,6 +17,7 @@ const routes = [
   },
   { path: "/notification", module: require("../routes/notification.routes") },
   { path: "/stat", module: require("../routes/fisStats.routes") },
+  { path: "/audit", module: require("../routes/audit.routes") },
 ];
 const errorRoutes = require("./error.routes");
 

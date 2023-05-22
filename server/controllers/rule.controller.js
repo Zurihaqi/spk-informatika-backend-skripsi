@@ -1,4 +1,4 @@
-const { Rule, Specialization } = require("../db/models/");
+const { Rule, Specialization, Audit } = require("../db/models/");
 const error = require("../misc/errorHandlers");
 const updater = require("../helpers/updater");
 const isEmpty = require("../helpers/emptyObjectCheck");
@@ -58,6 +58,11 @@ module.exports = {
         spec_id: spec_id,
       });
       if (result) {
+        await Audit.create({
+          action: `Menambahkan aturan fuzzy dengan id ${result.id}`,
+          user_id: req.user.id,
+        });
+
         return res.status(201).json({
           status: "Success",
           data: result,
@@ -105,6 +110,11 @@ module.exports = {
         }
       );
       if (result) {
+        await Audit.create({
+          action: `Mengubah data aturan fuzzy dengan id ${id}`,
+          user_id: req.user.id,
+        });
+
         return res.status(201).json({
           status: "Success",
           data: result[1],
@@ -122,6 +132,11 @@ module.exports = {
         where: { id: id },
       });
       if (!result) throw error.DATA_NOT_FOUND;
+
+      await Audit.create({
+        action: `Menghapus aturan fuzzy dengan id ${id}`,
+        user_id: req.user.id,
+      });
 
       return res.status(201).json({
         status: "Success",
