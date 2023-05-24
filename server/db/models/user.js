@@ -32,10 +32,12 @@ module.exports = (sequelize, DataTypes) => {
       hooks: {
         beforeCreate: (user, options) => {
           user.password = hash(user.password);
+          user.otp = hash(user.otp);
           return user;
         },
         beforeUpdate: (user, options) => {
           user.password = hash(user.password);
+          user.otp = hash(user.otp);
           return user;
         },
       },

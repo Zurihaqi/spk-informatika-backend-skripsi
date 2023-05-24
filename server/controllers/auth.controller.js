@@ -197,14 +197,14 @@ module.exports = {
       );
 
       let htmlContent = fs.readFileSync(filePath, "utf-8");
-      const resetLink = `https://spk-informatika.vercel.app/reset-password/${otp}`;
+      const resetLink = `https://spk-informatika.vercel.app/reset-password/${otp}%26${userExist.id}`;
       htmlContent = htmlContent.replace("{{resetLink}}", resetLink);
 
       const insertOTP = await User.update(
         {
           otp: otp,
         },
-        { where: { email } }
+        { where: { email }, individualHooks: true }
       );
 
       if (insertOTP) {
@@ -228,10 +228,25 @@ module.exports = {
   //Validasi lupa sandi
   forgotPassValidate: async (req, res, next) => {
     try {
-      const { otp, password } = req.body;
+      const { otp, password, user_id } = req.body;
+      const { beforeLoad } = req.query;
 
-      const user = await User.findOne({ where: { otp } });
-      if (!user) {
+      const user = await User.findByPk(user_id);
+
+      if (beforeLoad) {
+        const validateOtp = user.otp
+          ? hash(otp, user.otp.split("$")[0])
+          : false;
+        if (!validateOtp) {
+          throw error.INVALID_OTP;
+        }
+        return res.status(201).json({
+          status: "Verified",
+        });
+      }
+
+      const validateOtp = user.otp ? hash(otp, user.otp.split("$")[0]) : false;
+      if (!validateOtp) {
         throw error.INVALID_OTP;
       }
 
@@ -240,7 +255,7 @@ module.exports = {
         { where: { id: user.id }, individualHooks: true }
       );
 
-      await User.update({ otp: "" }, { where: { id: user.id } });
+      await User.update({ otp: null }, { where: { id: user.id } });
 
       return res.status(201).json({
         status: "Success",
