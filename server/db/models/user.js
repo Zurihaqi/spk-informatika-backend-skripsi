@@ -38,7 +38,9 @@ module.exports = (sequelize, DataTypes) => {
           return user;
         },
         beforeUpdate: (user, options) => {
-          user.password = hash(user.password);
+          if (user.password) {
+            user.password = hash(user.password);
+          }
           if (user.otp) {
             user.otp = hash(user.otp);
           }
