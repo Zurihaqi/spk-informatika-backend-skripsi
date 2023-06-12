@@ -207,14 +207,15 @@ module.exports = {
         const sum =
           result.software_development + result.data_science + result.networking;
 
-        result.softDevPercentage = Math.round(
-          (result.software_development / sum) * 100
+        result.softDevPercentage = (
+          (result.software_development / sum) *
+          100
+        ).toFixed(2);
+        result.dataSciPercentage = ((result.data_science / sum) * 100).toFixed(
+          2
         );
-        result.dataSciPercentage = Math.round(
-          (result.data_science / sum) * 100
-        );
-        result.networkingPercentage = Math.round(
-          (result.networking / sum) * 100
+        result.networkingPercentage = ((result.networking / sum) * 100).toFixed(
+          2
         );
 
         //Mengambil data riwayat rekomendasi mahasiswa

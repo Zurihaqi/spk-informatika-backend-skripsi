@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
   Recommendation.init(
     {
       crispOutput: DataTypes.ARRAY(DataTypes.FLOAT),
-      percentage: DataTypes.ARRAY(DataTypes.INTEGER),
+      percentage: DataTypes.ARRAY(DataTypes.FLOAT),
       user_id: DataTypes.INTEGER,
     },
     {
