@@ -1,4 +1,4 @@
-const { Recommendation, Grade, Course } = require("../db/models");
+const { Recommendation, Grade, Course, User } = require("../db/models");
 
 function getBackgroundColor(spec_id) {
   const randomShade = Math.random();
@@ -198,9 +198,28 @@ module.exports = {
   getStats: async (req, res, next) => {
     try {
       const [recommendations, grades] = await Promise.all([
-        Recommendation.findAll(),
-        Grade.findAll({ include: { model: Course } }),
+        Recommendation.findAll({
+          include: [
+            {
+              model: User,
+              where: { role: "Mahasiswa" },
+              attributes: [],
+            },
+          ],
+        }),
+        Grade.findAll({
+          include: [
+            {
+              model: User,
+              where: { role: "Mahasiswa" },
+              attributes: [],
+            },
+            { model: Course },
+          ],
+        }),
       ]);
+
+      console.log(recommendations);
 
       const grade_stats = gradesStats(grades);
       const recs_stats = recsStats(recommendations);
