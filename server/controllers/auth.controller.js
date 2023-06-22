@@ -258,6 +258,11 @@ module.exports = {
 
       await User.update({ otp: null }, { where: { id: user.id } });
 
+      await Notification.create({
+        content: "Kata Sandi anda telah diubah.",
+        user_id: user_id,
+      });
+
       return res.status(201).json({
         status: "Success",
       });

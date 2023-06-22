@@ -158,6 +158,11 @@ module.exports = {
           }
         );
         if (result[0]) {
+          await Notification.create({
+            content: "Kata Sandi anda telah diubah.",
+            user_id: id,
+          });
+
           return res.status(201).json({
             status: "Success",
             message: "Berhasil merubah password lakukan login ulang",
