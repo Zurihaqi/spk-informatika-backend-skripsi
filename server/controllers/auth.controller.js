@@ -219,6 +219,7 @@ module.exports = {
             status: "Success",
           });
         }
+        throw error.MAILER_FAIL;
       }
     } catch (err) {
       next(err);

@@ -23,6 +23,7 @@ const sendEmail = async (receiver, subject, content) => {
         clientSecret: CLIENT_SECRET,
         refreshToken: REFRESH_TOKEN,
         accessToken: oauth2Client.getAccessToken(),
+        accessType: "offline", // Set accessType to "offline"
       },
       tls: {
         rejectUnauthorized: false,
@@ -41,7 +42,6 @@ const sendEmail = async (receiver, subject, content) => {
     return info;
   } catch (err) {
     console.error(err);
-    throw error.MAILER_FAIL;
   }
 };
 
